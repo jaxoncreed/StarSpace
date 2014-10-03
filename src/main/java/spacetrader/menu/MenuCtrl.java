@@ -6,7 +6,7 @@
 
 package spacetrader.menu;
 
-import spacetrader.Ctrl;
+import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
 
@@ -15,19 +15,31 @@ import spacetrader.Window;
  * @author Jackson Morgan
  */
 public class MenuCtrl extends ViewCtrl {
+    MenuView view;
+    MainCtrl mainCtrl;
     
-    public MenuCtrl(Ctrl aParent, Window aWindow) {
+    public MenuCtrl(MainCtrl aParent, Window aWindow) {
         super(aParent, aWindow);
+        view = new MenuView(aWindow, this);
+        mainCtrl = aParent;
     }
 
     @Override
     public void startView() {
-        
+        view.renderMainMenu();
     }
 
     @Override
     public void stopView() {
         
+    }
+
+    void newGame() {
+        mainCtrl.createCharacter();
+    }
+    
+    void closeApplication() {
+        mainCtrl.closeApplication();
     }
     
     

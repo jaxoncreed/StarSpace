@@ -32,6 +32,10 @@ public class MainCtrl extends Ctrl{
         stage.show();
     }
     
+    public void closeApplication() {
+        window.closeApplication();
+    }
+    
     /**
      * A helper method to handle switching views under normal circumstances
      * @param newView: The view to which the window should be switched
@@ -39,6 +43,7 @@ public class MainCtrl extends Ctrl{
     private void switchViews(ViewCtrl newViewCtrl) {
         currentViewCtrl.stopView();
         newViewCtrl.startView();
+        currentViewCtrl = newViewCtrl;
     }
 
     /**

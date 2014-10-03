@@ -11,9 +11,13 @@ package spacetrader;
  * @author Jackson Morgan
  */
 public abstract class SubCtrl extends Ctrl {
-    Ctrl parent;
+    private Ctrl parent;
     
     public SubCtrl(Ctrl aParent) {
         parent = aParent;
+    }
+    
+    public Ctrl getParent() {
+        return parent;
     }
 }

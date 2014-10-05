@@ -37,8 +37,10 @@ public class MenuView implements Initializable {
     }
 
     void renderMainMenu() {
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("MainMenu.fxml"))) ;
+        loader.setController(this);
         try {
-            window.loadFXML(new FXMLLoader((getClass().getResource("MainMenu.fxml"))));
+            window.loadFXML(loader);
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,7 +48,7 @@ public class MenuView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        start.setOnAction((ActionEvent event) -> System.out.println(this));
+        start.setOnAction((ActionEvent event) -> menuCtrl.newGame());
         exit.setOnAction((ActionEvent event) -> menuCtrl.closeApplication());
     }
     

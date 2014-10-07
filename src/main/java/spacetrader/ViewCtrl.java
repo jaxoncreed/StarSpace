@@ -11,7 +11,7 @@ package spacetrader;
  * @author Jackson Morgan
  */
 public abstract class ViewCtrl extends SubCtrl {
-    private Window window;
+    protected Window window;
     
     public ViewCtrl(Ctrl parent, Window aWindow) {
         super(parent);

@@ -2,6 +2,7 @@ package spacetrader;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
 
 /**
@@ -14,6 +15,7 @@ public class MainCtrl extends Ctrl{
     private ViewCtrl currentViewCtrl;
     
     private MenuCtrl menuCtrl;
+    private CreateCharacterCtrl createCharacterCtrl;
     
     
     /**
@@ -28,6 +30,7 @@ public class MainCtrl extends Ctrl{
         window = aWindow;
         currentViewCtrl = new MenuCtrl(this, window);
         menuCtrl = new MenuCtrl(this, window);
+        createCharacterCtrl = new CreateCharacterCtrl(this, window);
         stage.setScene(new Scene(window));
         stage.show();
     }
@@ -57,7 +60,7 @@ public class MainCtrl extends Ctrl{
      * Starts the character creator while disabling other functions.
      */
     public void createCharacter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switchViews(createCharacterCtrl);
     }
     
     /**

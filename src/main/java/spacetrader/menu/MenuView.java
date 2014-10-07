@@ -21,6 +21,7 @@ import spacetrader.Window;
 public class MenuView implements Initializable {
     public Window window;
     public MenuCtrl menuCtrl;
+    public Pane curPane;
    
     @FXML
     Button start;
@@ -40,7 +41,8 @@ public class MenuView implements Initializable {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("MainMenu.fxml"))) ;
         loader.setController(this);
         try {
-            window.loadFXML(loader);
+            curPane = loader.load();
+            window.loadFXML(curPane);
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +52,10 @@ public class MenuView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         start.setOnAction((ActionEvent event) -> menuCtrl.newGame());
         exit.setOnAction((ActionEvent event) -> menuCtrl.closeApplication());
+    }
+
+    void removeMainMenu() {
+        window.clearFXML(curPane);
     }
     
     

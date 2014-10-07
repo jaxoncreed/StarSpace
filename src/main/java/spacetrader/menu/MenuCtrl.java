@@ -31,7 +31,7 @@ public class MenuCtrl extends ViewCtrl {
 
     @Override
     public void stopView() {
-        
+        view.removeMainMenu();
     }
 
     void newGame() {

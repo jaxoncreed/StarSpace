@@ -11,8 +11,12 @@ import javafx.scene.layout.Pane;
  */
 public class Window extends Pane {
     
-    public void loadFXML(FXMLLoader xml) throws IOException {
-        this.getChildren().add(xml.load());
+    public void loadFXML(Pane pane) throws IOException {
+        this.getChildren().add(pane);
+    }
+    
+    public void clearFXML(Pane pane) {
+        this.getChildren().remove(pane);
     }
 
     void closeApplication() {

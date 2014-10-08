@@ -20,9 +20,13 @@ public class MainCtrl extends Ctrl{
     private Stage stage;
     private ViewCtrl currentViewCtrl;
     private GalaxyGeneratorCtrl galaxyGenerator;
+    
+    //TODO: allow player to be generated
     private Player player;
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
+    //TODO: think of better way to get galaxy generated
+    private ControlShipCtrl controlShipCtrl;
     private MakeTradeCtrl makeTradeCtrl;
     private ControlShipCtrl controlShip;
     private Galaxy gax; 
@@ -40,6 +44,7 @@ public class MainCtrl extends Ctrl{
         
         //TODO: fix later
         player = new Player("Bob", Faction.NoFaction);
+
         galaxyGenerator = new GalaxyGeneratorCtrl(this, window);
         currentViewCtrl = new MenuCtrl(this, window);
         menuCtrl = new MenuCtrl(this, window);
@@ -91,8 +96,10 @@ public class MainCtrl extends Ctrl{
     }
     
     public void controlShip(){
-        switchViews(new ControlShipCtrl(this,window,gax.getSystems().get(0)));
+        controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+        switchViews(controlShipCtrl);
     }
+    
     public void setGalaxy(Galaxy gax) {
         this.gax = gax;
     }

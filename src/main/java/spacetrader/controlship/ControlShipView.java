@@ -49,9 +49,9 @@ public class ControlShipView implements Initializable {
     
     public ControlShipView() {};
     
-    public ControlShipView(Window aWindow, ControlShipCtrl aMenuCtrl) {
+    public ControlShipView(Window aWindow, ControlShipCtrl aShipCtrl) {
         window = aWindow;
-        shipCtrl = aMenuCtrl;
+        shipCtrl = aShipCtrl;
     }
 
     void renderMainMenu() {

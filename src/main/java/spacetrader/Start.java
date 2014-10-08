@@ -28,7 +28,7 @@ public class Start extends Application {
         items.add(new Item("Brick", 5, 3));
         items.add(new Item("Barrak", 5, 3));
         items.add(new Item("Bloop", 5, 3));*/
-        mainCtrl.createCharacter();
+        mainCtrl.mainMenu();
     }
 
     public static void main(String[] args) {

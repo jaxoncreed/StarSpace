@@ -28,12 +28,13 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     
     @Override
     public void startView() {
+        view.renderGalaxyCreator();
         mainCtrl.setGalaxy(generator.generate());
-        //view.renderGalaxyCreator();
+        mainCtrl.controlShip();
     }
 
     @Override
     public void stopView() {
-        //view.removeGalaxyCreator();
+        view.removeGalaxyCreator();
     }
 }

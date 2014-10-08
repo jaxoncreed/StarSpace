@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
-
+import spacetrader.controlship.ControlShipCtrl;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -16,7 +16,7 @@ public class MainCtrl extends Ctrl{
     
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
-    
+    private ControlShipCtrl controlShip;
     
     /**
      * Constructor
@@ -33,6 +33,7 @@ public class MainCtrl extends Ctrl{
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
         stage.setScene(new Scene(window));
         stage.show();
+        controlShip = new ControlShipCtrl(this,window);
     }
     
     public void closeApplication() {
@@ -68,5 +69,9 @@ public class MainCtrl extends Ctrl{
      */
     public void generateUniverse() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void controlShip(){
+        switchViews(controlShip);
     }
 }

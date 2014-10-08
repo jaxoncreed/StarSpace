@@ -8,6 +8,8 @@ package spacetrader;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
+import spacetrader.game_model.Planet;
+import spacetrader.game_model.Position;
 
 /**
  *
@@ -19,7 +21,7 @@ public class Start extends Application {
     public void start(Stage stage) throws Exception {
         Window window = new Window();
         MainCtrl mainCtrl = new MainCtrl(stage, window);
-        mainCtrl.mainMenu();
+        mainCtrl.makeTrade(new Planet("My Planet", new Position(1, 1)));
     }
 
     public static void main(String[] args) {

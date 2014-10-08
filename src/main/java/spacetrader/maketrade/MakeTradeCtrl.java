@@ -5,15 +5,9 @@
  */
 package spacetrader.maketrade;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
-import spacetrader.createcharacter.CreateCharacterView;
-import spacetrader.menu.MenuView;
 import spacetrader.game_model.*;
 
 /**
@@ -24,7 +18,7 @@ public class MakeTradeCtrl extends ViewCtrl {
     MakeTradeView view;
     MainCtrl mainCtrl;
     Inventory store;
-    Player player
+    Player player;
     
     public MakeTradeCtrl(MainCtrl aParent, Window window, Player player) {
         super(aParent, window);

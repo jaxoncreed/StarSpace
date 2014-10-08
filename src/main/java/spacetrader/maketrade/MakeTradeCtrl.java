@@ -23,19 +23,15 @@ import spacetrader.game_model.*;
 public class MakeTradeCtrl extends ViewCtrl {
     MakeTradeView view;
     MainCtrl mainCtrl;
-    Player player
     Inventory store;
     
-    public MakeTradeCtrl(MainCtrl aParent, Window window,
-                         Player player, Inventory store) {
+    public MakeTradeCtrl(MainCtrl aParent, Window window) {
         super(aParent, window);
-        view = new MakeTradeCtrl(window, this);
+        view = new MakeTradeView(window, this);
         mainCtrl = aParent;
-        this.player = player;
-        this.store = store;
     }
 
-    public boolean sell(Item item) {
+    public boolean sell(Player player, Inventory store, Item item) {
         Inventory cargo = player.getShip().getCargo();
         cargo.remove(item);
         store.add(item);
@@ -44,7 +40,7 @@ public class MakeTradeCtrl extends ViewCtrl {
         return true;
     }
     
-    public boolean buy(Item item) {
+    public boolean buy(Player player, Inventory store, Item item) {
         Inventory cargo = player.getShip().getCargo();
         int cost = (int)(item.getBasePrice() * (double)item.getHowMany());
         if (player.getWoolongs() < cost) {
@@ -64,7 +60,7 @@ public class MakeTradeCtrl extends ViewCtrl {
 
     @Override
     public void stopView() {
-        view.removeCharacterCreator();
+        view.removeMakeTrade();
     }
     
 }

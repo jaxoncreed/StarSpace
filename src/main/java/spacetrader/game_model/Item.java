@@ -25,7 +25,7 @@ public class Item implements Tradeable {
     }
     
     public int getHowMany() {
-        return howMany
+        return howMany;
     }
     
     public void setHowMany(int howMany) {

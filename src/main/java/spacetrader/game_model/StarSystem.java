@@ -3,7 +3,7 @@ package spacetrader.game_model;
 import java.util.List;
 
 import java.util.ArrayList;
-import spacetrader.graph.Node;
+import spacetrader.game_model.graph.Node;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
@@ -104,5 +104,8 @@ public class StarSystem implements Node{
 
     public double getStarMass() {
     	return starMass;
+    }
+    public Faction getFaction(){
+        return faction;
     }
 }

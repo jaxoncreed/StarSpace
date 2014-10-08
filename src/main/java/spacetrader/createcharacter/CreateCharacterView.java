@@ -73,7 +73,7 @@ public class CreateCharacterView implements Initializable {
         pointsToAward = 5;
         piloting = navigation = engineering = charisma = 0;
     }
-    
+
     void renderCharacterCreator() {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("CharacterCreator.fxml"))) ;
         loader.setController(this);

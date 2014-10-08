@@ -15,7 +15,6 @@ import spacetrader.Window;
  * @author Jackson Morgan
  */
 public class MenuCtrl extends ViewCtrl {
-    MenuView view;
     MainCtrl mainCtrl;
     
     public MenuCtrl(MainCtrl aParent, Window aWindow) {
@@ -26,12 +25,12 @@ public class MenuCtrl extends ViewCtrl {
 
     @Override
     public void startView() {
-        view.renderMainMenu();
+        view.render();
     }
 
     @Override
     public void stopView() {
-        view.removeMainMenu();
+        view.hide();
     }
 
     void newGame() {

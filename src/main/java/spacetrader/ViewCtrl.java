@@ -12,12 +12,17 @@ package spacetrader;
  */
 public abstract class ViewCtrl extends SubCtrl {
     protected Window window;
+    protected AbstractView view;
     
     public ViewCtrl(Ctrl parent, Window aWindow) {
         super(parent);
         window = aWindow;
     }
     
-    public abstract void startView();
-    public abstract void stopView();
+    public void startView() {
+        view.render();
+    };
+    public void stopView() {
+        view.hide();
+    }
 }

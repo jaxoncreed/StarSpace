@@ -4,12 +4,19 @@
   <auxiliary>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/C:/git/CS2340/src/main/java/spacetrader/menu/MenuCtrl.java</file>
+      </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/C:/git/CS2340/src/main/java/spacetrader/menu/MenuCtrl.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/Window.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/menu/MenuView.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/createcharacter/CreateCharacterView.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/MainCtrl.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/Start.java</file>
+        <file>file:/C:/git/StarSpace/src/main/java/spacetrader/createcharacter/CreateCharacterCtrl.java</file>
       </group>
     </open-files>
   </auxiliary>

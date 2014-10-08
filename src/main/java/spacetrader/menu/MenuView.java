@@ -12,13 +12,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import spacetrader.AbstractView;
 import spacetrader.Window;
 
 /**
  *
  * @author Jackson Morgan
  */
-public class MenuView implements Initializable {
+public class MenuView extends AbstractView implements Initializable {
     public Window window;
     public MenuCtrl menuCtrl;
     public Pane curPane;
@@ -37,7 +38,7 @@ public class MenuView implements Initializable {
         menuCtrl = aMenuCtrl;
     }
 
-    void renderMainMenu() {
+    public void renderMainMenu() {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("MainMenu.fxml"))) ;
         loader.setController(this);
         try {
@@ -54,8 +55,18 @@ public class MenuView implements Initializable {
         exit.setOnAction((ActionEvent event) -> menuCtrl.closeApplication());
     }
 
-    void removeMainMenu() {
+    public void removeMainMenu() {
         window.clearFXML(curPane);
+    }
+
+    @Override
+    public void render() {
+        renderMainMenu();
+    }
+
+    @Override
+    public void hide() {
+        removeMainMenu();
     }
     
     

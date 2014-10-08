@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package spacetrader;
 
 /**
  *
- * @author Jackson Morgan
+ * @author Jackson
  */
-public abstract class SubCtrl extends Ctrl {
-    protected Ctrl parent;
+public abstract class AbstractView {
+
+    public abstract void render();
+    public abstract void hide();
     
-    public SubCtrl(Ctrl aParent) {
-        parent = aParent;
-    }
 }

@@ -27,7 +27,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
 
     
     public void renderMakeTrade() {
-        
+        System.out.print("It's here");
     }
     
     @Override

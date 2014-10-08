@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
+import spacetrader.game_model.Galaxy;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -13,11 +14,10 @@ public class MainCtrl extends Ctrl{
     private Window window;
     private Stage stage;
     private ViewCtrl currentViewCtrl;
-    
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
     private ControlShipCtrl controlShip;
-    
+    private Galaxy galaxy; 
     /**
      * Constructor
      * 
@@ -33,7 +33,6 @@ public class MainCtrl extends Ctrl{
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
         stage.setScene(new Scene(window));
         stage.show();
-        controlShip = new ControlShipCtrl(this,window);
     }
     
     public void closeApplication() {
@@ -72,6 +71,6 @@ public class MainCtrl extends Ctrl{
     }
     
     public void controlShip(){
-        switchViews(controlShip);
+        switchViews(new ControlShipCtrl(this,window,galaxy.getSystems().get(0)));
     }
 }

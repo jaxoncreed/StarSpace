@@ -6,10 +6,14 @@
 
 package spacetrader.controlship;
 
+import java.util.ArrayList;
+import java.util.List;
 import spacetrader.menu.*;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
+import spacetrader.game_model.Planet;
+import spacetrader.game_model.StarSystem;
 
 /**
  *
@@ -18,11 +22,15 @@ import spacetrader.Window;
 public class ControlShipCtrl extends ViewCtrl {
     ControlShipView view;
     MainCtrl mainCtrl;
-    
-    public ControlShipCtrl(MainCtrl aParent, Window aWindow) {
+    private StarSystem sys;
+    private Planet planet;
+ 
+    public ControlShipCtrl(MainCtrl aParent, Window aWindow,StarSystem s) {
         super(aParent, aWindow);
         view = new ControlShipView(aWindow, this);
         mainCtrl = aParent;
+        sys=s;
+        planet=s.getPlanets().get(0);
     }
 
     @Override
@@ -34,12 +42,19 @@ public class ControlShipCtrl extends ViewCtrl {
     public void stopView() {
         
     }
-
-    void newGame() {
+    
+    public List<Planet> getPlanets(){
+        return sys.getPlanets();
+    }
+    public Planet getPlanet(){
+        return planet;
+    }
+    public void setPlanet(Planet p){
+        planet=p;
+    }
+    
+    void newTrade() {
         mainCtrl.createCharacter();
     }
     
-    void closeApplication() {
-        mainCtrl.closeApplication();
-    }
 }

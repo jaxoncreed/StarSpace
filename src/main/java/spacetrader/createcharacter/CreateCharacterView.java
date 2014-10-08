@@ -66,7 +66,7 @@ public class CreateCharacterView implements Initializable {
         this.window = window;
         createCharacterCtrl = ccc;
     }
-    
+
     void renderCharacterCreator() {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("CharacterCreator.fxml"))) ;
         loader.setController(this);

@@ -6,16 +6,22 @@
 package spacetrader.game_model;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 /**
  *
  * @author fsanchez
  */
 public class Inventory {
-    private List<Item> items;
+    private HashMap<Item,Integer> items;
     private int maxSize;
-    
+    private int size;
     public Inventory(List<Item> inventory, int maxSize) {
-        this.items = inventory;
+        items=new HashMap<Item,Integer>();
+        size=0;
+        for(Item i:inventory){
+            items.put(i,1);
+            size++;
+        }
         this.maxSize = maxSize;
     }
     public Inventory(int maxSize) {
@@ -25,25 +31,38 @@ public class Inventory {
         this(new ArrayList<>(), 10);
     }
     public boolean add(Item item) {
-        if (items.size() < maxSize) {
-            items.add(item);
+        if (size < maxSize) {
+            items.put(item,this.getAmount(item)+1);
+            size++;
             return true;
         }
         return false;
     }
 
     public boolean remove(Item item) {
-        return items.remove(item);
+        if(items.get(item)>0){
+            items.put(item, this.getAmount(item)-1);
+            size--;
+            if(getAmount(item)==0){
+                items.remove(item);
+            }
+            return true;
+        }
+        return false;
+    }
+    public int getAmount(Item item){
+        if(items.containsKey(item))
+            return items.get(item);
+        return 0;
     }
     
-    public Item[] getItems() {
-        return items.toArray(new Item[items.size()]);
+    public List<Item> getItems() {
+        return new ArrayList<Item>(items.keySet());
     }
     public void setMaxSize(int size) {
         maxSize = size;
-
     }
     public void clearInventory() {
-        items = new ArrayList<>();
+        items = new HashMap();
     }
 }

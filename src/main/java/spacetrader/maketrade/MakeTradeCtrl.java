@@ -5,6 +5,7 @@
  */
 package spacetrader.maketrade;
 
+import java.util.ArrayList;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
@@ -28,18 +29,18 @@ public class MakeTradeCtrl extends ViewCtrl {
         this.player = player;
     }
 
-    public boolean sell(Inventory store, Item item) {
+    public boolean sell(Item item,int amount) {
         Inventory cargo = player.getShip().getCargo();
         cargo.remove(item);
         store.add(item);
-        int profit = (int)(item.getBasePrice() * (double)item.getHowMany());
+        int profit = (int)(item.getBasePrice());
         player.setWoolongs(player.getWoolongs() + profit);
         return true;
     }
     
-    public boolean buy(Inventory store, Item item) {
+    public boolean buy(Item item,int amount) {
         Inventory cargo = player.getShip().getCargo();
-        int cost = (int)(item.getBasePrice() * (double)item.getHowMany());
+        int cost = (int)(item.getBasePrice());
         if (player.getWoolongs() < cost) {
             return false;
         }
@@ -64,5 +65,22 @@ public class MakeTradeCtrl extends ViewCtrl {
     public void stopView() {
         view.removeMakeTrade();
     }
-    
+    public void shipControl(){
+        mainCtrl.controlShip();
+    }
+    public ArrayList<Item> getItemsStore(){
+        return (ArrayList<Item>) store.getItems();
+    }
+   public ArrayList<Item> getItemsPlayer(){
+        return (ArrayList<Item>) player.getShip().getCargo().getItems();
+    }
+   public int getStoreItemAmount(Item i){
+       return store.getAmount(i);
+   }
+   public int getPlayerItemAmount(Item i){
+       return player.getShip().getCargo().getAmount(i);
+   }
+   public int getPlayerMoney(){
+       return player.getWoolongs();
+   }
 }

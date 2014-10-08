@@ -16,11 +16,14 @@ public class Planet {
 		this.system = system;
 		this.techLevel = techLevel;
 		this.government = government;
+                market=new Market(new Inventory(10),this);
 	}
 
     public Planet(String name, Position pos) {
         this.name=name;
         this.pos=pos;
+        market=new Market(new Inventory(10),this);
+
     }
     
     public Market getMarket() {

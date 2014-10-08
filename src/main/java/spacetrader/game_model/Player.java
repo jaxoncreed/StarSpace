@@ -42,4 +42,5 @@ public class Player {
     public Faction getFaction() {
         return faction;
     }
+
 }

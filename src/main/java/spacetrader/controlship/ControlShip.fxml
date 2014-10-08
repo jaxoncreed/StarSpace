@@ -19,7 +19,7 @@
                         <Pane id="info" prefHeight="351.0" prefWidth="449.0" />
                         <HBox id="actions" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="135.0" prefWidth="83.0" text="Trade" />
+                              <Button fx:id="trade" mnemonicParsing="false" prefHeight="135.0" prefWidth="83.0" text="Trade" />
                            </children>
                         </HBox>
                      </children>

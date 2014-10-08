@@ -11,6 +11,8 @@ import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
 import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
 import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.Item;
+import spacetrader.game_model.Market;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -50,8 +52,15 @@ public class MainCtrl extends Ctrl{
         menuCtrl = new MenuCtrl(this, window);
         makeTradeCtrl = new MakeTradeCtrl(this, window, player);
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
+        
+        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
+        player.getShip().addToCargo(new Item("Block", 5));
+        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
+        player.getShip().addToCargo(new Item("Brick", 5));
+        
         stage.setScene(new Scene(window));
         stage.show();
+
     }
     
     public void closeApplication() {
@@ -90,6 +99,12 @@ public class MainCtrl extends Ctrl{
     }
 
     public void makeTrade(Inventory inv) {
+        /*List<Item> items = new ArrayList<>();
+        items.add(new Item("Block", 5, 3));
+        items.add(new Item("Brick", 5, 3));
+        items.add(new Item("Barrak", 5, 3));
+        items.add(new Item("Bloop", 5, 3));*/
+
         currentViewCtrl.stopView();
         makeTradeCtrl.renderMarket(inv);
         currentViewCtrl = makeTradeCtrl;
@@ -102,5 +117,8 @@ public class MainCtrl extends Ctrl{
     
     public void setGalaxy(Galaxy gax) {
         this.gax = gax;
+        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
+        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
+
     }
 }

@@ -54,7 +54,7 @@ public class ControlShipCtrl extends ViewCtrl {
     }
     
     void newTrade() {
-        mainCtrl.createCharacter();
+        mainCtrl.makeTrade(planet.getMarket().getCargo());
     }
     
 }

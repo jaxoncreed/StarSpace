@@ -68,8 +68,8 @@ public class ControlShipView implements Initializable {
             travel();
         });
         planets=shipCtrl.getPlanets();
-        planets.remove(shipCtrl.getPlanet());
         tempPlanet=shipCtrl.getPlanet();
+        planets.remove(shipCtrl.getPlanet());
         updateList();
         setPlanet(tempPlanet);
     }
@@ -77,6 +77,7 @@ public class ControlShipView implements Initializable {
         list.getChildren().clear();
         for(Planet p:planets){
             Button b=new Button();
+            b.setText(p.getName());
             b.setOnAction((ActionEvent event)->{
                 selectPlanet(p);
             });
@@ -88,7 +89,7 @@ public class ControlShipView implements Initializable {
     }
     private void setPlanet(Planet p){
         planets.remove(p);
-        planets.add(shipCtrl.getPlanet());
+        planets.add(tempPlanet);
         shipCtrl.setPlanet(p);
     }
     private void travel(){
@@ -103,6 +104,7 @@ public class ControlShipView implements Initializable {
 
     void remove() {
         window.clearFXML(curPane);
+        curPane=null;
     }
     
     

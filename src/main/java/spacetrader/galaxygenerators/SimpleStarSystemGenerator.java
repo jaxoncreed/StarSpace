@@ -79,7 +79,7 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
             pos = pos.rotate(theta);
             
 			SimplePlanetGenerator planetGen = 
-				new SimplePlanetGenerator("TempPlanetName", pos, system);
+				new SimplePlanetGenerator("Planet "+i, pos, system);
 			system.addPlanet(planetGen.generate());
 		}
                 

@@ -6,7 +6,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.7" layoutX="14.0" layoutY="14.0" prefHeight="450.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -16,7 +15,7 @@
                   <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="448.0" prefWidth="449.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label text="Ship Control View" textAlignment="CENTER" />
-                        <Label id="name" text="Planet" />
+                        <Label id="name" fx:id="name" text="Planet" />
                         <Pane id="info" prefHeight="351.0" prefWidth="449.0" />
                         <HBox id="actions" prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -35,7 +34,7 @@
                            <children>
                               <ScrollPane prefHeight="391.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <VBox id="list" prefHeight="546.0" prefWidth="184.0" />
+                                    <VBox id="list" fx:id="list" prefHeight="546.0" prefWidth="184.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -44,8 +43,8 @@
                            <children>
                               <HBox layoutX="-27.0" layoutY="-36.0" prefHeight="45.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button id="travel" mnemonicParsing="false" prefHeight="45.0" prefWidth="85.0" text="Travel" />
-                                    <Button id="switchLOD" mnemonicParsing="false" prefHeight="45.0" prefWidth="109.0" text="Universe" textAlignment="CENTER">
+                                    <Button id="travel" fx:id="travel" mnemonicParsing="false" prefHeight="45.0" prefWidth="85.0" text="Travel" />
+                                    <Button id="switchLOD" fx:id="switchLOD" mnemonicParsing="false" prefHeight="45.0" prefWidth="109.0" text="Universe" textAlignment="CENTER">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

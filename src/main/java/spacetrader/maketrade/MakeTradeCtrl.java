@@ -9,7 +9,7 @@ import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
 import spacetrader.game_model.*;
-import spacetrader.menu.MakeTradeView;
+import spacetrader.maketrade.MakeTradeView;
 
 /**
  *

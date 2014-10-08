@@ -23,12 +23,12 @@ public class Start extends Application {
     public void start(Stage stage) throws Exception {
         Window window = new Window();
         MainCtrl mainCtrl = new MainCtrl(stage, window);
-        List<Item> items = new ArrayList<>();
+        /*List<Item> items = new ArrayList<>();
         items.add(new Item("Block", 5, 3));
         items.add(new Item("Brick", 5, 3));
         items.add(new Item("Barrak", 5, 3));
-        items.add(new Item("Bloop", 5, 3));
-        mainCtrl.makeTrade(new Inventory(items, 10));
+        items.add(new Item("Bloop", 5, 3));*/
+        mainCtrl.createCharacter();
     }
 
     public static void main(String[] args) {

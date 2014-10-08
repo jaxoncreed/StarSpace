@@ -40,7 +40,7 @@ public class ControlShipCtrl extends ViewCtrl {
 
     @Override
     public void stopView() {
-        
+        view.remove();
     }
     
     public List<Planet> getPlanets(){

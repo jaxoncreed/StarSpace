@@ -1,15 +1,8 @@
 package spacetrader.menu;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
 import spacetrader.Window;
@@ -22,13 +15,12 @@ import spacetrader.maketrade.MakeTradeCtrl;
  */
 public class MakeTradeView extends AbstractView implements Initializable {
     public Window window;
-    public MenuCtrl menuCtrl;
+    public MakeTradeCtrl makeTradeCtrl;
     public Pane curPane;
 
-    public MakeTradeView() {};
-
-    public MakeTradeView(Window window, MakeTradeCtrl aThis) {
-        System.out.println("make trade view");
+    public MakeTradeView(Window window, MakeTradeCtrl ctrl) {
+        this.window = window;
+        this.makeTradeCtrl = ctrl;
     }
     
     @Override

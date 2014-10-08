@@ -9,6 +9,7 @@ import spacetrader.game_model.Inventory;
 import spacetrader.game_model.Player;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
+import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
 import spacetrader.game_model.Galaxy;
 /**
  * The overall centralized controller. Manages the other controllers
@@ -18,7 +19,7 @@ public class MainCtrl extends Ctrl{
     private Window window;
     private Stage stage;
     private ViewCtrl currentViewCtrl;
-
+    private GalaxyGeneratorCtrl galaxyGenerator;
     private Player player;
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
@@ -39,7 +40,7 @@ public class MainCtrl extends Ctrl{
         
         //TODO: fix later
         player = new Player("Bob", Faction.NoFaction);
-        
+        galaxyGenerator = new GalaxyGeneratorCtrl(this, window);
         currentViewCtrl = new MenuCtrl(this, window);
         menuCtrl = new MenuCtrl(this, window);
         makeTradeCtrl = new MakeTradeCtrl(this, window, player);
@@ -80,7 +81,7 @@ public class MainCtrl extends Ctrl{
      * Starts generating the universe while disabling other functions.
      */
     public void generateUniverse() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switchViews(galaxyGenerator);
     }
 
     public void makeTrade(Inventory inv) {

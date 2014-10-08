@@ -24,7 +24,7 @@ public class MakeTradeCtrl extends ViewCtrl {
     MakeTradeView view;
     MainCtrl mainCtrl;
     Inventory store;
-    Player player
+    Player player;
     
     public MakeTradeCtrl(MainCtrl aParent, Window window, Player player) {
         super(aParent, window);
@@ -52,6 +52,11 @@ public class MakeTradeCtrl extends ViewCtrl {
         cargo.add(item);
         player.setWoolongs(player.getWoolongs() - cost);
         return true;
+    }
+    
+    public void renderMarket(Inventory store) {
+        this.store = store;
+        startView()
     }
     
     @Override

@@ -20,12 +20,11 @@ public class MainCtrl extends Ctrl{
     private ViewCtrl currentViewCtrl;
 
     private Player player;
-    
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
     private MakeTradeCtrl makeTradeCtrl;
     private ControlShipCtrl controlShip;
-    private Galaxy galaxy; 
+    private Galaxy gax; 
     
     /**
      * Constructor
@@ -91,6 +90,9 @@ public class MainCtrl extends Ctrl{
     }
     
     public void controlShip(){
-        switchViews(new ControlShipCtrl(this,window,galaxy.getSystems().get(0)));
+        switchViews(new ControlShipCtrl(this,window,gax.getSystems().get(0)));
+    }
+    public void setGalaxy(Galaxy gax) {
+        this.gax = gax;
     }
 }

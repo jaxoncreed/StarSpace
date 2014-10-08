@@ -25,6 +25,11 @@ public class Player {
     public void setWoolongs(int i) {
         woolongs = i;
     }
+    
+    public Ship getShip() {
+        return ship;
+    }
+    
     public void setShip(Ship s) {
         ship = s;
     }

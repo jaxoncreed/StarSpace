@@ -70,8 +70,11 @@ public class ControlShipView implements Initializable {
         planets=shipCtrl.getPlanets();
         planets.remove(shipCtrl.getPlanet());
         tempPlanet=shipCtrl.getPlanet();
+        updateList();
+        setPlanet(tempPlanet);
     }
     void updateList(){
+        list.getChildren().clear();
         for(Planet p:planets){
             Button b=new Button();
             b.setOnAction((ActionEvent event)->{
@@ -91,13 +94,14 @@ public class ControlShipView implements Initializable {
     private void travel(){
         setPlanet(tempPlanet);
         updateList();
+        name.setText(shipCtrl.getPlanet().getName());
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }
 
-    void removeMainMenu() {
+    void remove() {
         window.clearFXML(curPane);
     }
     

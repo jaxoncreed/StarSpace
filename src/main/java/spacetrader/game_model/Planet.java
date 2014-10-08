@@ -38,5 +38,7 @@ public class Planet {
 	public System getSystem() {
 		return system;
 	}
-
+        public String getName(){
+            return name;
+        }
 }

@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
+import spacetrader.game_model.Skillset;
 import spacetrader.menu.MenuView;
 
 /**
@@ -36,6 +37,15 @@ public class CreateCharacterCtrl extends ViewCtrl {
     @Override
     public void stopView() {
         view.removeCharacterCreator();
+    }
+
+    void backout() {
+        mainCtrl.mainMenu();
+    }
+
+    void creationDone(Skillset skill) {
+        //TODO: Save the player
+        mainCtrl.generateUniverse();
     }
     
 }

@@ -57,6 +57,7 @@ public class MenuView extends AbstractView implements Initializable {
 
     public void removeMainMenu() {
         window.clearFXML(curPane);
+        curPane = null;
     }
 
     @Override

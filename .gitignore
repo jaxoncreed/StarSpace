@@ -1,6 +1,7 @@
 /build/
 
 /.nb-gradle
-/.gradle
+/.gradle/*
 /.gradle
 *.class
+*.lock

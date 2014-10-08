@@ -24,14 +24,16 @@ public class MakeTradeCtrl extends ViewCtrl {
     MakeTradeView view;
     MainCtrl mainCtrl;
     Inventory store;
+    Player player;
     
-    public MakeTradeCtrl(MainCtrl aParent, Window window) {
+    public MakeTradeCtrl(MainCtrl aParent, Window window, Player player) {
         super(aParent, window);
         view = new MakeTradeView(window, this);
         mainCtrl = aParent;
+        this.player = player;
     }
 
-    public boolean sell(Player player, Inventory store, Item item) {
+    public boolean sell(Inventory store, Item item) {
         Inventory cargo = player.getShip().getCargo();
         cargo.remove(item);
         store.add(item);
@@ -40,7 +42,7 @@ public class MakeTradeCtrl extends ViewCtrl {
         return true;
     }
     
-    public boolean buy(Player player, Inventory store, Item item) {
+    public boolean buy(Inventory store, Item item) {
         Inventory cargo = player.getShip().getCargo();
         int cost = (int)(item.getBasePrice() * (double)item.getHowMany());
         if (player.getWoolongs() < cost) {
@@ -50,6 +52,11 @@ public class MakeTradeCtrl extends ViewCtrl {
         cargo.add(item);
         player.setWoolongs(player.getWoolongs() - cost);
         return true;
+    }
+    
+    public void renderMarket(Inventory store) {
+        this.store = store;
+        startView();
     }
     
     @Override

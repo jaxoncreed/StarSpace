@@ -56,7 +56,7 @@ public class MakeTradeCtrl extends ViewCtrl {
     
     public void renderMarket(Inventory store) {
         this.store = store;
-        startView()
+        startView();
     }
     
     @Override

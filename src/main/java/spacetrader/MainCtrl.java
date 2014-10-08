@@ -8,7 +8,8 @@ import spacetrader.game_model.Faction;
 import spacetrader.game_model.Inventory;
 import spacetrader.game_model.Player;
 import spacetrader.menu.MenuCtrl;
-
+import spacetrader.controlship.ControlShipCtrl;
+import spacetrader.game_model.Galaxy;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -17,12 +18,14 @@ public class MainCtrl extends Ctrl{
     private Window window;
     private Stage stage;
     private ViewCtrl currentViewCtrl;
+
     private Player player;
     
     private MenuCtrl menuCtrl;
     private CreateCharacterCtrl createCharacterCtrl;
     private MakeTradeCtrl makeTradeCtrl;
-    
+    private ControlShipCtrl controlShip;
+    private Galaxy galaxy; 
     
     /**
      * Constructor
@@ -85,5 +88,9 @@ public class MainCtrl extends Ctrl{
         currentViewCtrl.stopView();
         makeTradeCtrl.renderMarket(inv);
         currentViewCtrl = makeTradeCtrl;
+    }
+    
+    public void controlShip(){
+        switchViews(new ControlShipCtrl(this,window,galaxy.getSystems().get(0)));
     }
 }

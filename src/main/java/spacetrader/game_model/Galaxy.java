@@ -31,4 +31,5 @@ public class Galaxy {
 			addSystem(system);
 		}
 	}
+
 }

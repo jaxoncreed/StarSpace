@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
 import spacetrader.Window;
+import spacetrader.game_model.Item;
+import spacetrader.maketrade.MakeTradeCtrl;
 
 /**
  *
@@ -25,9 +27,8 @@ public class MakeTradeView extends AbstractView implements Initializable {
 
     public MakeTradeView() {};
 
-    
-    public void renderMakeTrade() {
-        System.out.print("It's here");
+    public MakeTradeView(Window window, MakeTradeCtrl aThis) {
+        System.out.println("make trade view");
     }
     
     @Override
@@ -44,4 +45,12 @@ public class MakeTradeView extends AbstractView implements Initializable {
     public void hide() {
 
     }    
+
+    public void renderMakeTrade(Item[] items, int woolongs, Item[] items0) {
+        System.out.println("Render Make Trade");
+    }
+
+    public void removeMakeTrade() {
+        System.out.println("remove make trade");
+    }
 }

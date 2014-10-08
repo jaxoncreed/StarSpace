@@ -37,7 +37,7 @@ public class Inventory {
     }
     
     public Item[] getItems() {
-        return (Item[]) items.toArray();
+        return items.toArray(new Item[items.size()]);
     }
     public void setMaxSize(int size) {
         maxSize = size;

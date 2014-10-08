@@ -1,4 +1,4 @@
-package spacetrader.menu;
+package spacetrader.maketrade;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +36,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
     @Override
     public void hide() {
 
-    }    
+    }
 
     public void renderMakeTrade(Item[] items, int woolongs, Item[] items0) {
         System.out.println("Render Make Trade");

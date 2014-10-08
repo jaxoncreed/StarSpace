@@ -48,6 +48,11 @@ public class MakeTradeCtrl extends ViewCtrl {
         return true;
     }
     
+    public void renderMarket(Inventory store) {
+        this.store = store;
+        startView()
+    }
+    
     @Override
     public void startView() {
         view.renderMakeTrade(player.getShip().getCargo().getItems(),

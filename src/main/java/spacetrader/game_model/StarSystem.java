@@ -108,4 +108,7 @@ public class StarSystem implements Node{
     public Faction getFaction(){
         return faction;
     }
+    public StarType getStarType() {
+        return starType;
+    }
 }

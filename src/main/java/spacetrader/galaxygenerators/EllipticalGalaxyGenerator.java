@@ -4,6 +4,8 @@ package spacetrader.galaxygenerators;
 import spacetrader.game_model.Galaxy;
 import spacetrader.game_model.Position;
 import spacetrader.game_model.StarType;
+import spacetrader.game_model.StarSystem;
+import java.util.List;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.UniformRealDistribution;
 import org.apache.commons.math3.distribution.BinomialDistribution;
@@ -60,9 +62,11 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 			Position pos = new Position(x, y);
 
 			// calculate the distance from pos to all other StarSystems already generated
-			int size = galaxy.getSystems().size();
 			boolean tooClose = false;
+            List<StarSystem> systems = gax.getSystems();
+            int size = systems.size();
 			for (int j = 0; j < size && !tooClose; j++) {
+                StarSystem system = systems.get(i);
 				tooClose = pos.distTo(system.getPosition()) < minSystemDist;
 			}
 

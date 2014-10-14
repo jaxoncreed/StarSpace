@@ -83,11 +83,11 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 			double theta = Util.sampleFromUniformReal(0, Math.PI);
 			double x = dist * Math.cos(theta);
 			double y = dist * Math.sin(theta);
-            Position pos = new Position(pos + x, pos + y);
-            pos = pos.rotate(theta);
+            Position planetPos = new Position(pos.x + x, pos.y + y);
+            planetPos = planetPos.rotate(theta);
             
 			SimplePlanetGenerator planetGen = 
-				new SimplePlanetGenerator("Planet "+i, pos, system);
+				new SimplePlanetGenerator("Planet "+i, planetPos, system);
 			system.addPlanet(planetGen.generate());
 		}
                 

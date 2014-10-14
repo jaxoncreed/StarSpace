@@ -49,7 +49,7 @@ public class Galaxy {
 
 	public final void setWidth(double width) {
 		if (width <= 0) {
-			throw new IllegalArgumentException("width must be positive; " + width + " given")
+			throw new IllegalArgumentException("width must be positive; " + width + " given");
 		}
 		this.width = width;
 	}
@@ -57,7 +57,7 @@ public class Galaxy {
 	public final void setHeight(double height) {
 
 		if (height <= 0) {
-			throw new IllegalArgumentException("height must be positive; " + height + " given")
+			throw new IllegalArgumentException("height must be positive; " + height + " given");
 		}
 		this.height = height;
 	}

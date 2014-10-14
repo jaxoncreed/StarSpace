@@ -2,6 +2,7 @@ package spacetrader.galaxygenerators;
 
 import spacetrader.game_model.Galaxy;
 import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.StarType;
 import java.util.List;
 /**
  * @author Michael Lane <mlane@gatech.edu>
@@ -48,8 +49,8 @@ public class JumpPointsGenerator {
 				double attraction = calculateAttraction(system1, system2);
 				if (attraction >= threshold
 					|| (connectBlackHoles 
-						&& system1.starType == StarType.BLACK_HOLE)
-						&& system2.starType == StarType.BLACK_HOLE) {
+						&& system1.getStarType() == StarType.BLACK_HOLE)
+						&& system2.getStarType() == StarType.BLACK_HOLE) {
 					
 					system1.addJumpPoint(
 						system1.getPosition(), 

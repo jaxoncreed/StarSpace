@@ -39,7 +39,7 @@ public abstract class GalaxyGenerator {
 		setName(name);
 		int sample = (int) Math.abs(Util.sampleFromNormal(systemNumMean, systemNumSD));
 		setNumSystems(sample > 0 ? sample : 1);
-		setMinSystemDist(minStarSystemDist);
+		setMinSystemDist(minSystemDist);
 		setWidth(width);
 		setHeight(height);
 

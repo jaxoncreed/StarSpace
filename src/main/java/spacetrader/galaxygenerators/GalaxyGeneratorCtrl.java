@@ -23,7 +23,7 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
         super(aParent, window);
         view = new CreateGalaxyView(window, this);
         mainCtrl = aParent;
-        generator = new EllipticalGalaxyGenerator("Fart Dust", 25, 1, 1, 3, 3, 1);
+//        generator = new EllipticalGalaxyGenerator("Fart Dust", 25, 1, 1, 3, 3, 1);
     }
     
     @Override

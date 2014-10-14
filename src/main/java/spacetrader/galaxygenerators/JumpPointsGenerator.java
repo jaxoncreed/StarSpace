@@ -6,20 +6,23 @@ import java.util.List;
 /**
  * @author Michael Lane <mlane@gatech.edu>
  */
-public abstract class JumpPointsGenerator {
+public class JumpPointsGenerator {
 
 	private Galaxy galaxy;
 	private double constant;
 	private double threshold;
+	public boolean connectBlackHoles; 
 
 	public JumpPointsGenerator(
 		Galaxy galaxy,
 		double constant,
-		double threshold) {
+		double threshold,
+		boolean connectBlackHoles) {
 
 		setGalaxy(galaxy);
 		setConstant(constant);
 		setThreshold(threshold);
+		this.connectBlackHoles = connectBlackHoles;
 	}
 
 	private double calculateAttraction(StarSystem system1, StarSystem system2) {
@@ -43,7 +46,11 @@ public abstract class JumpPointsGenerator {
 			for (int j = i + 1; j < numSystems; j++) {
 				StarSystem system2 = systems.get(j);
 				double attraction = calculateAttraction(system1, system2);
-				if (attraction >= threshold) {
+				if (attraction >= threshold
+					|| (connectBlackHoles 
+						&& system1.starType == StarType.BLACK_HOLE)
+						&& system2.starType == StarType.BLACK_HOLE) {
+					
 					system1.addJumpPoint(
 						system1.getPosition(), 
 						system2, 

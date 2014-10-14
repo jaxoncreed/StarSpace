@@ -15,7 +15,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
  */
 public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
-	private List<Double> distsFromStar;
+	private List<Double> _distsFromStar;
 
 	/**
 	 * A StarSystemGenerator without much generative fluff
@@ -40,42 +40,50 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 		Galaxy galaxy) {
 
 		super(name, pos, planetNumMean, planetNumSD,
-		      (Util.sampleFromBinomial(1, 0.5) > 0) ? StarType.BIG : StarType.LITTLE,
+		      (Util.sampleFromBinomial(1, 0.5) > 0) ? StarType.GIANT : StarType.DWARF,
 		      galaxy);
 
 		// generates the total distances from the star of the planets,
 		// so that the furthest distance does not excede plutoDist
-		distsFromStar = new ArrayList<Double>();
+		_distsFromStar = new ArrayList<Double>();
 		NormalDistribution distr = new NormalDistribution(planetSepMean, planetSepSD);
 		double total = 0;
 		boolean tryAgain = true;
 		while (tryAgain) {
 			for (int i = 0; i < numPlanets; i++) {
 				total += distr.sample();
-				distsFromStar.add(total);
+				_distsFromStar.add(total);
 			}
-			if (total <= plutoDist) {
+
+			// if the furthest planet is wi`thin plutoDist from the center,
+			// and if the orbit of the furthest planet does not exist the bounds of the galaxy
+			if (total <= plutoDist
+				&& Math.abs(pos.x) + total < galaxy.getWidth()/2
+				&& Math.abs(pos.x) + total < galaxy.getWidth()/2) {
 				tryAgain = false;
 			} else {
-				distsFromStar = new ArrayList<Double>();
+				_distsFromStar = new ArrayList<Double>();
 				total = 0;
 			}
 		}
 	}		
 
+	/**
+	 * @return A randomly generated StarSystem with the current specifications
+	 */
 	public StarSystem generate() {
 
 		StarSystem system = new StarSystem(name, pos, starType);
 		
 		for (int i = 0; i < numPlanets; i++) {
 
-			double dist = distsFromStar.get(i);
+			double dist = _distsFromStar.get(i);
 
-			// randomly generate a position 
+			// randomly generate a position, given a distance
 			double theta = Util.sampleFromUniformReal(0, Math.PI);
 			double x = dist * Math.cos(theta);
 			double y = dist * Math.sin(theta);
-            Position pos = new Position(x, y);
+            Position pos = new Position(pos + x, pos + y);
             pos = pos.rotate(theta);
             
 			SimplePlanetGenerator planetGen = 

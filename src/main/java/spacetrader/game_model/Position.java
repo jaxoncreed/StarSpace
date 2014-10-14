@@ -27,7 +27,6 @@ public class Position {
 		return Math.atan2(this.y, this.x);
 	}
 
-
 	public int relQuadrant(Position that) {
 		if (this.x < that.x && this.y < that.y) return 1;
 		if (this.x > that.x && this.y < that.y) return 2;

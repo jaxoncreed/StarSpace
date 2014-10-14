@@ -16,7 +16,7 @@ public class StarSystem implements Node{
 	private List<Planet> planets;
 	private double starMass;
 	private Map<Node,JumpPoint> jumpPoints;
-        private Faction faction;
+    private Faction faction;
 
 
 	public Position getPosition() {

@@ -21,41 +21,24 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 	private double _yBound;
 	private double _tiltRads;
 
-	/**
-	 * Maybe use this for experimenting?
-	 */
-    public EllipticalGalaxyGenerator(
-        String name, 
-        int numSystems,
-        double xSD,
-        double ySD,
-        double xBound,
-        double yBound,
-        double tiltRads) {
-		
-        super(name, numSystems);
-		setXSD(xSD);
-		setYSD(ySD);
-		setXBound(xBound);
-		setYBound(yBound);
-		setTiltRads(tiltRads);
-    }
-        
 
 	/**
-	 * 
+	 * Use this constructor
 	 */
 	public EllipticalGalaxyGenerator(
 		String name, 
 		double systemNumMean, 
 		double systemNumSD,
+		double minSystemDist,
+		double width,
+		double height,
 		double xSD,
 		double ySD,
 		double xBound,
 		double yBound,
 		double tiltRads) {
 
-		super(name, systemNumMean, systemNumSD);
+		super(name, systemNumMean, systemNumSD, minSystemDist, width, height);
 		setXSD(xSD);
 		setYSD(ySD);
 		setXBound(xBound);
@@ -69,19 +52,31 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 
 		NormalDistribution xDistr = new NormalDistribution(0, _xSD);
 		NormalDistribution yDistr = new NormalDistribution(0, _ySD);
-		Galaxy gax = new Galaxy();
+		Galaxy gax = new Galaxy(width, height);
 		for (int i = 0; i < numSystems; i++) {
 			// randomly generate position
 			double x = xDistr.sample();
 			double y = yDistr.sample();
 			Position pos = new Position(x, y);
-			// if this position is too far away from the origin, then loop again
-			if (1 >
-				(Math.pow(_xBound, 2)*Math.pow(_yBound, 2))
-				/
+
+			// calculate the distance from pos to all other StarSystems already generated
+			int size = galaxy.getSystems().size();
+			boolean tooClose = false;
+			for (int j = 0; j < size && !tooClose; j++) {
+				tooClose = pos.distTo(system.getPosition()) < minSystemDist;
+			}
+
+			// if this position is too far away from the origin
+			if (
+				1 > 		   (Math.pow(_xBound, 2)*Math.pow(_yBound, 2)) /
+			//  ---------------------------------------------------------------------------
 				(Math.pow(y, 2)*Math.pow(_xBound, 2) + Math.pow(x, 2)*Math.pow(_yBound, 2))
-			) {
+			
+			// or if this position is too close to StarSystem already generated 
+			|| tooClose) {
+				// then loop again
 				i--;			
+
 			// otherwise make the system in all its glory
 			} else {
 				pos = pos.rotate(_tiltRads);

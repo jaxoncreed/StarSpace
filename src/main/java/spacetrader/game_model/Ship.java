@@ -9,7 +9,7 @@ public class Ship implements Tradeable {
     private final String name;
     private int firePower;
     private final Inventory cargo;
-    
+    private Position position; 
     public Ship(String name) {
         this.name = name;
         basePrice = 1000;
@@ -61,4 +61,11 @@ public class Ship implements Tradeable {
     public void setBasePrice(double value) {
         basePrice = value;
     }
+    public void setPosition(Position pos){
+        position=pos;
+    }
+    public Position getPosition(){
+        return position;
+    }
+
 }

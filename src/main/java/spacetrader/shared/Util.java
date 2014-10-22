@@ -1,4 +1,4 @@
-package spacetrader.galaxygenerators;
+package spacetrader.shared;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.BinomialDistribution;

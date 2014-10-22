@@ -2,12 +2,11 @@ package spacetrader.galaxygenerators;
 
 
 //import spacetrader.Util;
-import spacetrader.game_model.Galaxy;
+import spacetrader.shared.Util;
 import spacetrader.game_model.StarSystem;
 import java.util.List;
 import java.util.ArrayList;
 import spacetrader.game_model.Position;
-import spacetrader.game_model.StarType;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 /**
@@ -15,80 +14,120 @@ import org.apache.commons.math3.distribution.NormalDistribution;
  */
 public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
-	private List<Double> _distsFromStar;
+	/** 
+	 * The expected value of the separation between the orbits of planets
+	 * in the generated StarSystem.
+	 */
+	private Double planetSepMean;
+
+	/** 
+	 * The standard deviation of the separation between the orbits of planets
+	 * in the generated StarSystem.
+	 */
+	private Double planetSepSD;
 
 	/**
-	 * A StarSystemGenerator without much generative fluff
-	 * 
-	 * @param name The system's name
-	 * @param pos The system's position
-	 * @param planetNumMean The expected number of planets in the system
-	 * @param planetNumSD The sd to the expected number of planets in the system
-	 * @param planetSepMean The expected seperation between the orbits of planets
-	 * @param planetSepSD The sd to the expected seperation bwteen the orbits of planets
-	 * @param plutoDist The upper bound of the distance of the furthest star from the sun
-	 * @param galaxy This system's galaxy
+	 * The min distance of the separation between the orbits of planets
+	 * in the generated StarSystem.
 	 */
-	public SimpleStarSystemGenerator(
-		String name, 
-		Position pos,
-		double planetNumMean, 
-		double planetNumSD,
-		double planetSepMean,
-		double planetSepSD,
-		double plutoDist,
-		Galaxy galaxy) {
+	private Double minPlanetSep;
 
-		super(name, pos, planetNumMean, planetNumSD,
-		      (Util.sampleFromBinomial(1, 0.5) > 0) ? StarType.GIANT : StarType.DWARF,
-		      galaxy);
+	/** The maximum distance of any planet in the generated StarSystem. */
+	private Double plutoDist;
+
+	public SimpleStarSystemGenerator() {
+
+	}		
+
+	/**
+	 * @param planetSepMean must be nonnegative
+	 */
+	public final void setPlanetSepMean(Double planetSepMean) {
+		if (planetSepMean < 0) {
+			throw new IllegalArgumentException("planetSepMean must be nonnegative; " + planetSepMean + " given");
+		}
+		this.planetSepMean = planetSepMean;
+	}
+
+	/**
+	 * @param planetSepSD must be positive
+	 */
+	public final void setPlanetSepSD(Double planetSepSD) {
+		if (planetSepSD <= 0) {
+			throw new IllegalArgumentException("planetSepSD must be positive; " + planetSepSD + " given");
+		}
+		this.planetSepSD = planetSepSD;
+	}
+
+	/**
+	 * @param minPlanetSep must be nonnegative
+	 */
+	public final void setMinPlanetSep(Double minPlanetSep) {
+		if (minPlanetSep < 0) {
+			throw new IllegalArgumentException("minPlanetSep must be nonnegative; " + minPlanetSep + " given");
+		}
+		this.minPlanetSep = minPlanetSep;
+	}
+
+	/**
+	 * @param plutoDist must be positive
+	 */
+	public final void setPlutoDist(Double plutoDist) {
+		if (plutoDist <= 0) {
+			throw new IllegalArgumentException("plutoDist must be positive; " + plutoDist + " given");
+		}
+		this.plutoDist = plutoDist;
+	}
+
+
+    @Override
+	public StarSystem generate() {
 
 		// generates the total distances from the star of the planets,
 		// so that the furthest distance does not excede plutoDist
-		_distsFromStar = new ArrayList<Double>();
+		List<Double> distsFromStar = new ArrayList();
 		NormalDistribution distr = new NormalDistribution(planetSepMean, planetSepSD);
 		double total = 0;
 		boolean tryAgain = true;
 		while (tryAgain) {
-			for (int i = 0; i < numPlanets; i++) {
-				total += distr.sample();
-				_distsFromStar.add(total);
+			for (int i = 0; i < getNumPlanets(); i++) {
+				double sample = distr.sample();
+				// if this planet's orbit is too close to the previous
+				if (minPlanetSep != null && sample < minPlanetSep) {
+					// then try again
+					i--;
+				} else {
+					total += sample;
+					distsFromStar.add(total);
+				}
 			}
 
-			// if the furthest planet is wi`thin plutoDist from the center,
+			// if the furthest planet is within plutoDist from the center,
 			// and if the orbit of the furthest planet does not exist the bounds of the galaxy
 			if (total <= plutoDist
 				&& Math.abs(pos.x) + total < galaxy.getWidth()/2
-				&& Math.abs(pos.x) + total < galaxy.getWidth()/2) {
+				&& Math.abs(pos.y) + total < galaxy.getHeight()/2) {
 				tryAgain = false;
 			} else {
-				_distsFromStar = new ArrayList<Double>();
+				distsFromStar = new ArrayList();
 				total = 0;
 			}
 		}
-	}		
-
-	/**
-	 * @return A randomly generated StarSystem with the current specifications
-	 */
-	public StarSystem generate() {
 
 		StarSystem system = new StarSystem(name, pos, starType);
-		
-		for (int i = 0; i < numPlanets; i++) {
-
-			double dist = _distsFromStar.get(i);
-
+		for (int i = 0; i < getNumPlanets(); i++) {
+			double dist = distsFromStar.get(i);
 			// randomly generate a position, given a distance
 			double theta = Util.sampleFromUniformReal(0, Math.PI);
 			double x = dist * Math.cos(theta);
 			double y = dist * Math.sin(theta);
-            Position planetPos = new Position(pos.x + x, pos.y + y);
-            planetPos = planetPos.rotate(theta);
-            
-			SimplePlanetGenerator planetGen = 
-				new SimplePlanetGenerator("Planet "+i, planetPos, system);
-			system.addPlanet(planetGen.generate());
+			Position posAboutStar = new Position(x, y);
+            posAboutStar = posAboutStar.rotate(theta);
+            Position planetPos = new Position(pos.x + posAboutStar.x, pos.y + posAboutStar.y);
+            // SET PROPERTIES FOR PLANET GENERATION HEREI
+            planetGenerator.setName(name + ", Planet " + i);
+            planetGenerator.setPosition(planetPos);
+			system.addPlanet(planetGenerator.generate());
 		}
                 
 		return system;

@@ -9,6 +9,8 @@ public class Ship implements Tradeable {
     private final String name;
     private int firePower;
     private final Inventory cargo;
+    private int health;
+    private int maxHealth;
     
     public Ship(String name) {
         this.name = name;
@@ -60,5 +62,17 @@ public class Ship implements Tradeable {
     }
     public void setBasePrice(double value) {
         basePrice = value;
+    }
+    
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health; 
+    }
+    
+    public void incrementHealth(int delta) {
+        this.health += delta;
     }
 }

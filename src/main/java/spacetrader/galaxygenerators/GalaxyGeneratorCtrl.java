@@ -17,13 +17,22 @@ import spacetrader.Window;
 public class GalaxyGeneratorCtrl extends ViewCtrl {
     CreateGalaxyView view;
     MainCtrl mainCtrl;
-    EllipticalGalaxyGenerator generator;
+    GalaxyGenerator generator; 
+    
+    private static final String CONFIG_XML_FILE = "generator_config.xml";
 
-    public GalaxyGeneratorCtrl(MainCtrl aParent, Window window) {
+    public GalaxyGeneratorCtrl(MainCtrl aParent, Window window) throws Exception {
         super(aParent, window);
         view = new CreateGalaxyView(window, this);
         mainCtrl = aParent;
-//        generator = new EllipticalGalaxyGenerator("Fart Dust", 25, 1, 1, 3, 3, 1);
+        GeneratorConfigParser parser = new GeneratorConfigParser(CONFIG_XML_FILE);
+        parser.createGenerators();
+                
+        generator = parser.getGalaxyGenerators().get(0);
+        StarSystemGenerator sysGen = parser.getStarSystemGenerators().get(0);
+        PlanetGenerator planetGen = parser.getPlanetGenerators().get(0);
+        sysGen.setPlanetGenerator(planetGen);
+        generator.setStarSystemGenerator(sysGen);
     }
     
     @Override

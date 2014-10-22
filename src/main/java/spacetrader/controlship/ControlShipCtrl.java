@@ -6,9 +6,8 @@
 
 package spacetrader.controlship;
 
-import java.util.ArrayList;
+import spacetrader.shared.Util;
 import java.util.List;
-import spacetrader.menu.*;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
@@ -24,6 +23,12 @@ public class ControlShipCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     private StarSystem sys;
     private Planet planet;
+    
+    private static final double PIRATE_ATTACK_PROB = 0.1;
+    private static final int PIRATE_ATTACK_DAMAGE = 50;
+    private static final String PIRATE_ATTACK_MSG = 
+        "Oh no! You were attacked by pirates and lost " + PIRATE_ATTACK_DAMAGE + 
+        " health.";
  
     public ControlShipCtrl(MainCtrl aParent, Window aWindow,StarSystem s) {
         super(aParent, aWindow);
@@ -49,12 +54,21 @@ public class ControlShipCtrl extends ViewCtrl {
     public Planet getPlanet(){
         return planet;
     }
+    
     public void setPlanet(Planet p){
-        planet=p;
+        double sample = Util.sampleFromUniformReal(0, 1);
+        if (sample < PIRATE_ATTACK_PROB && !p.equals(planet)) {
+            mainCtrl.getPlayer().getShip().incrementHealth(PIRATE_ATTACK_DAMAGE);
+            System.out.println(PIRATE_ATTACK_MSG);
+        } else {
+           planet=p;
+        }
     }
     
     void newTrade() {
         mainCtrl.makeTrade(planet.getMarket().getCargo());
     }
+
+    
     
 }

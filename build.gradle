@@ -42,7 +42,7 @@ sourceSets {
   main {
     resources {
         srcDirs = ["src/main/java"]
-        includes = ["**/*.fxml"]
+        includes = ["**/*.fxml", "spacetrader/galaxygenerators/generator_config.xml"]
     }
   }
 }

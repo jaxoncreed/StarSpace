@@ -39,7 +39,7 @@ public class MainCtrl extends Ctrl{
      * @param aStage: The stage that comes with the beginning of the project
      * @param aWindow: A class that will be the window for the project
      */
-    public MainCtrl(Stage aStage, Window aWindow) {
+    public MainCtrl(Stage aStage, Window aWindow) throws Exception {
         //TODO: load option model and dynamically set window settings
         stage = aStage;
         window = aWindow;
@@ -53,9 +53,9 @@ public class MainCtrl extends Ctrl{
         makeTradeCtrl = new MakeTradeCtrl(this, window, player);
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
         
-        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
+//        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
         player.getShip().addToCargo(new Item("Block", 5));
-        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
+//        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
         player.getShip().addToCargo(new Item("Brick", 5));
         
         stage.setScene(new Scene(window));
@@ -120,5 +120,9 @@ public class MainCtrl extends Ctrl{
         this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
         this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
 
+    }
+    
+    public Player getPlayer() {
+        return player;
     }
 }

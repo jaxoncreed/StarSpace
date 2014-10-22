@@ -26,6 +26,10 @@ public class Market {
     public boolean removeItem(Item i) {
         return cargo.remove(i);
     }
+
+    public void dumpCargo() {
+        cargo.clearInventory();
+    }
     
     public Inventory getItems() {
         return cargo;

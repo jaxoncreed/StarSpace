@@ -5,7 +5,7 @@
  */
 package spacetrader.maketrade;
 
-import java.util.ArrayList;
+import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
@@ -68,11 +68,11 @@ public class MakeTradeCtrl extends ViewCtrl {
     public void shipControl(){
         mainCtrl.controlShip();
     }
-    public ArrayList<Item> getItemsStore(){
-        return (ArrayList<Item>) store.getItems();
+    public List<Item> getItemsStore(){
+        return store.getItems();
     }
-   public ArrayList<Item> getItemsPlayer(){
-        return (ArrayList<Item>) player.getShip().getCargo().getItems();
+   public List<Item> getItemsPlayer(){
+        return player.getShip().getCargo().getItems();
     }
    public int getStoreItemAmount(Item i){
        return store.getAmount(i);

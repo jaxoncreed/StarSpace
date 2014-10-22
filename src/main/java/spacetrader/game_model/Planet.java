@@ -2,6 +2,7 @@ package spacetrader.game_model;
 
 public class Planet {
 
+    //#todo need to implement id system
 	private Position pos;
 	private System system;
 	private int techLevel;
@@ -41,7 +42,8 @@ public class Planet {
 	public System getSystem() {
 		return system;
 	}
-        public String getName(){
-            return name;
-        }
+   
+    public String getName(){
+        return name;
+    }
 }

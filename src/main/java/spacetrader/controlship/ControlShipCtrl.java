@@ -68,6 +68,11 @@ public class ControlShipCtrl extends ViewCtrl {
     void newTrade() {
         mainCtrl.makeTrade(planet.getMarket().getCargo());
     }
+    
+    public void saveGame() {
+        //code for saving game
+        System.out.println("Working");
+    }
 
     
     

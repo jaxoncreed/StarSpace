@@ -1,9 +1,11 @@
 package spacetrader.game_model;
 
+import java.io.Serializable;
+
 /**
  * Ship model!
  */
-public class Ship implements Tradeable {
+public class Ship implements Tradeable, Serializable {
 
     private double basePrice;
     private final String name;

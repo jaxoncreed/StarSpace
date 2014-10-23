@@ -5,11 +5,13 @@
  */
 package spacetrader.game_model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author fsanchez
  */
-public class Market {
+public class Market implements Serializable {
 
     private Inventory cargo;
     private final Planet planet;

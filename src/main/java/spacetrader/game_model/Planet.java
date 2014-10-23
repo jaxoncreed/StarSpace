@@ -1,6 +1,8 @@
 package spacetrader.game_model;
 
-public class Planet {
+import java.io.Serializable;
+
+public class Planet implements Serializable {
 
     //#todo need to implement id system
 	private Position pos;

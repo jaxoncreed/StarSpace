@@ -1,5 +1,6 @@
 package spacetrader.game_model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class StarSystem implements Node{
+public class StarSystem implements Node, Serializable {
 
 	private String name;
 	private Position pos;
@@ -16,7 +17,7 @@ public class StarSystem implements Node{
 	private List<Planet> planets;
 	private double starMass;
 	private Map<Node,JumpPoint> jumpPoints;
-    private Faction faction;
+        private Faction faction;
 
 
 	public Position getPosition() {

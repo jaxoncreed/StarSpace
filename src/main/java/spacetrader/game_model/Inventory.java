@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package spacetrader.game_model;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.HashMap;
  *
  * @author fsanchez
  */
-public class Inventory {
+public class Inventory implements Serializable {
     private HashMap<Item,Integer> items;
     private int maxSize;
     private int size;

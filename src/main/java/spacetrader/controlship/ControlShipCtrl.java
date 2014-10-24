@@ -70,8 +70,7 @@ public class ControlShipCtrl extends ViewCtrl {
     }
     
     public void saveGame() {
-        //code for saving game
-        System.out.println("Working");
+        mainCtrl.saveGame();
     }
 
     

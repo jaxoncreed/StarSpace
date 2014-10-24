@@ -41,8 +41,7 @@ public class MenuCtrl extends ViewCtrl {
         mainCtrl.closeApplication();
     }
     public void loadGame() {
-        //code for loading game
-        System.out.println("Working");
+        mainCtrl.loadGame();
     }
     
     

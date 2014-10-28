@@ -1,5 +1,7 @@
 package spacetrader.game_model;
 
+import org.jbox2d.dynamics.Body;
+
 /**
  * Ship model!
  */
@@ -9,7 +11,8 @@ public class Ship implements Tradeable {
     private final String name;
     private int firePower;
     private final Inventory cargo;
-    
+    private PhysicsDescriptor physicsDescriptor
+
     public Ship(String name) {
         this.name = name;
         basePrice = 1000;

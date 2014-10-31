@@ -42,6 +42,8 @@ public class ControlShipView implements Initializable {
     @FXML 
     Button trade;
     @FXML
+    Button shipyard;
+    @FXML
     Button saveButton;
     
     
@@ -66,6 +68,7 @@ public class ControlShipView implements Initializable {
             Logger.getLogger(ControlShipView.class.getName()).log(Level.SEVERE, null, ex);
         }
         trade.setOnAction((ActionEvent event)-> shipCtrl.newTrade());
+        shipyard.setOnAction((ActionEvent event) -> shipCtrl.buyShip());
         travel.setOnAction((ActionEvent event)->{
             travel();
         });

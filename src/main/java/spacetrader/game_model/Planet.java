@@ -28,6 +28,12 @@ public class Planet implements Serializable {
         market=new Market(new Inventory(10),this);
 
     }
+    public void setTechLevel(int lvl) {
+        this.techLevel = lvl;
+    }
+    public int getTechLevel() {
+        return techLevel;
+    }
     
     public Market getMarket() {
         return market;

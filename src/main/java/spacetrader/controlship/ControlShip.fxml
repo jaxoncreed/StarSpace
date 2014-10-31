@@ -20,6 +20,7 @@
                         <HBox id="actions" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Button fx:id="trade" mnemonicParsing="false" prefHeight="135.0" prefWidth="83.0" text="Trade" />
+                              <Button fx:id="shipyard" mnemonicParsing="false" prefHeight="68.0" prefWidth="88.0" text="Buy Ship" />
                            </children>
                         </HBox>
                      </children>

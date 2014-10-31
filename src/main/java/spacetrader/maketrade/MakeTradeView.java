@@ -98,7 +98,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
             yourItemsContainer.getChildren().add(h);
         }
         theirItemsContainer.getChildren().clear();
-        for(Item i:itemsM){
+        for (Item i:itemsM){
             HBox h=new HBox(); 
             Button b=new Button();
             b.setText(i.getName()+" #"+makeTradeCtrl.getStoreItemAmount(i));
@@ -114,6 +114,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
 
     }
     public void removeMakeTrade() {
+        window.clearFXML(curPane);
         System.out.println("remove make trade");
     }
 }

@@ -10,7 +10,7 @@ public class Ship implements Tradeable, Serializable {
     private double basePrice;
     private final String name;
     private int firePower;
-    private final Inventory cargo;
+    private Inventory cargo;
     private int health;
     private int maxHealth;
     
@@ -18,6 +18,7 @@ public class Ship implements Tradeable, Serializable {
         this.name = name;
         basePrice = 1000;
         firePower = 10;
+        health = 10;
         cargo = new Inventory();
     }
     public Ship(String name, double basePrice, int firePower, int cargoSize) {
@@ -25,6 +26,14 @@ public class Ship implements Tradeable, Serializable {
         this.firePower = firePower;
         this.basePrice = basePrice;
         cargo = new Inventory(cargoSize);
+    }
+    public Ship(String name, double basePrice, int firePower, int health,
+            Inventory cargo) {
+        this.name = name;
+        this.basePrice = basePrice;
+        this.firePower = firePower;
+        this.health = health;
+        this.cargo = cargo;
     }
     
     public boolean addItem(Item i) {
@@ -76,5 +85,8 @@ public class Ship implements Tradeable, Serializable {
     
     public void incrementHealth(int delta) {
         this.health += delta;
+    }
+    public void setCargo(Inventory cargo) {
+        this.cargo = cargo;
     }
 }

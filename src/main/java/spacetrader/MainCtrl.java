@@ -13,9 +13,12 @@ import spacetrader.game_model.Player;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
 import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
+import spacetrader.game_model.Planet;
 import spacetrader.game_model.Galaxy;
 import spacetrader.game_model.GameModel;
+import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.Item;
+import spacetrader.buyship.*;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -25,6 +28,7 @@ public class MainCtrl extends Ctrl{
     private Stage stage;
     private ViewCtrl currentViewCtrl;
     private GalaxyGeneratorCtrl galaxyGenerator;
+    private boolean runAI = false;
     
     //TODO: allow player to be generated
     private Player player;
@@ -33,6 +37,7 @@ public class MainCtrl extends Ctrl{
     //TODO: think of better way to get galaxy generated
     private ControlShipCtrl controlShipCtrl;
     private MakeTradeCtrl makeTradeCtrl;
+    private BuyShipCtrl buyShipCtrl;
     private ControlShipCtrl controlShip;
     private Galaxy gax; 
     private GameModel gameModel;
@@ -57,6 +62,7 @@ public class MainCtrl extends Ctrl{
         currentViewCtrl = new MenuCtrl(this, window);
         menuCtrl = new MenuCtrl(this, window);
         makeTradeCtrl = new MakeTradeCtrl(this, window, player);
+        buyShipCtrl = new BuyShipCtrl(this, window, player);
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
         gameSaver = new GameSaver(gameModel);
         
@@ -65,7 +71,6 @@ public class MainCtrl extends Ctrl{
         player.getShip().addToCargo(new Item("Block", 5));
 //        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
         player.getShip().addToCargo(new Item("Brick", 5));
-        
         stage.setScene(new Scene(window));
         stage.show();
 
@@ -104,6 +109,11 @@ public class MainCtrl extends Ctrl{
      */
     public void generateUniverse() {
         switchViews(galaxyGenerator);
+    }
+    
+    public void buyShip() {
+        switchViews(buyShipCtrl);
+        
     }
 
     public void makeTrade(Inventory inv) {
@@ -156,5 +166,13 @@ public class MainCtrl extends Ctrl{
             System.out.println("Game could not be loaded. Corrupted file.");
             Logger.getLogger(MainCtrl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    private void runAI() {
+        if (runAI) {
+            //code for AI
+        }
+    }
+    private void setAI(boolean val) {
+        runAI = val;
     }
 }

@@ -65,7 +65,8 @@ public class MakeTradeCtrl extends ViewCtrl {
     public void stopView() {
         view.removeMakeTrade();
     }
-    public void shipControl(){
+    public void shipControl() {
+        stopView();
         mainCtrl.controlShip();
     }
     public List<Item> getItemsStore(){

@@ -35,6 +35,15 @@ public class ControlShipCtrl extends ViewCtrl {
         view = new ControlShipView(aWindow, this);
         mainCtrl = aParent;
         sys=s;
+            int ii = 0;
+            for (Planet y : s.getPlanets()) {
+                if (ii < 4) {
+                    y.setTechLevel(10);
+                } else {
+                    y.setTechLevel(4);
+                }
+                ii++;
+            }
         planet=s.getPlanets().get(0);
     }
 
@@ -67,6 +76,13 @@ public class ControlShipCtrl extends ViewCtrl {
     
     void newTrade() {
         mainCtrl.makeTrade(planet.getMarket().getCargo());
+    }
+    void buyShip() {
+        if (planet.getTechLevel() > 5) {
+            mainCtrl.buyShip();
+        } else {
+            System.out.println("Planet does not have high enough tech level");
+        }
     }
     
     public void saveGame() {

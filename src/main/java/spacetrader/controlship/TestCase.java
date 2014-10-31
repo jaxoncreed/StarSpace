@@ -11,6 +11,8 @@ import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import spacetrader.MultiKeyPressEventHandler;
+import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 
 /**
  * Test class inorder to not run the whole application to run test cases on the Real time view. I don't know why there is no test case folder or how to add one. 
@@ -22,9 +24,12 @@ public class TestCase extends Application {
     public void start(Stage primaryStage) throws IOException {
         RealTimeShipView pane=new RealTimeShipView(new RealTimeShipController());
         Scene scene=new Scene(pane);
-        scene.setOnKeyPressed((KeyEvent e)->{
-            pane.handleKey(e);
+        MultiKeyPressEventHandler handler=new MultiKeyPressEventHandler((MultiKeyPressEventHandler.MultiKeyEvent event) -> {
+            pane.handleMutliKey(event);
         });
+        scene.setOnKeyPressed(handler);
+        scene.setOnKeyReleased(handler);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

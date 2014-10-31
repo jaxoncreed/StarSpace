@@ -26,10 +26,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import spacetrader.MultiKeyPressEventHandler;
+import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXBackgroundRender;
+import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXShipRender;
 import spacetrader.game_model.Planet;
 import spacetrader.game_model.Player;
 import spacetrader.game_model.Position;
+import spacetrader.game_model.Ship;
 import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
 
@@ -56,6 +60,7 @@ public class RealTimeShipView extends Pane implements Initializable {
         loader.setController(this);
         controller=c;
         system=controller.getSystem();
+        player=controller.getPlayer();
         try {
             this.getChildren().add(loader.load());
         } catch (IOException ex) {
@@ -63,8 +68,8 @@ public class RealTimeShipView extends Pane implements Initializable {
         }
         PIXELS_PER_DISTANCE=(int)(anchor.getPrefWidth()/view_size);
         bounds=system.getBounds();
-        bounds.setOffsetNear(new Position(1,1));
-        bounds.setOffsetFar(new Position(1,1));
+        bounds.setOffsetNear(new Position(4,4));
+        bounds.setOffsetFar(new Position(4,4));
         canvasWidth=(bounds.getDistanceX())*PIXELS_PER_DISTANCE;
         canvasHeight=(bounds.getDistanceY())*PIXELS_PER_DISTANCE;
         
@@ -93,9 +98,16 @@ public class RealTimeShipView extends Pane implements Initializable {
             pr.setGraphicsContext(canvas.getGraphicsContext2D());
             pr.draw();
         }
- 
+        Ship s=player.getShip();
+        JavaFXShipRender playrend=new JavaFXShipRender(s,bounds.normalize(s.getPosition()));
+        playrend.setGraphicsContext(canvas.getGraphicsContext2D());
+        playrend.setScale(PIXELS_PER_DISTANCE);
+        playrend.draw();
+        canvas.setTranslateX(-(bounds.normalize(s.getPosition()).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
+        canvas.setTranslateY(-(bounds.normalize(s.getPosition()).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
+
     }
-    public void handleKey(KeyEvent t){
+    public void handleKey(KeyEvent t){/*
         if (t.getCode() == KeyCode.D ) {
             Position p=new Position(1,0);
             canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
@@ -115,11 +127,24 @@ public class RealTimeShipView extends Pane implements Initializable {
             Position p=new Position(0,1);
             canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
             canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
+        }*/
+    }
 
+    public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
+        if(event.isPressed(KeyCode.D)){
+            controller.movePlayer(.01, 0);
+        }
+        if(event.isPressed(KeyCode.A)){
+            controller.movePlayer(-.01, 0);
+        }
+        if(event.isPressed(KeyCode.W)){
+            controller.movePlayer(0, -.01);
+        }
+        if(event.isPressed(KeyCode.S)){
+            controller.movePlayer(0, .01);
         }
 
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

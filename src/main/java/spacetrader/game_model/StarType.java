@@ -1,5 +1,7 @@
 package spacetrader.game_model;
 
-public enum StarType {
+import java.io.Serializable;
+
+public enum StarType implements Serializable {
 	DWARF, GIANT, BLACK_HOLE; // these two need to be here for SimpleStarSystemGenerator to work
 }

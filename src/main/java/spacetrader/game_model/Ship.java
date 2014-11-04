@@ -1,18 +1,27 @@
 package spacetrader.game_model;
 
+<<<<<<< HEAD
 import org.jbox2d.dynamics.Body;
+=======
+import java.io.Serializable;
+>>>>>>> master
 
 /**
  * Ship model!
  */
-public class Ship implements Tradeable {
+public class Ship implements Tradeable, Serializable {
 
     private double basePrice;
     private final String name;
     private int firePower;
     private final Inventory cargo;
+<<<<<<< HEAD
     private PhysicsDescriptor physicsDescriptor;
     private Position position;
+=======
+    private int health;
+    private int maxHealth;
+>>>>>>> master
     
     public Ship(String name) {
         this.name = name;
@@ -65,6 +74,7 @@ public class Ship implements Tradeable {
     public void setBasePrice(double value) {
         basePrice = value;
     }
+<<<<<<< HEAD
     public void setPosition(Position pos){
         position=pos;
     }
@@ -72,4 +82,18 @@ public class Ship implements Tradeable {
         return position;
     }
 
+=======
+    
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health; 
+    }
+    
+    public void incrementHealth(int delta) {
+        this.health += delta;
+    }
+>>>>>>> master
 }

@@ -1,9 +1,8 @@
 package spacetrader.game_model;
 
-import spacetrader.game_model.StarSystem;
-import java.awt.geom.Point2D;
+import java.io.Serializable;
 
-public class JumpPoint {
+public class JumpPoint implements Serializable {
 	private StarSystem targetSys;
 	private Position targetPos;
 	private Position pos;

@@ -5,13 +5,14 @@
  */
 package spacetrader.game_model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public class Item implements Tradeable {
+public class Item implements Tradeable, Serializable {
     private final String name;
     private final double basePrice;
     

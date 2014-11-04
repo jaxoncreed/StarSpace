@@ -5,11 +5,13 @@
  */
 package spacetrader.game_model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author fsanchez
  */
-public class Market {
+public class Market implements Serializable {
 
     private Inventory cargo;
     private final Planet planet;
@@ -25,6 +27,10 @@ public class Market {
     
     public boolean removeItem(Item i) {
         return cargo.remove(i);
+    }
+
+    public void dumpCargo() {
+        cargo.clearInventory();
     }
     
     public Inventory getItems() {

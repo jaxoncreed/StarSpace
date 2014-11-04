@@ -5,11 +5,13 @@
  */
 package spacetrader.game_model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author fsanchez
  */
-public class Player {
+public class Player implements Serializable {
     private final String name;
     private final Faction faction;
     private int woolongs; //currency

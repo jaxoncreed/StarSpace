@@ -1,6 +1,7 @@
 package spacetrader.galaxygenerators;
 
 //import spacetrader.Util;
+import spacetrader.shared.Util;
 import spacetrader.game_model.Galaxy;
 import spacetrader.game_model.Position;
 import spacetrader.game_model.StarType;
@@ -17,37 +18,12 @@ import org.apache.commons.math3.distribution.BinomialDistribution;
  */
 public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 
-	private double _xSD;
-	private double _ySD;
-	private double _xBound;
-	private double _yBound;
-	private double _tiltRads;
+	private Double _xSD;
+	private Double _ySD;
+	private Double _xBound;
+	private Double _yBound;
+	private Double _tiltRads;
 
-
-	/**
-	 * Use this constructor
-	 */
-	public EllipticalGalaxyGenerator(
-		String name, 
-		double systemNumMean, 
-		double systemNumSD,
-		double minSystemDist,
-		double width,
-		double height,
-		double xSD,
-		double ySD,
-		double xBound,
-		double yBound,
-		double tiltRads) {
-
-		super(name, systemNumMean, systemNumSD, minSystemDist, width, height);
-		setXSD(xSD);
-		setYSD(ySD);
-		setXBound(xBound);
-		setYBound(yBound);
-		setTiltRads(tiltRads);
-
-	}
 
     @Override
 	public Galaxy generate() {
@@ -55,7 +31,9 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 		NormalDistribution xDistr = new NormalDistribution(0, _xSD);
 		NormalDistribution yDistr = new NormalDistribution(0, _ySD);
 		Galaxy gax = new Galaxy(width, height);
-		for (int i = 0; i < numSystems; i++) {
+		starSystemGenerator.setGalaxy(gax);
+		for (int i = 0; i < getNumSystems(); i++) {
+                       
 			// randomly generate position
 			double x = xDistr.sample();
 			double y = yDistr.sample();
@@ -66,11 +44,11 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
             List<StarSystem> systems = gax.getSystems();
             int size = systems.size();
 			for (int j = 0; j < size && !tooClose; j++) {
-                StarSystem system = systems.get(i);
+                StarSystem system = systems.get(j);
 				tooClose = pos.distTo(system.getPosition()) < minSystemDist;
 			}
 
-			// if this position is too far away from the origin
+			// if pos is too far away from the origin
 			if (
 				1 > 		   (Math.pow(_xBound, 2)*Math.pow(_yBound, 2)) /
 			//  ---------------------------------------------------------------------------
@@ -83,25 +61,26 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 
 			// otherwise make the system in all its glory
 			} else {
+                _tiltRads = Util.sampleFromUniformReal(0, Math.PI);
 				pos = pos.rotate(_tiltRads);
-				StarType starType;
-				StarSystemGenerator systemGen = 
-					new SimpleStarSystemGenerator("TempName", pos, 9, 2, 100, 20, 9*100*1.5, gax);
-				gax.addSystem(systemGen.generate());
+				// SET PROPERTIES FOR STARSYSTEM GENERATION HERE
+				starSystemGenerator.setName("System " + i);
+				starSystemGenerator.setPosition(pos);
+				
+				gax.addSystem(starSystemGenerator.generate());
 			}
 		}
 		return gax;
 	}
 
-	public final void setXSD(double xSD) {
-
+	public final void setXSD(Double xSD) {
 		if (xSD <= 0) {
 			throw new IllegalArgumentException("xSD must be positive");
 		}
 		_xSD = xSD;
 	}
 
-	public final void setYSD(double ySD) {
+	public final void setYSD(Double ySD) {
 
 		if (ySD <= 0) {
 			throw new IllegalArgumentException("ySD must be positive");
@@ -109,7 +88,7 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 		_ySD = ySD;
 	}
 
-	public final void setXBound(double xBound) {
+	public final void setXBound(Double xBound) {
 
 		if (xBound <= 0) {
 			throw new IllegalArgumentException("xBound must be positive");
@@ -117,7 +96,7 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 		_xBound = xBound;
 	}
 
-	public final void setYBound(double yBound) {
+	public final void setYBound(Double yBound) {
 
 		if (yBound <= 0) {
 			throw new IllegalArgumentException("yBound must be positive");
@@ -125,7 +104,7 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 		_yBound = yBound;
 	}
 
-	public final void setTiltRads(double tiltRads) {
+	public final void setTiltRads(Double tiltRads) {
 
 		_tiltRads = tiltRads;
 	}

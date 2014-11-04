@@ -40,6 +40,9 @@ public class MenuCtrl extends ViewCtrl {
     void closeApplication() {
         mainCtrl.closeApplication();
     }
+    public void loadGame() {
+        mainCtrl.loadGame();
+    }
     
     
 }

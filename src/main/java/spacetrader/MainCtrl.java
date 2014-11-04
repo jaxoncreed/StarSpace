@@ -1,5 +1,8 @@
 package spacetrader;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,8 +14,8 @@ import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
 import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
 import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.GameModel;
 import spacetrader.game_model.Item;
-import spacetrader.game_model.Market;
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -32,6 +35,8 @@ public class MainCtrl extends Ctrl{
     private MakeTradeCtrl makeTradeCtrl;
     private ControlShipCtrl controlShip;
     private Galaxy gax; 
+    private GameModel gameModel;
+    private GameSaver gameSaver;
     
     /**
      * Constructor
@@ -39,23 +44,26 @@ public class MainCtrl extends Ctrl{
      * @param aStage: The stage that comes with the beginning of the project
      * @param aWindow: A class that will be the window for the project
      */
-    public MainCtrl(Stage aStage, Window aWindow) {
+    public MainCtrl(Stage aStage, Window aWindow) throws Exception {
         //TODO: load option model and dynamically set window settings
         stage = aStage;
         window = aWindow;
         
-        //TODO: fix later
+        gameModel = new GameModel();
+        //TODO: fix later. Players don't actually get set by character creator.
         player = new Player("Bob", Faction.NoFaction);
-
+        
         galaxyGenerator = new GalaxyGeneratorCtrl(this, window);
         currentViewCtrl = new MenuCtrl(this, window);
         menuCtrl = new MenuCtrl(this, window);
         makeTradeCtrl = new MakeTradeCtrl(this, window, player);
         createCharacterCtrl = new CreateCharacterCtrl(this, window);
+        gameSaver = new GameSaver(gameModel);
         
-        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
+        
+//        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
         player.getShip().addToCargo(new Item("Block", 5));
-        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
+//        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
         player.getShip().addToCargo(new Item("Brick", 5));
         
         stage.setScene(new Scene(window));
@@ -116,9 +124,37 @@ public class MainCtrl extends Ctrl{
     }
     
     public void setGalaxy(Galaxy gax) {
+        //TODO: Game model should not be instantiating player here
         this.gax = gax;
         this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
         this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
-
+        gameModel.setGalaxy(this.gax);
+        gameModel.setPlayer(this.player);
+    }
+    
+    public Player getPlayer() {
+        return player;
+    }
+    
+    public void saveGame() {
+        gameSaver.saveGame();
+    }
+    
+    public void loadGame() {
+        //TODO: update so player and galaxy are combined
+        GameModel tempModel;
+        try {
+            tempModel = gameSaver.loadGame();
+            this.gax = tempModel.getGalaxy();
+            this.player = tempModel.getPlayer();
+            controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+            switchViews(controlShipCtrl);
+        } catch (IOException ex) {
+            System.out.println("Game could not be loaded. No such file.");
+            Logger.getLogger(MainCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Game could not be loaded. Corrupted file.");
+            Logger.getLogger(MainCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

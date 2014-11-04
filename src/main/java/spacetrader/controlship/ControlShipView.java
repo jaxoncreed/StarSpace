@@ -41,6 +41,8 @@ public class ControlShipView implements Initializable {
     Label name; 
     @FXML 
     Button trade;
+    @FXML
+    Button saveButton;
     
     
     List<Planet> planets;
@@ -67,6 +69,8 @@ public class ControlShipView implements Initializable {
         travel.setOnAction((ActionEvent event)->{
             travel();
         });
+        //Adding event listener for save button
+        saveButton.setOnAction((ActionEvent event) -> shipCtrl.saveGame());
         planets=shipCtrl.getPlanets();
         tempPlanet=shipCtrl.getPlanet();
         planets.remove(shipCtrl.getPlanet());

@@ -10,19 +10,23 @@ import spacetrader.game_model.StarSystem;
  */
 public abstract class PlanetGenerator {
 
+	/** The name of the planet to generate */
 	protected String name;
+
+	/** The Position of the Planet to generate */
 	protected Position pos;
+
+	/** The StarSystem that this Planet belongs to */
 	protected StarSystem system;
 
-	protected PlanetGenerator(String name, Position pos, StarSystem system) {
-
-		setName(name);
-		setPosition(pos);
-		setSystem(system);
-	}
-
+	/**
+	 * @return Returns a Planet with the given specifications. 
+	 */
 	public abstract Planet generate();
 
+	/**
+	 * @param name must be non-null and non-empty
+	 */
 	public final void setName(String name) {
 		if (name == null || name.length() == 0) {
 			throw new IllegalArgumentException("invalid planet name");
@@ -30,6 +34,9 @@ public abstract class PlanetGenerator {
 		this.name = name;
 	}
 
+	/**
+	 * @param pos must be non-null
+	 */
 	public final void setPosition(Position pos) {
 		if (pos == null) {
 			throw new IllegalArgumentException("position must be non-null");
@@ -37,6 +44,9 @@ public abstract class PlanetGenerator {
 		this.pos = pos;
 	}
 
+	/**
+	 * @param system must be non-null
+	 */
 	public final void setSystem(StarSystem system) {
 		if (system == null) {
 			throw new IllegalArgumentException("system must be non-null");

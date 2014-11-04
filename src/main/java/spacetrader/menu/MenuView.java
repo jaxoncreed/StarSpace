@@ -30,6 +30,8 @@ public class MenuView extends AbstractView implements Initializable {
     Pane background;
     @FXML
     Button exit;
+    @FXML
+    Button loadButton;
 
     public MenuView() {};
     
@@ -47,6 +49,7 @@ public class MenuView extends AbstractView implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        loadButton.setOnAction((ActionEvent event) -> menuCtrl.loadGame());
     }
 
     @Override

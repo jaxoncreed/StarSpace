@@ -31,8 +31,8 @@ public class MakeTradeView extends AbstractView implements Initializable {
     public Window window;
     public MakeTradeCtrl makeTradeCtrl;
     public Pane curPane;
-    ArrayList<Item> itemsP;
-    ArrayList<Item> itemsM;
+    List<Item> itemsP;
+    List<Item> itemsM;
     @FXML
     Button finishButton;
     @FXML

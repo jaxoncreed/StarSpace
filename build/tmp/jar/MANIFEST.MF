@@ -1,4 +1,8 @@
 Manifest-Version: 1.0
 Main-Class: spacetrader.Start
+<<<<<<< HEAD
 Class-Path: ../../libs/*.jar
+=======
+Class-Path: ../../libs/SpaceTrader.jar
+>>>>>>> master
 

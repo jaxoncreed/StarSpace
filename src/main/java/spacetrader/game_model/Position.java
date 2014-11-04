@@ -1,6 +1,8 @@
 package spacetrader.game_model;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
 	public double x;
 	public double y;
 	public static final Position origin = new Position(0,0);

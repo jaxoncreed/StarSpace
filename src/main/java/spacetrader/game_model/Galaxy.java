@@ -1,6 +1,6 @@
 package spacetrader.game_model;
 
-import spacetrader.game_model.StarSystem;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Presently only a single galaxy will ever be instantiated.
  */
-public class Galaxy {
+public class Galaxy implements Serializable {
 
 	private Map<Position,StarSystem> systems;
 	private Position pos;
@@ -31,9 +31,9 @@ public class Galaxy {
 		systems.put(system.getPosition(),system);
 	}
 
-    public Map<Position,StarSystem> getHashMap(){
-        return systems;
-    }
+        public Map<Position,StarSystem> getHashMap(){
+            return systems;
+        }
 
 	public List<StarSystem> getSystems() {
 		return new ArrayList<StarSystem>(systems.values());

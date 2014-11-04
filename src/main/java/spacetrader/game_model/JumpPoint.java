@@ -3,18 +3,20 @@ package spacetrader.game_model;
 import java.io.Serializable;
 
 public class JumpPoint implements Serializable {
+
+	public static final String TERM = "Hargin Point";
+
 	private StarSystem targetSys;
 	private Position targetPos;
 	private Position pos;
-	public static final String term = "Hargin Point";
-        private int level;
+	private int level;
 
 	public JumpPoint(Position pos, StarSystem targetSys,
-					 Position targetPos) {
+		Position targetPos) {
 		pos = this.pos;
 		targetSys = this.targetSys;
 		targetPos = this.targetPos;
-                level=1;
+		level = 1;
 	}
 
 	public Position getPos() {
@@ -28,8 +30,8 @@ public class JumpPoint implements Serializable {
 	public Position getTargetPos() {
 		return targetPos;
 	}
-        public int getLevel(){
-            return level;
-        }
+	public int getLevel(){
+		return level;
+	}
 
 }

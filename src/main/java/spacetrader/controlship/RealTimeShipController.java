@@ -39,7 +39,7 @@ class RealTimeShipController {
     public Player getPlayer(){
         return player;
     }
-    public void movePlayer(double x,double y){
+    public void movePlayer(float x,float y){
         player.getShip().getPosition().add(new Position(x,y));
     }
 }

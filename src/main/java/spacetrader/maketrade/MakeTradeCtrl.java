@@ -13,6 +13,8 @@ import spacetrader.game_model.*;
 import spacetrader.maketrade.MakeTradeView;
 import spacetrader.game_model.GameModel;
 
+import javafx.stage.Stage;
+
 /**
  *
  * @author Jackson Morgan
@@ -23,8 +25,8 @@ public class MakeTradeCtrl extends ViewCtrl {
     Inventory store;
     Player player;
     
-    public MakeTradeCtrl(MainCtrl aParent, Window window, GameModel gameModel) {
-        super(aParent, window, gameModel);
+    public MakeTradeCtrl(MainCtrl aParent, Window window, Stage stage, GameModel gameModel) {
+        super(aParent, window, stage, gameModel);
         view = new MakeTradeView(window, this);
         mainCtrl = aParent;
         this.player = gameModel.getPlayer();

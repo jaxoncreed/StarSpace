@@ -132,16 +132,16 @@ public class RealTimeShipView extends Pane implements Initializable {
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
         if(event.isPressed(KeyCode.D)){
-            controller.movePlayer(.01, 0);
+            controller.movePlayer(.01f, 0f);
         }
         if(event.isPressed(KeyCode.A)){
-            controller.movePlayer(-.01, 0);
+            controller.movePlayer(-.01f, 0f);
         }
         if(event.isPressed(KeyCode.W)){
-            controller.movePlayer(0, -.01);
+            controller.movePlayer(0f, -.01f);
         }
         if(event.isPressed(KeyCode.S)){
-            controller.movePlayer(0, .01);
+            controller.movePlayer(0f, .01f);
         }
 
     }

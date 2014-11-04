@@ -18,98 +18,115 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import spacetrader.Window;
-import spacetrader.game_model.Planet;
+import spacetrader.game_model.*;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TimelineBuilder;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import javafx.scene.*;
+import javafx.scene.canvas.*;
+import javafx.scene.paint.*;
+import javafx.scene.image.Image;
+
+import javafx.stage.Stage;
+
 
 /**
- *
- * @author Jackson Morgan
- */
+*
+* @author Jackson Morgan
+*/
 public class ControlShipView implements Initializable {
+
+    // TODO: Move images into their own class
+    // public static final Image PLAYER_SHIP = new Image("lasher_ff.png");
+
     public Window window;
     public ControlShipCtrl shipCtrl;
     public Pane curPane;
-   
-    @FXML
-    Button travel;   
-    @FXML
-    Button switchLOD;
-    @FXML
-    VBox list;
-    @FXML
-    HBox actions;
-    @FXML 
-    Label name; 
-    @FXML 
-    Button trade;
-    @FXML
-    Button saveButton;
-    
-    
-    List<Planet> planets;
-    Planet tempPlanet;
-    
-    
+
+    private final int framesPerSecond = 60;
+
+    private Position camera;
+    private Player player;
+    private Ship playerShip;
+
+    private Stage stage;
+    private Group root;
+    private Scene scene;
+    private Canvas canvas;
+    private GraphicsContext gc;
+
     public ControlShipView() {};
-    
-    public ControlShipView(Window aWindow, ControlShipCtrl aShipCtrl) {
-        window = aWindow;
-        shipCtrl = aShipCtrl;
+
+    public ControlShipView(Window window, ControlShipCtrl shipCtrl, Stage stage, GameModel gameModel) {
+        this.window = window;
+        this.shipCtrl = shipCtrl;
+
+        this.player = gameModel.getPlayer();
+        this.playerShip = player.getShip();
+        this.camera = new Position(playerShip.getPosition());
+
+        int canvasSize = 800;
+
+        root = new Group();
+        scene = new Scene(root, canvasSize, canvasSize, Color.BLACK);
+        canvas = new Canvas(canvasSize,canvasSize);
+        gc = canvas.getGraphicsContext2D();
+
+        root.getChildren().add(canvas);
+
+        stage.setScene(scene);
+        stage.show();
+
+        final Duration oneFrameAmt = Duration.millis(1000/60);
+        EventHandler eventHandler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Simulate a timestep
+                shipCtrl.update();
+
+                // Render the frame
+                renderPilotingShip();
+
+            }
+        };
+        final KeyFrame oneFrame = new KeyFrame(oneFrameAmt, eventHandler);
+
+        // sets the game world's game loop (Timeline)
+        TimelineBuilder.create()
+        .cycleCount(Animation.INDEFINITE)
+        .keyFrames(oneFrame)
+        .build()
+        .play();
     }
 
-    void renderPilotingShip() {
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("ControlShip.fxml"))) ;
-        loader.setController(this);
-        try {
-            curPane = loader.load();
-            window.loadFXML(curPane);
-        } catch (IOException ex) {
-            Logger.getLogger(ControlShipView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        trade.setOnAction((ActionEvent event)-> shipCtrl.newTrade());
-        travel.setOnAction((ActionEvent event)->{
-            travel();
-        });
-        //Adding event listener for save button
-        saveButton.setOnAction((ActionEvent event) -> shipCtrl.saveGame());
-        planets=shipCtrl.getPlanets();
-        tempPlanet=shipCtrl.getPlanet();
-        planets.remove(shipCtrl.getPlanet());
-        updateList();
-        setPlanet(tempPlanet);
+    private double temp = 0;
+
+    public void renderPilotingShip() {
+        // Camera smoothly follows ship
+        camera.average(playerShip.getPosition());
+
+        gc.clearRect(0,0,800,800);
+        gc.setFill(Color.BLUE);
+        gc.fillOval(400,400,Math.sin(temp/100.0)*400,Math.cos(temp/100.0)*400);
+        gc.setFill(Color.RED);
+        temp++;
     }
-    void updateList(){
-        list.getChildren().clear();
-        for(Planet p:planets){
-            Button b=new Button();
-            b.setText(p.getName());
-            b.setOnAction((ActionEvent event)->{
-                selectPlanet(p);
-            });
-            list.getChildren().add(b);
-        }
-    }
-    private void selectPlanet(Planet p){
-        tempPlanet=p;
-    }
-    private void setPlanet(Planet p){
-        planets.remove(p);
-        planets.add(tempPlanet);
-        shipCtrl.setPlanet(p);
-    }
-    private void travel(){
-        setPlanet(tempPlanet);
-        updateList();
-        name.setText(shipCtrl.getPlanet().getName());
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     void remove() {
-        window.clearFXML(curPane);
         curPane=null;
     }
-    
-    
+
+
 }

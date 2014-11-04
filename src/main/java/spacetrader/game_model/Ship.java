@@ -15,20 +15,31 @@ public class Ship implements Tradeable, Serializable {
     private Position position;
     private int health;
     private int maxHealth;
+    private StarSystem system;
     
     public Ship(String name) {
         this.name = name;
         basePrice = 1000;
         firePower = 10;
         cargo = new Inventory();
+        this.position = new Position(0.0f, 0.0f);
     }
     public Ship(String name, double basePrice, int firePower, int cargoSize) {
         this.name = name;
         this.firePower = firePower;
         this.basePrice = basePrice;
         cargo = new Inventory(cargoSize);
+        this.position = new Position(0.0f, 0.0f);
     }
     
+    public void setSystem(StarSystem system) {
+        this.system = system;
+    }
+
+    public StarSystem getSystem() {
+        return system;
+    }
+
     public boolean addItem(Item i) {
         return cargo.add(i);
     }

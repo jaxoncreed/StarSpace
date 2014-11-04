@@ -35,17 +35,29 @@ public class Player implements Serializable {
     public void setShip(Ship s) {
         ship = s;
     }
+
     public int getWoolongs() {
         return woolongs;
     }
+
     public String getName() {
         return name;
     }
+
     public Faction getFaction() {
         return faction;
     }
+
     public Position getPosition(){
         return ship.getPosition();
+    }
+
+    public StarSystem getSystem() {
+        return ship.getSystem();
+    }
+
+    public void setSystem(StarSystem system) {
+        ship.setSystem(system);
     }
 
 }

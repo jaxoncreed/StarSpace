@@ -16,6 +16,8 @@ import spacetrader.game_model.Skillset;
 import spacetrader.menu.MenuView;
 import spacetrader.game_model.GameModel;
 
+import javafx.stage.Stage;
+
 /**
  *
  * @author Jackson Morgan
@@ -25,8 +27,8 @@ public class CreateCharacterCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     GameModel gameModel;
 
-    public CreateCharacterCtrl(MainCtrl aParent, Window window, GameModel gameModel) {
-        super(aParent, window, gameModel);
+    public CreateCharacterCtrl(MainCtrl aParent, Window window, Stage stage, GameModel gameModel) {
+        super(aParent, window, stage, gameModel);
         view = new CreateCharacterView(window, this);
         mainCtrl = aParent;
     }

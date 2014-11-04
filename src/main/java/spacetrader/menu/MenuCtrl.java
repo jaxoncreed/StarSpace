@@ -11,6 +11,8 @@ import spacetrader.ViewCtrl;
 import spacetrader.Window;
 import spacetrader.game_model.GameModel;
 
+import javafx.stage.Stage;
+
 /**
  *
  * @author Jackson Morgan
@@ -18,8 +20,8 @@ import spacetrader.game_model.GameModel;
 public class MenuCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     
-    public MenuCtrl(MainCtrl aParent, Window aWindow, GameModel gameModel) {
-        super(aParent, aWindow, gameModel);
+    public MenuCtrl(MainCtrl aParent, Window aWindow, Stage stage, GameModel gameModel) {
+        super(aParent, aWindow, stage, gameModel);
         view = new MenuView(aWindow, this);
         mainCtrl = aParent;
     }

@@ -17,6 +17,46 @@ public class Position implements Serializable {
 		this.y = that.y;
 	}
 
+
+	public void add(Position that) {
+		this.x += that.x;
+		this.y += that.y;
+	}
+
+	public void sub(Position that){
+		this.x-= that.x;
+		this.y-= that.y;
+	}
+
+	public void rotate(double theta) {
+		double r = distTo(origin);
+		double alpha = toAngle();
+
+		this.x = (double)(r * Math.cos(theta + alpha));
+		this.y = (double)(r * Math.sin(theta + alpha));
+	}
+
+	public void average(Position that) {
+		this.x = (this.x + that.x) / 2.0f;
+		this.y = (this.y + that.y) / 2.0f;
+	}
+
+	public void average(Position that, double weight) {
+		this.x = (this.x + that.x * weight) / 2.0f;
+		this.y = (this.y + that.y * weight) / 2.0f;
+	}
+
+	/**
+	* Reflects the vector about the input vector
+	* @param n the vector perpendicular to the surface of the reflecting object
+	*/
+	public void reflectOff(Position n) {
+		double len2 = n.x * n.x + n.y * n.y;
+		double dot = x * n.x + y * n.y;
+		this.x = x - 2*dot*n.x / len2;
+		this.y = y - 2*dot*n.y / len2;
+	}
+
 	public double distTo(Position that) {
 		return Math.sqrt((this.x - that.x) * (this.x - that.x) + (this.y - that.y) * (this.y - that.y));
 	}
@@ -37,15 +77,6 @@ public class Position implements Serializable {
 		return 0;
 	}
 
-	public void add(Position that) {
-		this.x += that.x;
-		this.y += that.y;
-	}
-        public void sub(Position that){
-                this.x-= that.x;
-                this.y-= that.y;
-        }
-
 	public boolean equals(Position that) {
 		return (this.x == that.x && this.y == that.y);
 	}
@@ -55,30 +86,4 @@ public class Position implements Serializable {
 		return s;
 	}
 
-	/**
-	 * Reflects the vector about the input vector
-	 * @param n the vector perpendicular to the surface of the reflecting object
-	 */
-	public Position reflectOff(Position n){
-		double len2 = n.x * n.x + n.y * n.y;
-		double dot = x * n.x + y * n.y;
-		return new Position(x - 2*dot*n.x / len2, y - 2*dot*n.y / len2);
-	}
-
-	public Position rotate(double theta) {
-
-		double r = distTo(origin);
-		double alpha = toAngle();
-
-		double newX = r * Math.cos(theta + alpha);
-		double newY = r * Math.sin(theta + alpha);
-		return new Position(newX, newY);
-	}
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 79 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
-            hash = 79 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
-            return hash;
-        }
 }

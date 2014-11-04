@@ -6,7 +6,6 @@ public class Planet implements Serializable {
 
     //#todo need to implement id system
 	private Position pos;
-	private System system;
 	private int techLevel;
 	private String government;
 	private String name;
@@ -16,7 +15,6 @@ public class Planet implements Serializable {
 		String name) {
 		this.name = name;
 		this.pos = pos;
-		this.system = system;
 		this.techLevel = techLevel;
 		this.government = government;
                 market=new Market(new Inventory(10),this);
@@ -41,10 +39,6 @@ public class Planet implements Serializable {
 		this.pos = pos;
 	}
 
-	public System getSystem() {
-		return system;
-	}
-   
     public String getName(){
         return name;
     }

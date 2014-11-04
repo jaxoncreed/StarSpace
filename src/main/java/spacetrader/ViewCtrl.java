@@ -7,6 +7,7 @@
 package spacetrader;
 
 import spacetrader.game_model.GameModel;
+import javafx.stage.Stage;
 
 /**
  *
@@ -16,11 +17,13 @@ public abstract class ViewCtrl extends SubCtrl {
     protected Window window;
     protected AbstractView view;
     protected GameModel gameModel;
+    protected Stage stage;
 
-    public ViewCtrl(Ctrl parent, Window aWindow, GameModel gameModel) {
+    public ViewCtrl(Ctrl parent, Window window, Stage stage, GameModel gameModel) {
         super(parent);
-        window = aWindow;
+        this.window = window;
         this.gameModel = gameModel;
+        this.stage = stage;
     }
     
     public void startView() {

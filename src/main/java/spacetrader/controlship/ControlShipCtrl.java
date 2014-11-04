@@ -14,6 +14,7 @@ import spacetrader.Window;
 import spacetrader.game_model.Planet;
 import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.GameModel;
+import javafx.stage.Stage;
 
 /**
  *
@@ -24,18 +25,19 @@ public class ControlShipCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     private GameModel gameModel;
     private Planet planet;
-    
-    private static final double PIRATE_ATTACK_PROB = 0.1;
-    private static final int PIRATE_ATTACK_DAMAGE = 50;
-    private static final String PIRATE_ATTACK_MSG = 
-        "Oh no! You were attacked by pirates and lost " + PIRATE_ATTACK_DAMAGE + 
-        " health.";
+
+    protected Stage stage;
  
-    public ControlShipCtrl(MainCtrl aParent, Window aWindow, GameModel gameModel) {
-        super(aParent, aWindow, gameModel);
-        view = new ControlShipView(aWindow, this);
+    public ControlShipCtrl(MainCtrl aParent, Window aWindow, Stage stage, GameModel gameModel) {
+        super(aParent, aWindow, stage, gameModel);
+        view = new ControlShipView(aWindow, this, stage, gameModel);
         mainCtrl = aParent;
     }
+
+    public void update() {
+
+    }
+
 
     @Override
     public void startView() {
@@ -45,28 +47,6 @@ public class ControlShipCtrl extends ViewCtrl {
     @Override
     public void stopView() {
         view.remove();
-    }
-    
-    public List<Planet> getPlanets(){
-        return null;
-    }
-
-    public Planet getPlanet(){
-        return planet;
-    }
-    
-    public void setPlanet(Planet p){
-        double sample = Util.sampleFromUniformReal(0, 1);
-        if (sample < PIRATE_ATTACK_PROB && !p.equals(planet)) {
-            gameModel.getPlayer().getShip().incrementHealth(PIRATE_ATTACK_DAMAGE);
-            System.out.println(PIRATE_ATTACK_MSG);
-        } else {
-           planet=p;
-        }
-    }
-    
-    void newTrade() {
-        mainCtrl.makeTrade(planet.getMarket().getCargo());
     }
     
     public void saveGame() {

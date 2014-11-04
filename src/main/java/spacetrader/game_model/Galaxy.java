@@ -16,7 +16,7 @@ public class Galaxy implements Serializable {
 	private double width;
 	private double height;
 
-	public Galaxy () {
+	public Galaxy() {
 		systems = new HashMap();
 		pos = Position.origin;
 	}
@@ -28,19 +28,18 @@ public class Galaxy implements Serializable {
 	}
 
 	public void addSystem(StarSystem system) {
-		systems.put(system.getPosition(),system);
+		systems.put(system.getPosition(), system);
 	}
 
-        public Map<Position,StarSystem> getHashMap(){
-            return systems;
-        }
+    public Map<Position,StarSystem> getHashMap(){
+        return systems;
+    }
 
 	public List<StarSystem> getSystems() {
 		return new ArrayList<StarSystem>(systems.values());
 	}
 
 	public void replaceSystems(List<StarSystem> systems) {
-
 		this.systems = new HashMap();
 		for (StarSystem system : systems) {
 			addSystem(system);

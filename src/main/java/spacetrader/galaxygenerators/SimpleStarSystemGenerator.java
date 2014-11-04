@@ -85,13 +85,13 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
 		// generates the total distances from the star of the planets,
 		// so that the furthest distance does not excede plutoDist
-		List<Double> distsFromStar = new ArrayList();
+		List<Float> distsFromStar = new ArrayList();
 		NormalDistribution distr = new NormalDistribution(planetSepMean, planetSepSD);
-		double total = 0;
+		float total = 0;
 		boolean tryAgain = true;
 		while (tryAgain) {
 			for (int i = 0; i < getNumPlanets(); i++) {
-				double sample = distr.sample();
+				float sample = (float) distr.sample();
 				// if this planet's orbit is too close to the previous
 				if (minPlanetSep != null && sample < minPlanetSep) {
 					// then try again
@@ -116,13 +116,13 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
 		StarSystem system = new StarSystem(name, pos, starType);
 		for (int i = 0; i < getNumPlanets(); i++) {
-			double dist = distsFromStar.get(i);
+			float dist = distsFromStar.get(i);
 			// randomly generate a position, given a distance
 			double theta = Util.sampleFromUniformReal(0, Math.PI);
 			double x = dist * Math.cos(theta);
 			double y = dist * Math.sin(theta);
-			Position posAboutStar = new Position(x, y);
-            posAboutStar = posAboutStar.rotate(theta);
+			Position posAboutStar = new Position((float)x, (float)y);
+            posAboutStar.rotate(theta);
             Position planetPos = new Position(pos.x + posAboutStar.x, pos.y + posAboutStar.y);
             // SET PROPERTIES FOR PLANET GENERATION HEREI
             planetGenerator.setName(name + ", Planet " + i);

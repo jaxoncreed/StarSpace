@@ -39,6 +39,10 @@ public class Position {
 		this.x += that.x;
 		this.y += that.y;
 	}
+        public void sub(Position that){
+                this.x-= that.x;
+                this.y-= that.y;
+        }
 
 	public boolean equals(Position that) {
 		return (this.x == that.x && this.y == that.y);

@@ -42,5 +42,8 @@ public class Player {
     public Faction getFaction() {
         return faction;
     }
+    public Position getPosition(){
+        return ship.getPosition();
+    }
 
 }

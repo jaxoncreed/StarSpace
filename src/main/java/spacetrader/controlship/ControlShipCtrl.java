@@ -13,6 +13,7 @@ import spacetrader.ViewCtrl;
 import spacetrader.Window;
 import spacetrader.game_model.Planet;
 import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.GameModel;
 
 /**
  *
@@ -21,7 +22,7 @@ import spacetrader.game_model.StarSystem;
 public class ControlShipCtrl extends ViewCtrl {
     ControlShipView view;
     MainCtrl mainCtrl;
-    private StarSystem sys;
+    private GameModel gameModel;
     private Planet planet;
     
     private static final double PIRATE_ATTACK_PROB = 0.1;
@@ -30,17 +31,15 @@ public class ControlShipCtrl extends ViewCtrl {
         "Oh no! You were attacked by pirates and lost " + PIRATE_ATTACK_DAMAGE + 
         " health.";
  
-    public ControlShipCtrl(MainCtrl aParent, Window aWindow,StarSystem s) {
-        super(aParent, aWindow);
+    public ControlShipCtrl(MainCtrl aParent, Window aWindow, GameModel gameModel) {
+        super(aParent, aWindow, gameModel);
         view = new ControlShipView(aWindow, this);
         mainCtrl = aParent;
-        sys=s;
-        planet=s.getPlanets().get(0);
     }
 
     @Override
     public void startView() {
-        view.renderMainMenu();
+        view.renderPilotingShip();
     }
 
     @Override
@@ -49,8 +48,9 @@ public class ControlShipCtrl extends ViewCtrl {
     }
     
     public List<Planet> getPlanets(){
-        return sys.getPlanets();
+        return null;
     }
+
     public Planet getPlanet(){
         return planet;
     }
@@ -58,7 +58,7 @@ public class ControlShipCtrl extends ViewCtrl {
     public void setPlanet(Planet p){
         double sample = Util.sampleFromUniformReal(0, 1);
         if (sample < PIRATE_ATTACK_PROB && !p.equals(planet)) {
-            mainCtrl.getPlayer().getShip().incrementHealth(PIRATE_ATTACK_DAMAGE);
+            gameModel.getPlayer().getShip().incrementHealth(PIRATE_ATTACK_DAMAGE);
             System.out.println(PIRATE_ATTACK_MSG);
         } else {
            planet=p;

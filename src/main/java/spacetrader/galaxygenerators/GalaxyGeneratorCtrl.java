@@ -9,6 +9,7 @@ package spacetrader.galaxygenerators;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
+import spacetrader.game_model.GameModel;
 
 /**
  *
@@ -21,8 +22,8 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     
     private static final String CONFIG_XML_FILE = "generator_config.xml";
 
-    public GalaxyGeneratorCtrl(MainCtrl aParent, Window window) throws Exception {
-        super(aParent, window);
+    public GalaxyGeneratorCtrl(MainCtrl aParent, Window window, GameModel gameModel) throws Exception {
+        super(aParent, window, gameModel);
         view = new CreateGalaxyView(window, this);
         mainCtrl = aParent;
         GeneratorConfigParser parser = new GeneratorConfigParser(CONFIG_XML_FILE);

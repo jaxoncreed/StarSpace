@@ -6,6 +6,8 @@
 
 package spacetrader;
 
+import spacetrader.game_model.GameModel;
+
 /**
  *
  * @author Jackson Morgan
@@ -13,10 +15,12 @@ package spacetrader;
 public abstract class ViewCtrl extends SubCtrl {
     protected Window window;
     protected AbstractView view;
-    
-    public ViewCtrl(Ctrl parent, Window aWindow) {
+    protected GameModel gameModel;
+
+    public ViewCtrl(Ctrl parent, Window aWindow, GameModel gameModel) {
         super(parent);
         window = aWindow;
+        this.gameModel = gameModel;
     }
     
     public void startView() {

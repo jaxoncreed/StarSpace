@@ -53,19 +53,20 @@ public class MainCtrl extends Ctrl{
         //TODO: fix later. Players don't actually get set by character creator.
         player = new Player("Bob", Faction.NoFaction);
         
-        galaxyGenerator = new GalaxyGeneratorCtrl(this, window);
-        currentViewCtrl = new MenuCtrl(this, window);
-        menuCtrl = new MenuCtrl(this, window);
-        makeTradeCtrl = new MakeTradeCtrl(this, window, player);
-        createCharacterCtrl = new CreateCharacterCtrl(this, window);
+        
+        galaxyGenerator = new GalaxyGeneratorCtrl(this, window, gameModel);
+        currentViewCtrl = new MenuCtrl(this, window, gameModel);
+        menuCtrl = new MenuCtrl(this, window, gameModel);
+        makeTradeCtrl = new MakeTradeCtrl(this, window, gameModel);
+        createCharacterCtrl = new CreateCharacterCtrl(this, window, gameModel);
         gameSaver = new GameSaver(gameModel);
         
         
-//        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
         player.getShip().addToCargo(new Item("Block", 5));
-//        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
         player.getShip().addToCargo(new Item("Brick", 5));
         
+
+
         stage.setScene(new Scene(window));
         stage.show();
 
@@ -119,23 +120,15 @@ public class MainCtrl extends Ctrl{
     }
     
     public void controlShip(){
-        controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+        controlShipCtrl = new ControlShipCtrl(this, window, gameModel);
         switchViews(controlShipCtrl);
     }
     
     public void setGalaxy(Galaxy gax) {
-        //TODO: Game model should not be instantiating player here
         this.gax = gax;
-        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
-        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
         gameModel.setGalaxy(this.gax);
-        gameModel.setPlayer(this.player);
     }
-    
-    public Player getPlayer() {
-        return player;
-    }
-    
+
     public void saveGame() {
         gameSaver.saveGame();
     }
@@ -147,7 +140,7 @@ public class MainCtrl extends Ctrl{
             tempModel = gameSaver.loadGame();
             this.gax = tempModel.getGalaxy();
             this.player = tempModel.getPlayer();
-            controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+            controlShipCtrl = new ControlShipCtrl(this, window, tempModel);
             switchViews(controlShipCtrl);
         } catch (IOException ex) {
             System.out.println("Game could not be loaded. No such file.");

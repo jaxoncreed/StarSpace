@@ -9,6 +9,7 @@ package spacetrader.menu;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
+import spacetrader.game_model.GameModel;
 
 /**
  *
@@ -17,8 +18,8 @@ import spacetrader.Window;
 public class MenuCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     
-    public MenuCtrl(MainCtrl aParent, Window aWindow) {
-        super(aParent, aWindow);
+    public MenuCtrl(MainCtrl aParent, Window aWindow, GameModel gameModel) {
+        super(aParent, aWindow, gameModel);
         view = new MenuView(aWindow, this);
         mainCtrl = aParent;
     }

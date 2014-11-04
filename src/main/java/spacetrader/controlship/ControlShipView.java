@@ -56,7 +56,7 @@ public class ControlShipView implements Initializable {
         shipCtrl = aShipCtrl;
     }
 
-    void renderMainMenu() {
+    void renderPilotingShip() {
         FXMLLoader loader = new FXMLLoader((getClass().getResource("ControlShip.fxml"))) ;
         loader.setController(this);
         try {

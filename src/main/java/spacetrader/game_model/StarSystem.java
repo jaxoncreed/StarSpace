@@ -11,7 +11,6 @@ import java.util.Objects;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.PositionContainer;
 
-<<<<<<< HEAD
 public class StarSystem implements Node {
 
     private String name;
@@ -21,17 +20,6 @@ public class StarSystem implements Node {
     private double starMass;
     private Map<Node, JumpPoint> jumpPoints;
     private Faction faction;
-=======
-public class StarSystem implements Node, Serializable {
-
-	private String name;
-	private Position pos;
-	private StarType starType;
-	private List<Planet> planets;
-	private double starMass;
-	private Map<Node,JumpPoint> jumpPoints;
-        private Faction faction;
->>>>>>> master
 
     public Position getPosition() {
         return pos;
@@ -123,8 +111,8 @@ public class StarSystem implements Node, Serializable {
         return null;
     }
     public List<Planet> getNearbyPlanets(PositionContainer container){
-        ArrayList<Planet> temp=new ArrayList<Planet>();
-        for(Planet p:planets){
+        ArrayList<Planet> temp = new ArrayList<Planet>();
+        for(Planet p : planets){
             if(container.contains(p.getPos()))
                 temp.add(p);
         }

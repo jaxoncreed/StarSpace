@@ -68,23 +68,23 @@ public class ControlShipView implements Initializable {
         this.window = window;
         this.shipCtrl = shipCtrl;
 
+        // Prepare camera
         this.player = gameModel.getPlayer();
         this.playerShip = player.getShip();
         this.camera = new Position(playerShip.getPosition());
 
+        // Prepare and show canvas
         int canvasSize = 800;
-
         root = new Group();
         scene = new Scene(root, canvasSize, canvasSize, Color.BLACK);
         canvas = new Canvas(canvasSize,canvasSize);
         gc = canvas.getGraphicsContext2D();
-
         root.getChildren().add(canvas);
-
         stage.setScene(scene);
         stage.show();
 
-        final Duration oneFrameAmt = Duration.millis(1000/60);
+        // Prepare game loop
+        final Duration oneFrameAmt = Duration.millis(1000/framesPerSecond);
         EventHandler eventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -98,7 +98,6 @@ public class ControlShipView implements Initializable {
         };
         final KeyFrame oneFrame = new KeyFrame(oneFrameAmt, eventHandler);
 
-        // sets the game world's game loop (Timeline)
         TimelineBuilder.create()
         .cycleCount(Animation.INDEFINITE)
         .keyFrames(oneFrame)
@@ -112,10 +111,19 @@ public class ControlShipView implements Initializable {
         // Camera smoothly follows ship
         camera.average(playerShip.getPosition());
 
+        // Testing the game loop at 60 FPS.  The final game WILL BE FRAME-LOCKED because of how the physics engine works.
+        // That is, unless you want to multi-thread.  Please no.
         gc.clearRect(0,0,800,800);
         gc.setFill(Color.BLUE);
-        gc.fillOval(400,400,Math.sin(temp/100.0)*400,Math.cos(temp/100.0)*400);
+        gc.fillOval(400,400,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
+        gc.setFill(Color.GREEN);
+        gc.fillOval(0,400,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
+        gc.setFill(Color.YELLOW);
+        gc.fillOval(400,0,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
+        gc.setFill(Color.ORANGE);
+        gc.fillOval(0,0,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
         gc.setFill(Color.RED);
+        gc.fillText((temp/60.0)+"", 10, 10);
         temp++;
     }
 
@@ -130,3 +138,12 @@ public class ControlShipView implements Initializable {
 
 
 }
+
+
+
+
+
+
+
+
+

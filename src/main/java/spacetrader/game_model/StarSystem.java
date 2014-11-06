@@ -20,6 +20,7 @@ public class StarSystem implements Node {
     private double starMass;
     private Map<Node, JumpPoint> jumpPoints;
     private Faction faction;
+    private List<Ship> ships;
 
     public Position getPosition() {
         return pos;
@@ -44,6 +45,18 @@ public class StarSystem implements Node {
         this(name, pos, starType);
         setStarMass(starMass);
         this.faction = faction;
+    }
+
+    public void addShip(Ship ship) {
+        ships.add(ship);
+    }
+
+    public void removeShip(Ship ship) {
+        ships.remove(ship);
+    }
+
+    public List<Ship> getShips() {
+        return ships;
     }
 
     public double getX() {

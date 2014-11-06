@@ -1,6 +1,7 @@
 package spacetrader.game_model;
 
 import java.io.Serializable;
+import org.jbox2d.dynamics.Body;
 
 /**
  * Ship model!
@@ -12,26 +13,32 @@ public class Ship implements Tradeable, Serializable {
     private int firePower;
     private final Inventory cargo;
     private PhysicsDescriptor physicsDescriptor;
-    private Position position;
     private int health;
     private int maxHealth;
     private StarSystem system;
+    private Body physicsBody;
     
     public Ship(String name) {
         this.name = name;
         basePrice = 1000;
         firePower = 10;
         cargo = new Inventory();
-        this.position = new Position(0.0f, 0.0f);
     }
+    
     public Ship(String name, double basePrice, int firePower, int cargoSize) {
         this.name = name;
         this.firePower = firePower;
         this.basePrice = basePrice;
         cargo = new Inventory(cargoSize);
-        this.position = new Position(0.0f, 0.0f);
     }
     
+    public void jump(JumpPoint jumpPoint) {
+        system.removeShip(this);
+        jumpPoint.getTargetSystem().addShip(this);
+        this.setSystem(jumpPoint.getTargetSystem());
+        this.setPosition(jumpPoint.getTargetPos());
+    }
+
     public void setSystem(StarSystem system) {
         this.system = system;
     }
@@ -60,6 +67,7 @@ public class Ship implements Tradeable, Serializable {
     public Inventory getCargo() {
         return cargo;
     }
+    
     public int getFirePower() {
         return firePower;
     }
@@ -75,16 +83,18 @@ public class Ship implements Tradeable, Serializable {
     public boolean addToCargo(Item i) {
         return cargo.add(i);
     }
+    
     public void setBasePrice(double value) {
         basePrice = value;
     }
+    
     public void setPosition(Position pos){
-        position=pos;
+        physicsDescriptor.setPosition(pos);
     }
+    
     public Position getPosition(){
-        return position;
+        return physicsDescriptor.getPosition();
     }
-
     
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
@@ -96,5 +106,13 @@ public class Ship implements Tradeable, Serializable {
     
     public void incrementHealth(int delta) {
         this.health += delta;
+    }
+
+    public PhysicsDescriptor getPhysicsDescriptor() {
+        return physicsDescriptor;
+    }
+
+    public void setPhysicsBody(Body body) {
+        this.physicsBody = body;
     }
 }

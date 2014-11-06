@@ -7,6 +7,8 @@
 package spacetrader.controlship;
 
 import spacetrader.shared.Util;
+import spacetrader.game_model.*;
+import spacetrader.PhysicsSimulator;
 import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
@@ -24,7 +26,8 @@ public class ControlShipCtrl extends ViewCtrl {
     ControlShipView view;
     MainCtrl mainCtrl;
     private GameModel gameModel;
-    private Planet planet;
+    private Player player;
+    private Ship playerShip;
 
     protected Stage stage;
  
@@ -32,10 +35,14 @@ public class ControlShipCtrl extends ViewCtrl {
         super(aParent, aWindow, stage, gameModel);
         view = new ControlShipView(aWindow, this, stage, gameModel);
         mainCtrl = aParent;
+
+        player = gameModel.getPlayer();
+        playerShip = player.getShip();
+
     }
 
     public void update() {
-
+        spacetrader.PhysicsSimulator.simulate(player.getSystem());
     }
 
 

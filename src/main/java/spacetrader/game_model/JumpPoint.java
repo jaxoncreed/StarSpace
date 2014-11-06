@@ -28,7 +28,7 @@ public class JumpPoint implements Serializable {
 	}
 
 	public Position getTargetPos() {
-		return targetPos;
+		return new Position(targetPos);
 	}
 	public int getLevel(){
 		return level;

@@ -33,6 +33,7 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.paint.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 
 import javafx.stage.Stage;
 
@@ -71,7 +72,7 @@ public class ControlShipView implements Initializable {
         // Prepare camera
         this.player = gameModel.getPlayer();
         this.playerShip = player.getShip();
-        this.camera = new Position(playerShip.getPosition());
+//        this.camera = new Position(playerShip.getPosition());
 
         // Prepare and show canvas
         int canvasSize = 800;
@@ -129,7 +130,27 @@ public class ControlShipView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        //Handles Key Presses
+        window.getScene().setOnKeyPressed((KeyEvent t) -> {
+            switch (t.getCode().toString()) {
+                case "W":
+                    
+                    break;
+                case "A":
+                    
+                    break;
+                case "S":
+                    
+                    break;
+                case "D":
+                    
+                    break;
+            }
+        });
+        
+        window.getScene().setOnKeyReleased((KeyEvent t) -> {
+            
+        });
     }
 
     void remove() {

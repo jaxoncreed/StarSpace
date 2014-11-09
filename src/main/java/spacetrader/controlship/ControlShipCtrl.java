@@ -42,7 +42,7 @@ public class ControlShipCtrl extends ViewCtrl {
     }
 
     public void update() {
-        spacetrader.PhysicsSimulator.simulate(player.getSystem());
+        //spacetrader.PhysicsSimulator.simulate(player.getSystem());
     }
 
 

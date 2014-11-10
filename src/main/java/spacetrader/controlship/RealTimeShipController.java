@@ -40,6 +40,9 @@ class RealTimeShipController {
         return player;
     }
     public void movePlayer(float x,float y){
-        player.getShip().getPosition().add(new Position(x,y));
+        System.out.println("PRESSED");
+        Position p=player.getPosition();
+        p.add(new Position(x,y));
+        player.getShip().setPosition(p);
     }
 }

@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
  * @author benhirsch
  */
 public class SpriteManager {
-    private static final Image THRASHER_LL;
+//    private static final Image THRASHER_LL;
     
     public SpriteManager() {
         

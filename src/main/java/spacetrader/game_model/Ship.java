@@ -33,7 +33,7 @@ public class Ship implements Tradeable, Serializable {
         this.maxHealth = 100;
         this.system = null;
         this.physicsBody = null;
-        this.linearAcceleration = 1.0;
+        this.linearAcceleration = 100.0;
         this.maxLinearSpeed = 10.0;
         this.angularAcceleration = 1.0;
         this.maxAngularSpeed = 10.0;
@@ -106,6 +106,13 @@ public class Ship implements Tradeable, Serializable {
         }
         return physicsDescriptor.getPosition();
     }
+
+    public double getAngle() {
+        if (physicsBody != null) {
+            return physicsBody.getAngle();
+        }
+        return physicsDescriptor.getAngle();
+    }
     
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
@@ -132,14 +139,16 @@ public class Ship implements Tradeable, Serializable {
             double angle = physicsBody.getAngle();
             Position force = new Position(linearAcceleration, 0.0);
             force.rotate(angle);
-            Vec2 centerOfMass = physicsBody.getLocalCenter();
+            force.y = -force.y;
+            System.out.println(force);
+            Vec2 centerOfMass = physicsBody.getWorldCenter();
             physicsBody.applyForce(force.toVec2(), centerOfMass);
         }
     }
     
     public void turnLeft() {
         if (physicsBody != null) {
-            physicsBody.applyTorque((float)(-angularAcceleration));
+            physicsBody.applyTorque((float)(angularAcceleration));
         }
     }
     
@@ -148,14 +157,15 @@ public class Ship implements Tradeable, Serializable {
             double angle = physicsBody.getAngle();
             Position force = new Position(-linearAcceleration, 0.0);
             force.rotate(angle);
-            Vec2 centerOfMass = physicsBody.getLocalCenter();
+            force.y = -force.y;
+            Vec2 centerOfMass = physicsBody.getWorldCenter();
             physicsBody.applyForce(force.toVec2(), centerOfMass);
         }
     }
     
     public void turnRight() {
         if (physicsBody != null) {
-            physicsBody.applyTorque((float)angularAcceleration);
+            physicsBody.applyTorque((float)(-angularAcceleration));
         }
     }
 

@@ -142,8 +142,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         gc.fillOval(playerShip.getPosition().x - camera.x, playerShip.getPosition().y - camera.y, 100, 100);
 
         gc.setFill(Color.RED);
+        gc.fillOval(playerShip.getPosition().x - camera.x + 50*Math.sin(playerShip.getAngle() + Math.PI/2) + 45, playerShip.getPosition().y - camera.y + 50*Math.cos(playerShip.getAngle() + Math.PI/2) + 45, 10, 10);
+        gc.setFill(Color.RED);
         gc.fillText((temp/60.0)+"", 10, 10);
-                    shipCtrl.playerAccelerate();
         temp++;
     }
 

@@ -23,6 +23,7 @@ public class Ship implements Tradeable, Serializable {
         basePrice = 1000;
         firePower = 10;
         cargo = new Inventory();
+        physicsDescriptor = new PhysicsDescriptor();
     }
     
     public Ship(String name, double basePrice, int firePower, int cargoSize) {
@@ -30,6 +31,7 @@ public class Ship implements Tradeable, Serializable {
         this.firePower = firePower;
         this.basePrice = basePrice;
         cargo = new Inventory(cargoSize);
+        physicsDescriptor = new PhysicsDescriptor();
     }
     
     public void jump(JumpPoint jumpPoint) {

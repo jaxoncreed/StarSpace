@@ -72,7 +72,7 @@ public class ControlShipView implements Initializable {
         // Prepare camera
         this.player = gameModel.getPlayer();
         this.playerShip = player.getShip();
-//        this.camera = new Position(playerShip.getPosition());
+       this.camera = new Position(playerShip.getPosition());
 
         // Prepare and show canvas
         int canvasSize = 800;

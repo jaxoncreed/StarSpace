@@ -2,38 +2,43 @@ package spacetrader.game_model;
 
 import java.io.Serializable;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.common.Vec2;
 
 /**
  * Ship model!
  */
 public class Ship implements Tradeable, Serializable {
 
-    private double basePrice;
     private final String name;
+    private double basePrice;
     private int firePower;
     private final Inventory cargo;
-    private PhysicsDescriptor physicsDescriptor;
     private int health;
     private int maxHealth;
     private StarSystem system;
     private Body physicsBody;
-    
+    private PhysicsDescriptor physicsDescriptor;
+    private double linearAcceleration;
+    private double maxLinearSpeed;
+    private double angularAcceleration;
+    private double maxAngularSpeed;
+
     public Ship(String name) {
+        this.basePrice = 1000;
         this.name = name;
-        basePrice = 1000;
-        firePower = 10;
-        cargo = new Inventory();
-        physicsDescriptor = new PhysicsDescriptor();
+        this.firePower = 10;
+        this.cargo = new Inventory();
+        this.physicsDescriptor = new PhysicsDescriptor();
+        this.health = 100;
+        this.maxHealth = 100;
+        this.system = null;
+        this.physicsBody = null;
+        this.linearAcceleration = 1.0;
+        this.maxLinearSpeed = 10.0;
+        this.angularAcceleration = 1.0;
+        this.maxAngularSpeed = 10.0;
     }
-    
-    public Ship(String name, double basePrice, int firePower, int cargoSize) {
-        this.name = name;
-        this.firePower = firePower;
-        this.basePrice = basePrice;
-        cargo = new Inventory(cargoSize);
-        physicsDescriptor = new PhysicsDescriptor();
-    }
-    
+        
     public void jump(JumpPoint jumpPoint) {
         system.removeShip(this);
         jumpPoint.getTargetSystem().addShip(this);
@@ -94,7 +99,11 @@ public class Ship implements Tradeable, Serializable {
         physicsDescriptor.setPosition(pos);
     }
     
-    public Position getPosition(){
+    public Position getPosition() {
+        if (physicsBody != null) {
+            Vec2 pos = physicsBody.getWorldCenter();
+            return new Position(pos.x, pos.y);
+        }
         return physicsDescriptor.getPosition();
     }
     
@@ -117,4 +126,37 @@ public class Ship implements Tradeable, Serializable {
     public void setPhysicsBody(Body body) {
         this.physicsBody = body;
     }
+
+    public void accelerate() {
+        if (physicsBody != null) {
+            double angle = physicsBody.getAngle();
+            Position force = new Position(linearAcceleration, 0.0);
+            force.rotate(angle);
+            Vec2 centerOfMass = physicsBody.getLocalCenter();
+            physicsBody.applyForce(force.toVec2(), centerOfMass);
+        }
+    }
+    
+    public void turnLeft() {
+        if (physicsBody != null) {
+            physicsBody.applyTorque((float)(-angularAcceleration));
+        }
+    }
+    
+    public void decelerate() {
+        if (physicsBody != null) {
+            double angle = physicsBody.getAngle();
+            Position force = new Position(-linearAcceleration, 0.0);
+            force.rotate(angle);
+            Vec2 centerOfMass = physicsBody.getLocalCenter();
+            physicsBody.applyForce(force.toVec2(), centerOfMass);
+        }
+    }
+    
+    public void turnRight() {
+        if (physicsBody != null) {
+            physicsBody.applyTorque((float)angularAcceleration);
+        }
+    }
+
 }

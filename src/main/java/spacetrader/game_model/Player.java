@@ -29,11 +29,11 @@ public class Player implements Serializable {
     }
     
     public Ship getShip() {
-        return ship;
+        return this.ship;
     }
     
     public void setShip(Ship s) {
-        ship = s;
+        this.ship = s;
     }
 
     public int getWoolongs() {

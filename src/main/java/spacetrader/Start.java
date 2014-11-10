@@ -23,7 +23,7 @@ public class Start extends Application {
     public void start(Stage stage) throws Exception {
         Window window = new Window();
         MainCtrl mainCtrl = new MainCtrl(stage, window);
-        mainCtrl.mainMenu();
+        mainCtrl.controlShip();
     }
 
     public static void main(String[] args) {

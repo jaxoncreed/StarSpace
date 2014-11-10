@@ -1,6 +1,7 @@
 package spacetrader.game_model;
 
 import java.io.Serializable;
+import org.jbox2d.common.Vec2;
 
 public class Position implements Serializable {
 	public double x;
@@ -84,6 +85,10 @@ public class Position implements Serializable {
 	public String toString() {
 		String s = "(" + x + ", " + y + ")";
 		return s;
+	}
+
+	public Vec2 toVec2() {
+		return new Vec2((float)x, (float)y);
 	}
 
 }

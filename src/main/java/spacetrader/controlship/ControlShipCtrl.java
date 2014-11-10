@@ -42,9 +42,24 @@ public class ControlShipCtrl extends ViewCtrl {
     }
 
     public void update() {
-        //spacetrader.PhysicsSimulator.simulate(player.getSystem());
+        spacetrader.PhysicsSimulator.simulate();
     }
 
+    public void playerAccelerate() {
+        playerShip.accelerate();
+    }
+
+    public void playerTurnLeft() {
+        playerShip.turnLeft();
+    }
+
+    public void playerDecelerate() {
+        playerShip.decelerate();
+    }
+
+    public void playerTurnRight() {
+        playerShip.turnRight();
+    }
 
     @Override
     public void startView() {

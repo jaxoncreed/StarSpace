@@ -28,7 +28,7 @@ public class PhysicsSimulator {
 			PhysicsDescriptor physics = ship.getPhysicsDescriptor();
 			Body body = world.createBody(physics.getBodyDef());
 			body.createFixture(physics.getFixtureDef());
-
+			ship.setPhysicsBody(body);
 		}
 	}
 

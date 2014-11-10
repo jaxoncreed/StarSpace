@@ -67,10 +67,13 @@ public class MainCtrl extends Ctrl{
 
         // TODO: Make character creator do this work and set the player
         player = new Player("Bob", Faction.NoFaction);
-
         player.setSystem(sol);
 
+        sol.addShip(player.getShip());
+
         gameModel.setPlayer(player);
+
+        spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
 
         // Create controllers
         controlShip         = new ControlShipCtrl     (this, window, stage, gameModel);

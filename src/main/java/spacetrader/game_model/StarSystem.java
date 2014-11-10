@@ -33,6 +33,7 @@ public class StarSystem implements Node {
         this.jumpPoints = new HashMap<Node, JumpPoint>();
         this.starType = starType;
         this.faction = Faction.NoFaction;
+        this.ships = new ArrayList<Ship>();
     }
 
     public StarSystem(

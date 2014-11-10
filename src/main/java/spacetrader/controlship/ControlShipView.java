@@ -51,7 +51,9 @@ public class ControlShipView implements Initializable {
     public ControlShipCtrl shipCtrl;
     public Pane curPane;
 
-    private final int framesPerSecond = 60;
+    private static final int FRAMES_PER_SECOND = 60;
+    private static final int SCREEN_WIDTH = 1280;
+    private static final int SCREEN_HEIGHT = 720; 
 
     private Position camera;
     private Player player;
@@ -75,17 +77,16 @@ public class ControlShipView implements Initializable {
        this.camera = new Position(playerShip.getPosition());
 
         // Prepare and show canvas
-        int canvasSize = 800;
         root = new Group();
-        scene = new Scene(root, canvasSize, canvasSize, Color.BLACK);
-        canvas = new Canvas(canvasSize,canvasSize);
+        scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.BLACK);
+        canvas = new Canvas(SCREEN_WIDTH,SCREEN_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         stage.setScene(scene);
         stage.show();
 
         // Prepare game loop
-        final Duration oneFrameAmt = Duration.millis(1000/framesPerSecond);
+        final Duration oneFrameAmt = Duration.millis(1000/FRAMES_PER_SECOND);
         EventHandler eventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -110,21 +111,18 @@ public class ControlShipView implements Initializable {
 
     public void renderPilotingShip() {
         // Camera smoothly follows ship
-        camera.average(playerShip.getPosition());
+//        camera.average(new Position(playerShip.getPosition().x - 350, playerShip.getPosition().y - 350));
 
         // Testing the game loop at 60 FPS.  The final game WILL BE FRAME-LOCKED because of how the physics engine works.
         // That is, unless you want to multi-thread.  Please no.
-        gc.clearRect(0,0,800,800);
+        gc.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+
         gc.setFill(Color.BLUE);
-        gc.fillOval(400,400,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
-        gc.setFill(Color.GREEN);
-        gc.fillOval(0,400,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
-        gc.setFill(Color.YELLOW);
-        gc.fillOval(400,0,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
-        gc.setFill(Color.ORANGE);
-        gc.fillOval(0,0,Math.abs(Math.sin(temp/100.0)*400),Math.abs(Math.cos(temp/100.0)*400));
+        gc.fillOval(playerShip.getPosition().x - camera.x, playerShip.getPosition().y - camera.y, 100, 100);
+
         gc.setFill(Color.RED);
         gc.fillText((temp/60.0)+"", 10, 10);
+                    shipCtrl.playerAccelerate();
         temp++;
     }
 
@@ -134,16 +132,20 @@ public class ControlShipView implements Initializable {
         window.getScene().setOnKeyPressed((KeyEvent t) -> {
             switch (t.getCode().toString()) {
                 case "W":
-                    
+                    shipCtrl.playerAccelerate();
+                    System.out.println("shipCtrl.playerAccelerate()");
                     break;
                 case "A":
-                    
+                    shipCtrl.playerTurnLeft();
+                    System.out.println("shipCtrl.playerTurnLeft()");
                     break;
                 case "S":
-                    
+                    shipCtrl.playerDecelerate();
+                    System.out.println("shipCtrl.playerDecelerate()");
                     break;
                 case "D":
-                    
+                    shipCtrl.playerTurnRight();
+                    System.out.println("shipCtrl.playerTurnRight()");
                     break;
             }
         });

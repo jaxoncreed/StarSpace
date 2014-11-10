@@ -97,6 +97,28 @@ public class ControlShipView extends AbstractView implements Initializable {
 
             }
         };
+        scene.setOnKeyPressed((KeyEvent t) -> {
+            switch (t.getCode().toString()) {
+                case "W":
+                    shipCtrl.playerAccelerate();
+                    System.out.println("shipCtrl.playerAccelerate()");
+                    break;
+                case "A":
+                    shipCtrl.playerTurnLeft();
+                    System.out.println("shipCtrl.playerTurnLeft()");
+                    break;
+                case "S":
+                    shipCtrl.playerDecelerate();
+                    System.out.println("shipCtrl.playerDecelerate()");
+                    break;
+                case "D":
+                    shipCtrl.playerTurnRight();
+                    System.out.println("shipCtrl.playerTurnRight()");
+                    break;
+            }
+        });
+        
+        
         final KeyFrame oneFrame = new KeyFrame(oneFrameAmt, eventHandler);
 
         TimelineBuilder.create()
@@ -132,31 +154,7 @@ public class ControlShipView extends AbstractView implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Handles Key Presses
-        window.getScene().setOnKeyPressed((KeyEvent t) -> {
-            switch (t.getCode().toString()) {
-                case "W":
-                    shipCtrl.playerAccelerate();
-                    System.out.println("shipCtrl.playerAccelerate()");
-                    break;
-                case "A":
-                    shipCtrl.playerTurnLeft();
-                    System.out.println("shipCtrl.playerTurnLeft()");
-                    break;
-                case "S":
-                    shipCtrl.playerDecelerate();
-                    System.out.println("shipCtrl.playerDecelerate()");
-                    break;
-                case "D":
-                    shipCtrl.playerTurnRight();
-                    System.out.println("shipCtrl.playerTurnRight()");
-                    break;
-            }
-        });
-        
-        window.getScene().setOnKeyReleased((KeyEvent t) -> {
-            
-        });
+
     }
 
     void remove() {
@@ -169,12 +167,3 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
 
 }
-
-
-
-
-
-
-
-
-

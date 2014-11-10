@@ -97,6 +97,10 @@ public class StarSystem implements Node {
         return jumpPoints.get(s);
     }
 
+    public List<JumpPoint> getJumpPoints() {
+        return new ArrayList<JumpPoint>(jumpPoints.values());
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -141,6 +145,10 @@ public class StarSystem implements Node {
         return faction;
     }
 
+    public String getName() {
+        return name;
+    }
+    
     public StarType getStarType() {
         return starType;
     }

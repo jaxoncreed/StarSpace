@@ -64,6 +64,13 @@ public class ControlShipView extends AbstractView implements Initializable {
     private Canvas canvas;
     private GraphicsContext gc;
 
+    private boolean shouldAccelerate;
+    private boolean shouldTurnRight;
+    private boolean shouldDecelerate;
+    private boolean shouldTurnLeft;
+
+    private String interactionMessage = "";
+
     public ControlShipView() {};
 
     public ControlShipView(Window window, ControlShipCtrl shipCtrl, Stage stage, GameModel gameModel) {
@@ -89,6 +96,20 @@ public class ControlShipView extends AbstractView implements Initializable {
         EventHandler eventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                // Perform frame-sensitive controls
+                if (shouldAccelerate) {
+                    shipCtrl.playerAccelerate();
+                }
+                if (shouldTurnLeft) {
+                    shipCtrl.playerTurnLeft();
+                }
+                if (shouldDecelerate) {
+                    shipCtrl.playerDecelerate();
+                }
+                if (shouldTurnRight) {
+                    shipCtrl.playerTurnRight();
+                }
+
                 // Simulate a timestep
                 shipCtrl.update();
 
@@ -97,27 +118,47 @@ public class ControlShipView extends AbstractView implements Initializable {
 
             }
         };
+
+        // Prepare the keyboard
+        shouldAccelerate = false;
+        shouldTurnRight = false;
+        shouldDecelerate = false;
+        shouldTurnLeft = false;
         scene.setOnKeyPressed((KeyEvent t) -> {
             switch (t.getCode().toString()) {
                 case "W":
-                    shipCtrl.playerAccelerate();
-                    System.out.println("shipCtrl.playerAccelerate()");
+                    shouldAccelerate = true;
                     break;
                 case "A":
-                    shipCtrl.playerTurnLeft();
-                    System.out.println("shipCtrl.playerTurnLeft()");
+                    shouldTurnLeft = true;
                     break;
                 case "S":
-                    shipCtrl.playerDecelerate();
-                    System.out.println("shipCtrl.playerDecelerate()");
+                    shouldDecelerate = true;
                     break;
                 case "D":
-                    shipCtrl.playerTurnRight();
-                    System.out.println("shipCtrl.playerTurnRight()");
+                    shouldTurnRight = true;
+                    break;
+                case "E":
+                    shipCtrl.performInteraction();
                     break;
             }
         });
-        
+        scene.setOnKeyReleased((KeyEvent t) -> {
+            switch (t.getCode().toString()) {
+                case "W":
+                    shouldAccelerate = false;
+                    break;
+                case "A":
+                    shouldTurnLeft = false;
+                    break;
+                case "S":
+                    shouldDecelerate = false;
+                    break;
+                case "D":
+                    shouldTurnRight = false;
+                    break;
+            }
+        });        
         
         final KeyFrame oneFrame = new KeyFrame(oneFrameAmt, eventHandler);
 
@@ -132,20 +173,37 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     public void renderPilotingShip() {
         // Camera smoothly follows ship
-//        camera.average(new Position(playerShip.getPosition().x - 350, playerShip.getPosition().y - 350));
+        camera.average(new Position(playerShip.getPosition().x - AbstractView.SCREEN_WIDTH/2 + 50, playerShip.getPosition().y - AbstractView.SCREEN_HEIGHT/2 + 50), 0.05);
 
-        // Testing the game loop at 60 FPS.  The final game WILL BE FRAME-LOCKED because of how the physics engine works.
-        // That is, unless you want to multi-thread.  Please no.
+        // Clear the frame
         gc.clearRect(0,0,AbstractView.SCREEN_WIDTH,AbstractView.SCREEN_HEIGHT);
 
-        gc.setFill(Color.BLUE);
+        // Draw the ship's body
+        gc.setFill(Color.GREEN);
         gc.fillOval(playerShip.getPosition().x - camera.x, playerShip.getPosition().y - camera.y, 100, 100);
 
+        // Draw the ship's heading
         gc.setFill(Color.RED);
         gc.fillOval(playerShip.getPosition().x - camera.x + 50*Math.sin(playerShip.getAngle() + Math.PI/2) + 45, playerShip.getPosition().y - camera.y + 50*Math.cos(playerShip.getAngle() + Math.PI/2) + 45, 10, 10);
-        gc.setFill(Color.RED);
-        gc.fillText((temp/60.0)+"", 10, 10);
+ 
+        // Draw the jump points
+        for (JumpPoint j : player.getSystem().getJumpPoints()) {
+            gc.setFill(Color.BLUE);
+            gc.fillOval(j.getPos().x - camera.x - 5, j.getPos().y - camera.y - 5, 10, 10);
+             gc.setFill(Color.WHITE);
+           gc.fillText("To " + j.getTargetSystem().getName(), j.getPos().x - camera.x - 5, j.getPos().y - camera.y - 5);
+
+        }
+
+        if (interactionMessage != "") {
+            gc.setFill(Color.RED);
+            gc.fillText("Press E: " + interactionMessage, 10, 10);            
+        }
         temp++;
+    }
+
+    public void setInteractionMessage(String interactionMessage) {
+        this.interactionMessage = interactionMessage;
     }
 
     @Override

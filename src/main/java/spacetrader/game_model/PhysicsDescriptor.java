@@ -34,7 +34,7 @@ public class PhysicsDescriptor {
         // fixtureDef.isSensor    =
         fixtureDef.restitution    = 0.2f;
         fixtureDef.shape          = new CircleShape();
-        fixtureDef.shape.m_radius = 1.0f;
+        fixtureDef.shape.m_radius = 100.0f;
         // fixtureDef.userData    =
     }
 

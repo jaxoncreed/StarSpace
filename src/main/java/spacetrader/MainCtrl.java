@@ -54,10 +54,10 @@ public class MainCtrl extends Ctrl{
         StarSystem andromeda  = new StarSystem("Andromeda",  new Position(30, 30), StarType.DWARF);
         StarSystem yourmomeda = new StarSystem("Yourmomeda", new Position(50, 50), StarType.DWARF);
 
-        sol        .addJumpPoint(new Position(50, 50), andromeda,  new Position(30, 30));
-        // andromeda  .addJumpPoint(new Position(10, 10), sol,        new Position(30, 30));
-        andromeda  .addJumpPoint(new Position(50, 50), yourmomeda, new Position(30, 30));
-        yourmomeda .addJumpPoint(new Position(10, 10), andromeda,  new Position(30, 30));
+        sol        .addJumpPoint(new Position(500, 500), andromeda,  new Position(300, 300));
+        andromeda  .addJumpPoint(new Position(100, 100), sol,        new Position(300, 300));
+        andromeda  .addJumpPoint(new Position(500, 500), yourmomeda, new Position(300, 300));
+        yourmomeda .addJumpPoint(new Position(100, 100), andromeda,  new Position(300, 300));
 
         galaxy.addSystem(sol);
         galaxy.addSystem(andromeda);

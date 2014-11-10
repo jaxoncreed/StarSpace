@@ -3,11 +3,13 @@ package spacetrader.game_model;
 import java.io.Serializable;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
+import spacetrader.Interactable;
 
 /**
  * Ship model!
  */
-public class Ship implements Tradeable, Serializable {
+public class Ship implements Tradeable, Serializable, Interactable {
 
     private final String name;
     private double basePrice;
@@ -18,10 +20,11 @@ public class Ship implements Tradeable, Serializable {
     private StarSystem system;
     private Body physicsBody;
     private PhysicsDescriptor physicsDescriptor;
-    private double linearAcceleration;
+    private double linearThrust;
     private double maxLinearSpeed;
-    private double angularAcceleration;
+    private double angularThrust;
     private double maxAngularSpeed;
+    private double interactionRange;
 
     public Ship(String name) {
         this.basePrice = 1000;
@@ -33,10 +36,11 @@ public class Ship implements Tradeable, Serializable {
         this.maxHealth = 100;
         this.system = null;
         this.physicsBody = null;
-        this.linearAcceleration = 100.0;
+        this.linearThrust = 1000000.0;
         this.maxLinearSpeed = 10.0;
-        this.angularAcceleration = 1.0;
+        this.angularThrust = 100000000.0;
         this.maxAngularSpeed = 10.0;
+        this.interactionRange = 100.0;
     }
         
     public void jump(JumpPoint jumpPoint) {
@@ -137,7 +141,7 @@ public class Ship implements Tradeable, Serializable {
     public void accelerate() {
         if (physicsBody != null) {
             double angle = physicsBody.getAngle();
-            Position force = new Position(linearAcceleration, 0.0);
+            Position force = new Position(linearThrust, 0.0);
             force.rotate(angle);
             force.y = -force.y;
             System.out.println(force);
@@ -148,14 +152,14 @@ public class Ship implements Tradeable, Serializable {
     
     public void turnLeft() {
         if (physicsBody != null) {
-            physicsBody.applyTorque((float)(angularAcceleration));
+            physicsBody.applyTorque((float)(angularThrust));
         }
     }
     
     public void decelerate() {
         if (physicsBody != null) {
             double angle = physicsBody.getAngle();
-            Position force = new Position(-linearAcceleration, 0.0);
+            Position force = new Position(-linearThrust, 0.0);
             force.rotate(angle);
             force.y = -force.y;
             Vec2 centerOfMass = physicsBody.getWorldCenter();
@@ -165,8 +169,30 @@ public class Ship implements Tradeable, Serializable {
     
     public void turnRight() {
         if (physicsBody != null) {
-            physicsBody.applyTorque((float)(-angularAcceleration));
+            physicsBody.applyTorque((float)(-angularThrust));
         }
+    }
+
+    public void enablePhysicalSimulation(World world) {
+        physicsBody = world.createBody(physicsDescriptor.getBodyDef());
+        physicsBody.createFixture(physicsDescriptor.getFixtureDef());
+    }
+
+    public void disablePhysicalSimulation() {
+        setPosition(new Position(physicsBody.getPosition().x, physicsBody.getPosition().y));
+        physicsBody = null;
+    }
+
+    public double getInteractionRange() {
+        return interactionRange;
+    }
+
+    public String getInteractionMessage() {
+        return "";
+    }
+    
+    public void interact(Ship ship, GameModel gm) {
+
     }
 
 }

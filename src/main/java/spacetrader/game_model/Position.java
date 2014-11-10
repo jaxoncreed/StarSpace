@@ -43,8 +43,8 @@ public class Position implements Serializable {
 	}
 
 	public void average(Position that, double weight) {
-		this.x = (this.x + that.x * weight) / 2.0f;
-		this.y = (this.y + that.y * weight) / 2.0f;
+		this.x = (this.x + that.x * weight) / (1.0f + weight);
+		this.y = (this.y + that.y * weight) / (1.0f + weight);
 	}
 
 	/**

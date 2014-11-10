@@ -18,17 +18,21 @@ public class PhysicsSimulator {
 
 	private static final Vec2 GRAVITY = new Vec2(0.0f, 0.0f);
 	private static World world;
-
-	public static void setSystem(StarSystem system) {
-		// Initialize world (no gravity)
+        private static StarSystem system = null;
+            
+	public static void setSystem(StarSystem s) {
+            if (system != null) {
+		for (Ship ship : system.getShips()) {
+			ship.disablePhysicalSimulation();
+		}                
+            }
+            system = s;
+            // Initialize world (no gravity)
 		world = new World(GRAVITY);
 
 		// Add all physics objects
 		for (Ship ship : system.getShips()) {
-			PhysicsDescriptor physics = ship.getPhysicsDescriptor();
-			Body body = world.createBody(physics.getBodyDef());
-			body.createFixture(physics.getFixtureDef());
-			ship.setPhysicsBody(body);
+			ship.enablePhysicalSimulation(world);
 		}
 	}
 

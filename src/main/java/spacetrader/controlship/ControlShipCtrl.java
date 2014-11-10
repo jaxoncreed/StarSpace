@@ -6,6 +6,7 @@
 
 package spacetrader.controlship;
 
+import spacetrader.Interactable;
 import spacetrader.shared.Util;
 import spacetrader.game_model.*;
 import spacetrader.PhysicsSimulator;
@@ -28,6 +29,7 @@ public class ControlShipCtrl extends ViewCtrl {
     private GameModel gameModel;
     private Player player;
     private Ship playerShip;
+    private Interactable interactionEntity;
 
     protected Stage stage;
  
@@ -38,11 +40,31 @@ public class ControlShipCtrl extends ViewCtrl {
 
         player = gameModel.getPlayer();
         playerShip = player.getShip();
-
+        interactionEntity = null;
     }
 
     public void update() {
+
         spacetrader.PhysicsSimulator.simulate();
+ 
+        // Update interaction opportunities
+        interactionEntity = null;
+        view.setInteractionMessage("");
+        StarSystem curSystem = player.getSystem();
+        for (JumpPoint j : curSystem.getJumpPoints()) {
+            double interactionRange = playerShip.getInteractionRange() + j.getInteractionRange();
+            double distance = j.getPos().distTo(player.getPosition());
+            if (distance <= interactionRange) {
+                view.setInteractionMessage(j.getInteractionMessage());
+                interactionEntity = j;
+            }
+        }
+    }
+
+    public void performInteraction() {
+        if (interactionEntity != null) {
+            interactionEntity.interact(playerShip, gameModel);
+        }
     }
 
     public void playerAccelerate() {

@@ -48,7 +48,7 @@ public class MenuView extends AbstractView implements Initializable {
             window.loadFXML(curPane);
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        }
         loadButton.setOnAction((ActionEvent event) -> menuCtrl.loadGame());
     }
 

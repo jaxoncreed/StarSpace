@@ -76,13 +76,12 @@ public class MainCtrl extends Ctrl{
         spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
 
         // Create controllers
-        controlShip         = new ControlShipCtrl     (this, window, stage, gameModel);
         createCharacterCtrl = new CreateCharacterCtrl (this, window, stage, gameModel);
         currentViewCtrl     = new MenuCtrl            (this, window, stage, gameModel);
         galaxyGenerator     = new GalaxyGeneratorCtrl (this, window, stage, gameModel);
         makeTradeCtrl       = new MakeTradeCtrl       (this, window, stage, gameModel);
         menuCtrl            = new MenuCtrl            (this, window, stage, gameModel);
-
+        controlShipCtrl         = null; // this is kind of a hack to make the buttons show up at startup
         // Create game saver
         gameSaver = new GameSaver(gameModel);
 
@@ -134,6 +133,9 @@ public class MainCtrl extends Ctrl{
     }
     
     public void controlShip(){
+        if (controlShipCtrl == null) { // this is kind of a hack to make the buttons show up at startup
+            controlShipCtrl = new ControlShipCtrl(this, window, stage, gameModel);
+        }
         controlShipCtrl = new ControlShipCtrl(this, window, stage, gameModel);
         switchViews(controlShipCtrl);
     }

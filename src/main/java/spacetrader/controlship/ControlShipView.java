@@ -37,12 +37,13 @@ import javafx.scene.input.KeyEvent;
 
 import javafx.stage.Stage;
 
+import spacetrader.AbstractView;
 
 /**
 *
 * @author Jackson Morgan
 */
-public class ControlShipView implements Initializable {
+public class ControlShipView extends AbstractView implements Initializable {
 
     // TODO: Move images into their own class
     // public static final Image PLAYER_SHIP = new Image("lasher_ff.png");
@@ -52,9 +53,7 @@ public class ControlShipView implements Initializable {
     public Pane curPane;
 
     private static final int FRAMES_PER_SECOND = 60;
-    private static final int SCREEN_WIDTH = 1280;
-    private static final int SCREEN_HEIGHT = 720; 
-
+    
     private Position camera;
     private Player player;
     private Ship playerShip;
@@ -74,12 +73,12 @@ public class ControlShipView implements Initializable {
         // Prepare camera
         this.player = gameModel.getPlayer();
         this.playerShip = player.getShip();
-       this.camera = new Position(playerShip.getPosition());
+        this.camera = new Position(playerShip.getPosition());
 
         // Prepare and show canvas
         root = new Group();
-        scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT, Color.BLACK);
-        canvas = new Canvas(SCREEN_WIDTH,SCREEN_HEIGHT);
+        scene = new Scene(root, AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT, Color.BLACK);
+        canvas = new Canvas(AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         stage.setScene(scene);
@@ -115,7 +114,7 @@ public class ControlShipView implements Initializable {
 
         // Testing the game loop at 60 FPS.  The final game WILL BE FRAME-LOCKED because of how the physics engine works.
         // That is, unless you want to multi-thread.  Please no.
-        gc.clearRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+        gc.clearRect(0,0,AbstractView.SCREEN_WIDTH,AbstractView.SCREEN_HEIGHT);
 
         gc.setFill(Color.BLUE);
         gc.fillOval(playerShip.getPosition().x - camera.x, playerShip.getPosition().y - camera.y, 100, 100);
@@ -126,6 +125,11 @@ public class ControlShipView implements Initializable {
         temp++;
     }
 
+    @Override
+    public void render() {
+        renderPilotingShip();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Handles Key Presses
@@ -159,6 +163,10 @@ public class ControlShipView implements Initializable {
         curPane=null;
     }
 
+    @Override
+    public void hide() {
+        
+    }
 
 }
 

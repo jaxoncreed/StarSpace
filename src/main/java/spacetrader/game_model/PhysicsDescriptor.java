@@ -14,13 +14,13 @@ public class PhysicsDescriptor {
         bodyDef.active            = true; 
         // bodyDef.allowSleep     = 
         bodyDef.angle             = 0.0f;
-        bodyDef.angularDamping    = 0.0f;
+        bodyDef.angularDamping    = 0.1f;
         bodyDef.angularVelocity   = 0.0f;
         // bodyDef.awake          = 
         bodyDef.bullet            = false;
         bodyDef.fixedRotation     = false;
         // bodyDef.gravityScale   = 
-        bodyDef.linearDamping     = 0.0f;
+        bodyDef.linearDamping     = 0.1f;
         bodyDef.linearVelocity    = new Vec2(0.0f, 0.0f);
         bodyDef.position          = new Vec2(0.0f, 0.0f);
         bodyDef.type              = BodyType.DYNAMIC;

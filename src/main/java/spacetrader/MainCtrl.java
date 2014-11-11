@@ -58,6 +58,11 @@ public class MainCtrl extends Ctrl{
         andromeda  .addJumpPoint(new Position(100, 100), sol,        new Position(300, 300));
         andromeda  .addJumpPoint(new Position(500, 500), yourmomeda, new Position(300, 300));
         yourmomeda .addJumpPoint(new Position(100, 100), andromeda,  new Position(300, 300));
+        
+        sol        .addPlanet(new Planet("Earth", new Position(-100, -200)));
+        andromeda  .addPlanet(new Planet("Vulcan", new Position(-300, 200)));
+        yourmomeda .addPlanet(new Planet("SoFat", new Position(500, -100)));
+        yourmomeda .addPlanet(new Planet("SoDumb", new Position(-500, 100)));
 
         galaxy.addSystem(sol);
         galaxy.addSystem(andromeda);

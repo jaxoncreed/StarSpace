@@ -59,6 +59,14 @@ public class ControlShipCtrl extends ViewCtrl {
                 interactionEntity = j;
             }
         }
+        for (Planet p : curSystem.getPlanets()) {
+            double interactionRange = playerShip.getInteractionRange() + p.getInteractionRange();
+            double distance = p.getPos().distTo(player.getPosition());
+            if (distance <= interactionRange) {
+                view.setInteractionMessage(p.getInteractionMessage());
+                interactionEntity = p;
+            }
+        }
     }
 
     public void performInteraction() {

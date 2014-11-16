@@ -3,6 +3,7 @@ package spacetrader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.Group;
 import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,6 +34,7 @@ public class MainCtrl extends Ctrl{
     private Galaxy gax; 
     private GameModel gameModel;
     private GameSaver gameSaver;
+    private Group root;
     
     /**
      * Constructor
@@ -95,7 +97,7 @@ public class MainCtrl extends Ctrl{
         stage.show();
 
     }
-    
+
     public void closeApplication() {
         window.closeApplication();
     }

@@ -59,6 +59,7 @@ public class Planet implements Serializable, Interactable {
     @Override
     public void interact(Ship ship, GameModel gm) {
         //TODO: Switch to marketplace
+        
         System.out.println("Interaction with Planet.");
     }
 }

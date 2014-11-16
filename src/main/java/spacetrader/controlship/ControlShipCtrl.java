@@ -11,6 +11,7 @@ import spacetrader.shared.Util;
 import spacetrader.game_model.*;
 import spacetrader.PhysicsSimulator;
 import java.util.List;
+import javafx.scene.Group;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
@@ -30,6 +31,7 @@ public class ControlShipCtrl extends ViewCtrl {
     private Player player;
     private Ship playerShip;
     private Interactable interactionEntity;
+    private Planet planet;
 
     protected Stage stage;
  
@@ -65,12 +67,16 @@ public class ControlShipCtrl extends ViewCtrl {
             if (distance <= interactionRange) {
                 view.setInteractionMessage(p.getInteractionMessage());
                 interactionEntity = p;
+                planet = p;
             }
         }
     }
 
     public void performInteraction() {
         if (interactionEntity != null) {
+            if (interactionEntity instanceof Planet) {
+                mainCtrl.makeTrade(planet.getMarket().getCargo());
+            }
             interactionEntity.interact(playerShip, gameModel);
         }
     }
@@ -104,7 +110,6 @@ public class ControlShipCtrl extends ViewCtrl {
     public void saveGame() {
         mainCtrl.saveGame();
     }
-
     
     
 }

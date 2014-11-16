@@ -72,6 +72,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
         try {
             curPane = loader.load();
             window.loadFXML(curPane);
+            System.out.println("Loaded");
         } catch (IOException ex) {
             Logger.getLogger(MakeTradeView.class.getName()).log(Level.SEVERE, null, ex);
         }

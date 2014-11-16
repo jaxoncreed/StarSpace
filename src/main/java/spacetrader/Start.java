@@ -5,15 +5,9 @@
  */
 package spacetrader;
 
-import java.util.ArrayList;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
-import javafx.stage.Screen;
-import spacetrader.game_model.Inventory;
-import spacetrader.game_model.Item;
-import java.util.List;
-import spacetrader.AbstractView;
 
 /**
  *

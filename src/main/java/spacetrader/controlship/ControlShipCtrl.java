@@ -13,7 +13,7 @@ import spacetrader.PhysicsSimulator;
 import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.Planet;
 import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.GameModel;

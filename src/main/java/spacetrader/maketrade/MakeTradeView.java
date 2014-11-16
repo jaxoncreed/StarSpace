@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.Item;
 import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.fxml.FXML;

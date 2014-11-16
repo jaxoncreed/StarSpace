@@ -7,9 +7,16 @@ import java.io.Serializable;
  * @author Jackson Morgan
  */
 public class GameModel implements Serializable {
+    private static GameModel gameModel;
+    public static GameModel get(){
+        if(gameModel==null)
+            throw new GameModelNotSetException;
+        return gameModel;
+    }
+    
+    
     private Player player;
     private Galaxy galaxy;
-    
     public GameModel() {};
     
     public GameModel(Player aPlayer, Galaxy aGalaxy) {
@@ -48,5 +55,12 @@ public class GameModel implements Serializable {
     @Override
     public String toString() {
         return player.getName() + "; w:" + galaxy.getWidth() + "; h:" + galaxy.getHeight();
+    }
+
+    private static class GameModelNotSetException {
+
+        public GameModelNotSetException() {
+            
+        }
     }
 }

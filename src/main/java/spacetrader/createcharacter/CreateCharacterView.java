@@ -20,15 +20,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import spacetrader.Window;
+import spacetrader.AbstractView;
+import spacetrader.Window.JavaFXWindow;
+import spacetrader.Window.Window;
 import spacetrader.game_model.Skillset;
 
 /**
  *
  * @author Jackson Morgan
  */
-public class CreateCharacterView implements Initializable {
-    private Window window;
+public class CreateCharacterView extends AbstractView implements Initializable {
+    private JavaFXWindow window;
     private CreateCharacterCtrl createCharacterCtrl;
     private Pane curPane;
     
@@ -69,31 +71,16 @@ public class CreateCharacterView implements Initializable {
     private Skillset skill;
     private int piloting,navigation,engineering,charisma;
     
-    CreateCharacterView(Window window, CreateCharacterCtrl ccc) {
+    CreateCharacterView(JavaFXWindow window, CreateCharacterCtrl ccc) {
         this.window = window;
         createCharacterCtrl = ccc;
         pointsToAward = 5;
         piloting = navigation = engineering = charisma = 0;
     }
-
-    void renderCharacterCreator() {
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("CharacterCreator.fxml"))) ;
-        loader.setController(this);
-        try {
-            curPane = loader.load();
-            window.loadFXML(curPane);
-        } catch (IOException ex) {
-            Logger.getLogger(CreateCharacterView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    void removeCharacterCreator() {
-        window.clearFXML(curPane);
-        curPane = null;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+    private void setup(){
         pointsToAward=5;
         piloting=navigation=charisma=engineering=0;
         points.setText(""+pointsToAward);
@@ -184,5 +171,24 @@ public class CreateCharacterView implements Initializable {
         cancel.setOnAction((ActionEvent ever)->{
             createCharacterCtrl.backout();
         });
+
+    }
+    @Override
+    public void render() {
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("CharacterCreator.fxml"))) ;
+        loader.setController(this);
+        try {
+            curPane = loader.load();
+            window.loadFXML(curPane);
+        } catch (IOException ex) {
+            Logger.getLogger(CreateCharacterView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setup();
+    }
+
+    @Override
+    public void hide() {
+        window.clearFXML(curPane);
+        curPane = null;
     }
 }

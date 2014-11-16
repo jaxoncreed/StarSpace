@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.*;
 
 import javafx.animation.Animation;

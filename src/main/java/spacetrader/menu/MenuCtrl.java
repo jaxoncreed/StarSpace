@@ -8,7 +8,7 @@ package spacetrader.menu;
 
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;

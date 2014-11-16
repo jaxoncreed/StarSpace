@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader;
+package spacetrader.Application;
 
 /**
  *
- * @author Jackson
+ * @author Tyler Allen <tallen40@gatech.edu>
  */
-public abstract class AbstractView {
-
-    public abstract void render();
-    public abstract void hide();
-    
+public enum ApplicationType {
+    JavaFX
 }

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.Skillset;
 import spacetrader.menu.MenuView;
 import spacetrader.game_model.GameModel;
@@ -27,29 +27,23 @@ public class CreateCharacterCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     GameModel gameModel;
 
-    public CreateCharacterCtrl(MainCtrl aParent, Window window, Stage stage, GameModel gameModel) {
-        super(aParent, window, stage, gameModel);
-        view = new CreateCharacterView(window, this);
-        mainCtrl = aParent;
+    public CreateCharacterCtrl() {
+        
     }
 
     @Override
     public void startView() {
-        view.renderCharacterCreator();
     }
 
     @Override
     public void stopView() {
-        view.removeCharacterCreator();
+        view.hide();
     }
 
     void backout() {
-        mainCtrl.mainMenu();
     }
 
     void creationDone(Skillset skill) {
-        //TODO: Save the player
-        mainCtrl.generateUniverse();
     }
     
 }

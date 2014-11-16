@@ -8,7 +8,7 @@ package spacetrader.maketrade;
 import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.game_model.*;
 import spacetrader.maketrade.MakeTradeView;
 import spacetrader.game_model.GameModel;
@@ -25,11 +25,11 @@ public class MakeTradeCtrl extends ViewCtrl {
     Inventory store;
     Player player;
     
-    public MakeTradeCtrl(MainCtrl aParent, Window window, Stage stage, GameModel gameModel) {
-        super(aParent, window, stage, gameModel);
+    public MakeTradeCtrl(MainCtrl aParent, Window window) {
+        super(aParent, window);
         view = new MakeTradeView(window, this);
         mainCtrl = aParent;
-        this.player = gameModel.getPlayer();
+        this.player = GameModel.getGameModel().getPlayer();
     }
 
     public boolean sell(Item item,int amount) {

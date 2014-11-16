@@ -5,28 +5,27 @@
  */
 package spacetrader;
 
+import spacetrader.Window.Window;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
+import spacetrader.Application.ApplicationFactory;
+import spacetrader.Application.ApplicationType;
+import spacetrader.Application.MainApplication;
+import spacetrader.Window.JavaFXWindow;
+import spacetrader.Window.WindowFactory;
 
 /**
  *
  * @author Jackson Morgan
  */
-public class Start extends Application {
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Window window = new Window();
-
-	    stage.setWidth(AbstractView.SCREEN_WIDTH);
-	    stage.setHeight(AbstractView.SCREEN_HEIGHT);
-
-        MainCtrl mainCtrl = new MainCtrl(stage, window);
-        mainCtrl.mainMenu();
-    }
-
+public class Start {
     public static void main(String[] args) {
-        launch(args);
+        ApplicationType type=ApplicationType.JavaFX;
+        Window window=WindowFactory.getWindow(type);
+        MainCtrl ctrl=new MainCtrl(window);
+        MainApplication app=ApplicationFactory.getApplication(type, ctrl, window);
+        app.init();
+        app.run(args);
     }
 }

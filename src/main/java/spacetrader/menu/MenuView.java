@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 
 /**
  *

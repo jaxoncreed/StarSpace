@@ -12,6 +12,7 @@ import spacetrader.Window.Window;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
+import spacetrader.Window.JavaFXWindow;
 
 /**
  *
@@ -20,9 +21,9 @@ import javafx.stage.Stage;
 public class MenuCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     
-    public MenuCtrl(MainCtrl aParent, Window aWindow, Stage stage, GameModel gameModel) {
-        super(aParent, aWindow, stage, gameModel);
-        view = new MenuView(aWindow, this);
+    public MenuCtrl(MainCtrl aParent, Window aWindow) {
+        super(aParent, aWindow);
+        view = new MenuView((JavaFXWindow)aWindow, this);
         mainCtrl = aParent;
     }
 
@@ -35,17 +36,7 @@ public class MenuCtrl extends ViewCtrl {
     public void stopView() {
         view.hide();
     }
-
-    void newGame() {
-        mainCtrl.createCharacter();
+    public void exit(){
+        mainCtrl.close();
     }
-    
-    void closeApplication() {
-        mainCtrl.closeApplication();
-    }
-    public void loadGame() {
-        mainCtrl.loadGame();
-    }
-    
-    
 }

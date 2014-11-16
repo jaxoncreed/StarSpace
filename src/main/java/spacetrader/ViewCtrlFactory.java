@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.Window;
-
-import spacetrader.Application.ApplicationType;
+package spacetrader;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public class WindowFactory {
-    public static Window getWindow(ApplicationType type){
+class ViewCtrlFactory {
+    public static ViewCtrl getViewCtrl(CtrlViewTypes type){
         switch(type){
-            case JavaFX:return new JavaFXWindow();
+            
         }
         return null;
     }
-
 }

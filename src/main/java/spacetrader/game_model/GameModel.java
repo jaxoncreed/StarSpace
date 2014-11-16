@@ -8,12 +8,16 @@ import java.io.Serializable;
  */
 public class GameModel implements Serializable {
     private static GameModel gameModel;
-    public static GameModel get(){
+    public static GameModel get() throws GameModelNotSetException{
         if(gameModel==null)
-            throw new GameModelNotSetException;
+            throw new GameModelNotSetException();
         return gameModel;
     }
-    
+    public static GameModel set(Player player,Galaxy gal){
+        gameModel=new GameModel(player,gal);
+        return gameModel;
+    }
+
     
     private Player player;
     private Galaxy galaxy;
@@ -57,10 +61,10 @@ public class GameModel implements Serializable {
         return player.getName() + "; w:" + galaxy.getWidth() + "; h:" + galaxy.getHeight();
     }
 
-    private static class GameModelNotSetException {
+    public static class GameModelNotSetException extends Exception{
 
         public GameModelNotSetException() {
-            
+            super("Game Model not set up");
         }
     }
 }

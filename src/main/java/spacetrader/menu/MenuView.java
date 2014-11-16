@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
+import spacetrader.Window.JavaFXWindow;
 import spacetrader.Window.Window;
 
 /**
@@ -20,7 +21,7 @@ import spacetrader.Window.Window;
  * @author Jackson Morgan
  */
 public class MenuView extends AbstractView implements Initializable {
-    public Window window;
+    public JavaFXWindow window;
     public MenuCtrl menuCtrl;
     public Pane curPane;
    
@@ -35,7 +36,7 @@ public class MenuView extends AbstractView implements Initializable {
 
     public MenuView() {};
     
-    public MenuView(Window aWindow, MenuCtrl aMenuCtrl) {
+    public MenuView(JavaFXWindow aWindow, MenuCtrl aMenuCtrl) {
         window = aWindow;
         menuCtrl = aMenuCtrl;
     }
@@ -49,13 +50,11 @@ public class MenuView extends AbstractView implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        loadButton.setOnAction((ActionEvent event) -> menuCtrl.loadGame());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        start.setOnAction((ActionEvent event) -> menuCtrl.newGame());
-        exit.setOnAction((ActionEvent event) -> menuCtrl.closeApplication());
+        exit.setOnAction((ActionEvent event) -> menuCtrl.exit());
     }
 
     public void removeMainMenu() {

@@ -25,6 +25,9 @@ public class Start {
         Window window=WindowFactory.getWindow(type);
         MainCtrl ctrl=new MainCtrl(window);
         MainApplication app=ApplicationFactory.getApplication(type, ctrl, window);
+        ctrl.setClose(()->{
+            app.close();
+        });
         app.init();
         app.run(args);
     }

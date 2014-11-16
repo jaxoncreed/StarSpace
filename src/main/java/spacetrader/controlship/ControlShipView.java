@@ -84,8 +84,8 @@ public class ControlShipView extends AbstractView implements Initializable {
 
         // Prepare and show canvas
         root = new Group();
-        scene = new Scene(root, AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT, Color.BLACK);
-        canvas = new Canvas(AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT);
+        //scene = new Scene(root, AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT, Color.BLACK);
+        //canvas = new Canvas(AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         stage.setScene(scene);
@@ -173,10 +173,10 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     public void renderPilotingShip() {
         // Camera smoothly follows ship
-        camera.average(new Position(playerShip.getPosition().x - AbstractView.SCREEN_WIDTH/2 + 50, playerShip.getPosition().y - AbstractView.SCREEN_HEIGHT/2 + 50), 0.05);
+        //camera.average(new Position(playerShip.getPosition().x - AbstractView.SCREEN_WIDTH/2 + 50, playerShip.getPosition().y - AbstractView.SCREEN_HEIGHT/2 + 50), 0.05);
 
         // Clear the frame
-        gc.clearRect(0,0,AbstractView.SCREEN_WIDTH,AbstractView.SCREEN_HEIGHT);
+        //gc.clearRect(0,0,AbstractView.SCREEN_WIDTH,AbstractView.SCREEN_HEIGHT);
         
         // Draw the jump points
         for (JumpPoint j : player.getSystem().getJumpPoints()) {

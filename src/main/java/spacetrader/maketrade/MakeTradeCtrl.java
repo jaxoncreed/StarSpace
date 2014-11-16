@@ -6,6 +6,8 @@
 package spacetrader.maketrade;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
@@ -14,6 +16,7 @@ import spacetrader.maketrade.MakeTradeView;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
+import spacetrader.Window.JavaFXWindow;
 
 /**
  *
@@ -27,9 +30,13 @@ public class MakeTradeCtrl extends ViewCtrl {
     
     public MakeTradeCtrl(MainCtrl aParent, Window window) {
         super(aParent, window);
-        view = new MakeTradeView(window, this);
+        view = new MakeTradeView((JavaFXWindow)window, this);
         mainCtrl = aParent;
-        this.player = GameModel.getGameModel().getPlayer();
+        try {
+            this.player = GameModel.get().getPlayer();
+        } catch (GameModel.GameModelNotSetException ex) {
+            Logger.getLogger(MakeTradeCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean sell(Item item,int amount) {
@@ -69,7 +76,6 @@ public class MakeTradeCtrl extends ViewCtrl {
         view.removeMakeTrade();
     }
     public void shipControl(){
-        mainCtrl.controlShip();
     }
     public List<Item> getItemsStore(){
         return store.getItems();

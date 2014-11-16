@@ -27,8 +27,8 @@ public class CreateCharacterCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     GameModel gameModel;
 
-    public CreateCharacterCtrl() {
-        
+    public CreateCharacterCtrl(MainCtrl parent,Window aWindow) {
+        super(parent,aWindow);
     }
 
     @Override

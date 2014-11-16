@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import spacetrader.Window.JavaFXWindow;
 import spacetrader.controlship.ControlShipView;
 
 /**
@@ -28,7 +29,7 @@ import spacetrader.controlship.ControlShipView;
  * @author Jackson Morgan
  */
 public class MakeTradeView extends AbstractView implements Initializable {
-    public Window window;
+    public JavaFXWindow window;
     public MakeTradeCtrl makeTradeCtrl;
     public Pane curPane;
     List<Item> itemsP;
@@ -43,7 +44,7 @@ public class MakeTradeView extends AbstractView implements Initializable {
     Label money;
     
     
-    public MakeTradeView(Window window, MakeTradeCtrl ctrl) {
+    public MakeTradeView(JavaFXWindow window, MakeTradeCtrl ctrl) {
         this.window = window;
         this.makeTradeCtrl = ctrl;
     }

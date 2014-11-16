@@ -18,17 +18,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
+import spacetrader.Window.JavaFXWindow;
 
 /**
  *
  * @author fsanchez
  */
 public class CreateGalaxyView {
-    Window window;
+    JavaFXWindow window;
     GalaxyGeneratorCtrl createGalaxyCtrl;
     Pane pane;
     
-    public CreateGalaxyView(Window window, GalaxyGeneratorCtrl ccc) {
+    public CreateGalaxyView(JavaFXWindow window, GalaxyGeneratorCtrl ccc) {
         this.window = window;
         createGalaxyCtrl = ccc;
         pane = new Pane();

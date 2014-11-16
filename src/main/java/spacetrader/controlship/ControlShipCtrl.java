@@ -33,8 +33,8 @@ public class ControlShipCtrl extends ViewCtrl {
 
     protected Stage stage;
  
-    public ControlShipCtrl(MainCtrl aParent, Window aWindow, Stage stage, GameModel gameModel) {
-        super(aParent, aWindow, stage, gameModel);
+    public ControlShipCtrl(MainCtrl aParent, Window aWindow) {
+        super(aParent, aWindow);
         view = new ControlShipView(aWindow, this, stage, gameModel);
         mainCtrl = aParent;
 
@@ -102,7 +102,7 @@ public class ControlShipCtrl extends ViewCtrl {
     }
     
     public void saveGame() {
-        mainCtrl.saveGame();
+        //mainCtrl.saveGame();
     }
 
     

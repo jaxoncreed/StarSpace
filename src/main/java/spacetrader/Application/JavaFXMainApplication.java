@@ -24,27 +24,22 @@ public class JavaFXMainApplication extends MainApplication{
         super(window, ctrl);
     }
     public static class JavaFXApp extends Application{
-        private static JavaFXWindow  window;
-        private static MainCtrl  mainCtrl;
+        private static JavaFXMainApplication mainApp;
         @Override
         public void start(Stage primaryStage) throws Exception {
-            Pane pane=window.getPane();
+            Pane pane=mainApp.getWindow().getPane();
             Scene scene=new Scene(pane);
             primaryStage.setScene(scene);
-            mainCtrl.init();
+            mainApp.mainCtrl.init();
             primaryStage.show();
         }
-        public static void setCtrl(MainCtrl ctrl){
-            mainCtrl=ctrl;
-        }
-        public static void setWindow(JavaFXWindow win){
-            window=win;
+        public static void setApp(JavaFXMainApplication app){
+            mainApp=app;
         }
     }
     @Override
     public void init() {
-        JavaFXApp.setCtrl(mainCtrl);
-        JavaFXApp.setWindow((JavaFXWindow)window);
+       JavaFXApp.setApp(this);
     }
 
     @Override
@@ -56,5 +51,7 @@ public class JavaFXMainApplication extends MainApplication{
     public void close() {
         Platform.exit();
     }
-    
+    public JavaFXWindow getWindow(){
+        return (JavaFXWindow)window;
+    }
 }

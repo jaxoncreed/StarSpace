@@ -1,12 +1,13 @@
 package spacetrader;
 
-import spacetrader.Window.Window;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import spacetrader.Application.MainApplication;
+import spacetrader.Window.Window;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
@@ -20,18 +21,30 @@ import spacetrader.game_model.*;
 public class MainCtrl extends Ctrl{
     private Window window;
     private ViewCtrl currentViewCtrl;
-    private GalaxyGeneratorCtrl galaxyGenerator;
-    public MainCtrl(Window aWindow) {
-        window=aWindow;
-        
+    public static interface CloseOperator{
+        public void op();
+    }
+    private CloseOperator close;
+    /**
+     * Constructor
+     * 
+     * @param aWindow: A class that will be the window for the project
+     */
+    public MainCtrl(Window aWindow){
+        window = aWindow;
     }
     public void init(){
-        currentViewCtrl=
+        currentViewCtrl=new MenuCtrl(this,window);
+        currentViewCtrl.startView();
     }
-    private void switchViews(ViewCtrl newViewCtrl) {
+    public void switchViews(CtrlViewTypes type){
         currentViewCtrl.stopView();
-        newViewCtrl.startView();
-        currentViewCtrl = newViewCtrl;
+        currentViewCtrl=ViewCtrlFactory.getViewCtrl(type);
+        currentViewCtrl.startView();
     }
-
+    public void setClose(CloseOperator op){
+    }
+    public void close(){
+        close.op();
+    }
 }

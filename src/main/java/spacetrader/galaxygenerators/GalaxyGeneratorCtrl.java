@@ -12,15 +12,20 @@ import spacetrader.Window;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
+import spacetrader.game_model.Galaxy;
 
 /**
- *
+ * To generate a galaxy, simply instantiate this class, and call the generate() 
+ * method on the instantiation. The generated galaxy, complete with StarSystems, 
+ * Planets, and JumpPoints, will be available through the passed in GameModel.
+ * 
  * @author fsanchez
  */
 public class GalaxyGeneratorCtrl extends ViewCtrl {
     CreateGalaxyView view;
     MainCtrl mainCtrl;
-    GalaxyGenerator generator; 
+    GalaxyGenerator generator;
+    private GameModel gameModel;
     
     private static final String CONFIG_XML_FILE = "generator_config.xml";
 
@@ -36,6 +41,8 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
         PlanetGenerator planetGen = parser.getPlanetGenerators().get(0);
         sysGen.setPlanetGenerator(planetGen);
         generator.setStarSystemGenerator(sysGen);
+        
+        this.gameModel = gameModel;
     }
     
     @Override
@@ -48,5 +55,9 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     @Override
     public void stopView() {
         view.removeGalaxyCreator();
+    }
+    
+    public void generate() {
+        gameModel.setGalaxy(generator.generate());
     }
 }

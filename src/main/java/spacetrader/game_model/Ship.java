@@ -11,10 +11,10 @@ import spacetrader.Interactable;
  */
 public class Ship implements Tradeable, Serializable, Interactable {
 
-    private final String name;
+    private String name;
     private double basePrice;
     private int firePower;
-    private final Inventory cargo;
+    private Inventory cargo;
     private int health;
     private int maxHealth;
     private StarSystem system;

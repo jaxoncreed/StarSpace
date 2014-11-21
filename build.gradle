@@ -50,4 +50,9 @@ test {
    filter {
       includeTestsMatching "*Test"
    }
+   testLogging {
+       exceptionFormat = 'full'
+       showStandardStreams = true
+   }    
 }
+

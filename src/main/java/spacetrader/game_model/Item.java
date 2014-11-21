@@ -7,6 +7,7 @@ package spacetrader.game_model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import static spacetrader.game_model.ItemClass.*;
 
 /**
  *
@@ -52,5 +53,46 @@ public class Item implements Tradeable, Serializable {
         hash = 79 * hash + Objects.hashCode(this.name);
         hash = 79 * hash + (int) (Double.doubleToLongBits(this.basePrice) ^ (Double.doubleToLongBits(this.basePrice) >>> 32));
         return hash;
+    }
+    
+    private static enum ItemType {
+        
+        // ores
+        COPPER(ORE, 1.00),
+        IRON(ORE, 1.00), 
+        CARBON(ORE, 1.00),
+        GOLD(ORE, 5.00), 
+        DIAMOND(ORE, 10.00),
+        STEEL(ORE, 2.50),
+        
+        
+        // luxury goods
+        PS10(LUXURY, 400.00),
+        KUMQUAT(LUXURY, 1000.00),
+        
+        // weapons
+        RAILGUN(WEAPON, 300.00),
+        
+        // necessitities
+        GRAIN(NECESSITY, 0.50),
+        WATER(NECESSITY, 0.50),
+        OXYGEN(NECESSITY, 0.50);
+        
+        private final ItemClass itemClass;
+        private final double basePrice;
+        
+        private ItemType(ItemClass itemClass, double basePrice) {
+            this.itemClass = itemClass;
+            this.basePrice = basePrice;
+        }
+        
+        public double getBasePrice() {
+            return basePrice;
+        }
+        
+        public ItemClass getItemClass() {
+            return itemClass;
+        }
+
     }
 }

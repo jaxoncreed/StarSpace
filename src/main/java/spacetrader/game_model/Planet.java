@@ -2,7 +2,7 @@ package spacetrader.game_model;
 
 import java.io.Serializable;
 
-public class Planet implements Serializable {
+public class Planet implements Serializable, Positionable {
 
     //#todo need to implement id system
 	private Position pos;
@@ -53,5 +53,10 @@ public class Planet implements Serializable {
    
     public String getName(){
         return name;
+    }
+
+    @Override
+    public Position getPosition() {
+        return pos;
     }
 }

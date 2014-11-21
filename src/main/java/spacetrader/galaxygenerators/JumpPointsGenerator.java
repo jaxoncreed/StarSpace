@@ -1,9 +1,11 @@
 package spacetrader.galaxygenerators;
 
+import java.util.ArrayList;
 import spacetrader.game_model.Galaxy;
 import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.StarType;
 import java.util.List;
+import spacetrader.game_model.JumpPoint;
 /**
  * @author Michael Lane <mlane@gatech.edu>
  */
@@ -12,7 +14,8 @@ public class JumpPointsGenerator {
 	private Galaxy galaxy;
 	private double constant;
 	private double threshold;
-	public boolean connectBlackHoles; 
+	private boolean connectBlackHoles; 
+    private List<JumpPoint> jumpPoints;
 
 	public JumpPointsGenerator(
 		Galaxy galaxy,
@@ -24,6 +27,7 @@ public class JumpPointsGenerator {
 		setConstant(constant);
 		setThreshold(threshold);
 		this.connectBlackHoles = connectBlackHoles;
+        jumpPoints = new ArrayList();
 	}
 
 	private double calculateAttraction(StarSystem system1, StarSystem system2) {
@@ -52,10 +56,9 @@ public class JumpPointsGenerator {
 						&& system1.getStarType() == StarType.BLACK_HOLE)
 						&& system2.getStarType() == StarType.BLACK_HOLE) {
 					
-					system1.addJumpPoint(
-						system1.getPosition(), 
+					jumpPoints.add(system1.addJumpPoint(
 						system2, 
-						system2.getPosition());
+						system1.getPosition(), system2.getPosition()));
 				}
 			}
 		}
@@ -87,4 +90,8 @@ public class JumpPointsGenerator {
 		}
 		this.threshold = threshold;
 	}
+    
+    public List<JumpPoint> getJumpPointList() {
+        return jumpPoints;
+    }
 }

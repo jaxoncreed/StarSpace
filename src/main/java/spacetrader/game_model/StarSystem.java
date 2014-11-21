@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class StarSystem implements Node, Serializable {
+public class StarSystem implements Node, Serializable, Positionable {
 
 	private String name;
 	private Position pos;
@@ -57,28 +57,31 @@ public class StarSystem implements Node, Serializable {
 		planets.add(planet);
 	}
 
-	public void addJumpPoint(Position pos, StarSystem targetSys, Position targetPos) {
-		jumpPoints.put(targetSys,new JumpPoint(pos, targetSys, targetPos));
-		targetSys.asymmetricalAddJumpPoint(this,new JumpPoint(targetPos, this, pos));
-	}
-        public List<Planet> getPlanets() {
-            return planets;
-        }
+	public JumpPoint addJumpPoint(StarSystem targetSys, Position pos, Position targetPos) {
+        JumpPoint j = new JumpPoint(this, targetSys, pos, targetPos);
+		this.asymmetricalAddJumpPoint(targetSys, j);
+		targetSys.asymmetricalAddJumpPoint(this, j);
+        return j;
         
-	private void asymmetricalAddJumpPoint(StarSystem from,JumpPoint jumpPoint) {
+	}
+    public List<Planet> getPlanets() {
+        return planets;
+    }
+        
+	private void asymmetricalAddJumpPoint(StarSystem from, JumpPoint jumpPoint) {
 		jumpPoints.put(from,jumpPoint);
 	}
-        public ArrayList<StarSystem> getNeighbors(){
-            ArrayList<StarSystem> out=new ArrayList();
-            jumpPoints.forEach((k,v) -> {
-                out.add(v.getTargetSystem());
-            });
-            return out;
-        }
+    public List<StarSystem> getNeighbors(){
+        List<StarSystem> out=new ArrayList();
+        jumpPoints.forEach((k,v) -> {
+//                out.add(v.getTargetSystem());
+        });
+        return out;
+    }
 
-        public JumpPoint getJumpPoint(StarSystem s){
-            return jumpPoints.get(s);
-        }
+    public JumpPoint getJumpPoint(StarSystem s){
+        return jumpPoints.get(s);
+    }
     @Override
     public int hashCode() {
         int hash = 3;
@@ -112,4 +115,33 @@ public class StarSystem implements Node, Serializable {
     public StarType getStarType() {
         return starType;
     }
+    public String getName() {
+        return name;
+    }
+    
+    public String toString() {
+        return getName();
+    }
+
+//    @Override
+//    public double getCostTo(Node node) {
+//        if (!(node instanceof StarSystem)) {
+//            return Double.POSITIVE_INFINITY;
+//        }
+//        
+//        if (getJumpPoint((StarSystem) node) != null) {
+//            return 1;
+//        } else {
+//            return Double.POSITIVE_INFINITY;
+//        }
+//    }
+//
+//    @Override
+//    public List<Node> getSuccessors() {
+//        List<Node> out=new ArrayList();
+//        jumpPoints.forEach((k,v) -> {
+//            out.add(v.getTargetSystem());
+//        });
+//        return out;
+//    }
 }

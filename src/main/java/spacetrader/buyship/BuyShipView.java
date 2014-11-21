@@ -32,7 +32,7 @@ import spacetrader.controlship.ControlShipView;
  *
  * @author fsanchez
  */
-public class BuyShipView extends AbstractView implements Initializable {
+public class BuyShipView implements Initializable {
     public Window window;
     public BuyShipCtrl buyShipCtrl;
     public Pane curPane;
@@ -57,16 +57,6 @@ public class BuyShipView extends AbstractView implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
-    @Override
-    public void render() {
-        
-    }
-
-    @Override
-    public void hide() {
 
     }
 

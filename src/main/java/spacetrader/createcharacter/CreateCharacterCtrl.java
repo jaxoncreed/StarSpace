@@ -17,22 +17,26 @@ import spacetrader.menu.MenuView;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
+import spacetrader.AbstractView;
+import spacetrader.CtrlViewTypes;
+import spacetrader.ViewCtrlFactory;
 
 /**
  *
  * @author Jackson Morgan
  */
 public class CreateCharacterCtrl extends ViewCtrl {
-    CreateCharacterView view;
     MainCtrl mainCtrl;
     GameModel gameModel;
 
     public CreateCharacterCtrl(MainCtrl parent,Window aWindow) {
         super(parent,aWindow);
+        view=ViewCtrlFactory.getView(CtrlViewTypes.CharacterCreator, window, this);
     }
 
     @Override
     public void startView() {
+        view.render();
     }
 
     @Override

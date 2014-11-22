@@ -5,10 +5,12 @@
  */
 package spacetrader;
 
+import spacetrader.Window.Window;
+
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public enum CtrlViewTypes {
-    MainMenu,CharacterCreator,UniverseCreator,ControlShip,Trade,SaveGame,LoadGame,GalaxyMap
+public abstract class ViewFactory {
+    public abstract AbstractView getView(Window win,Ctrl ctrl);
 }

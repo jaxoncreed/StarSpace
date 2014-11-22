@@ -7,6 +7,7 @@ import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import spacetrader.Application.MainApplication;
+import static spacetrader.CtrlViewTypes.MainMenu;
 import spacetrader.Window.Window;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
@@ -34,15 +35,16 @@ public class MainCtrl extends Ctrl{
         window = aWindow;
     }
     public void init(){
-        currentViewCtrl=new MenuCtrl(this,window);
+        currentViewCtrl=ViewCtrlFactory.getViewCtrl(MainMenu,this,window);
         currentViewCtrl.startView();
     }
     public void switchViews(CtrlViewTypes type){
         currentViewCtrl.stopView();
-        currentViewCtrl=ViewCtrlFactory.getViewCtrl(type);
+        currentViewCtrl=ViewCtrlFactory.getViewCtrl(type,this,window);
         currentViewCtrl.startView();
     }
     public void setClose(CloseOperator op){
+        close=op;
     }
     public void close(){
         close.op();

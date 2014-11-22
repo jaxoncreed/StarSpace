@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader;
+package spacetrader.maketrade;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public enum CtrlViewTypes {
-    MainMenu,CharacterCreator,UniverseCreator,ControlShip,Trade,SaveGame,LoadGame,GalaxyMap
+public class MakeTradeViewFactory {
+    
 }

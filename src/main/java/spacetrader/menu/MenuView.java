@@ -50,6 +50,9 @@ public class MenuView extends AbstractView implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        start.setOnAction((ActionEvent event)->{
+            menuCtrl.startGame();
+        });
     }
 
     @Override

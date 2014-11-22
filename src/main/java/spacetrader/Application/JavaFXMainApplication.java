@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import spacetrader.MainCtrl;
+import spacetrader.MultiKeyPressEventHandler;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.Window.Window;
 
@@ -31,7 +32,14 @@ public class JavaFXMainApplication extends MainApplication{
             Scene scene=new Scene(pane);
             primaryStage.setScene(scene);
             mainApp.mainCtrl.init();
+            mainApp.getWindow().setKeyHandle(()->{
+                //Do nothing in the key handler by default
+            });
+            MultiKeyPressEventHandler handler=new MultiKeyPressEventHandler((MultiKeyPressEventHandler.MultiKeyEvent event) -> {
+                mainApp.getWindow().keyHandle(event);//Make the key handler for the window trigger on events
+            });
             primaryStage.show();
+
         }
         public static void setApp(JavaFXMainApplication app){
             mainApp=app;

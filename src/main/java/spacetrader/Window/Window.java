@@ -11,11 +11,21 @@ import spacetrader.Application.ApplicationType;
  * @author Jackson Morgan
  */
 public abstract class Window {
+    public static interface Handler{
+        public void handle();
+    } 
+    protected Handler handleKey;
     private int SCREEN_WIDTH = 1280;
     private int SCREEN_HEIGHT = 720; 
-    private ApplicationType type;
+    protected ApplicationType type;
     public abstract void init();
     public abstract void close();
+    public void setKeyHandle(Handler key){
+        handleKey=key;
+    }
+    public void keyHandle(){
+        handleKey.handle();
+    }
     public void setWidth(int width){
         SCREEN_WIDTH=width;
     }

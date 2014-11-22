@@ -20,6 +20,7 @@ public class GeneratorConfigParser {
 	private List<GalaxyGenerator> _galaxyGenerators;
 	private List<StarSystemGenerator> _starSystemGenerators;
 	private List<PlanetGenerator> _planetGenerators;
+    private List<JumpPointsGenerator> _jumpPointsGenerators;
 
 	public GeneratorConfigParser(String filename) throws Exception {
 
@@ -149,7 +150,10 @@ public class GeneratorConfigParser {
 			} else if (gen instanceof PlanetGenerator) {
 				_planetGenerators.add((PlanetGenerator) gen);
 
-			} else {
+			} else if (gen instanceof JumpPointsGenerator) {
+                _jumpPointsGenerators.add((JumpPointsGenerator) gen);
+                
+            } else {
 				throw new RuntimeException("YO FOOL: I don't know how you managed"
                     + " to get this far in the code and not run in to any other errors."
                     + " I don't know what's wrong with your input. It might be that"
@@ -169,6 +173,10 @@ public class GeneratorConfigParser {
 	public List<PlanetGenerator> getPlanetGenerators() {
 		return _planetGenerators;
 	}
+    
+    public List<JumpPointsGenerator> getJumpPointsGenerators() {
+        return _jumpPointsGenerators;
+    }
 
 	private String camelify(String str) {
 		StringBuilder builder = new StringBuilder(str);

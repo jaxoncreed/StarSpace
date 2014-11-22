@@ -1,5 +1,50 @@
-<config>
 
+<!-- 
+If you take a look at the "EllipticalGalaxyGenerator" class and compare it with
+the "EllipticalGalaxyGenerator" tag below, you will notice that many of the 
+fields in the class match the parameters listed inside the tag. All you need to 
+do set those fields is to simply list the field name below, along with a value. 
+The rest is done for you. You will also notice that some parameters inside the tag
+below don't appear as fields inside the "EllipticalGalaxyGenerator" class. Actually,
+they do, but you don't see them because they're inherited from the "GalaxyGenerator"
+abstract superclass.
+
+They only parameter below that is NOT found in either the "EllipticalGalaxyGenerator" 
+class or its abstract superclass "GalaxyGenerator" is "sampleNumSystems." You can
+see that the parameter is given the boolean value "true."
+
+When instantiating a GalaxyGenerator, there are two options: either, you can specify
+EXACTLY how many StarSystems you want the GalaxyGenerator to generate. Say you 
+specify 1000 StarSystems to generate. This way, whenever you call the method "generate()"
+on the GalaxyGenerator, a galaxy will be returned with 1000 StarSystems. The XML
+code for this type of specification is below:
+
+    <EllipticalGalaxyGenerator>
+        <numSystems>       1000  </numSystems>
+        <sampleNumSystems> false </sampleNumSystems>
+    </EllipticalGalaxyGenerator>
+
+Alternatively, let's say you DON'T want to specify exactly how many StarSystems 
+to generate, and would rather generate a random number of galaxies. Let's say you 
+want "about 1000 StarSystems, plus or minus 100." This type of specification can
+be seen below:
+
+    <EllipticalGalaxyGenerator>
+        <numSystemsMean>   1000 </numSystemsMean>
+        <numSystemsSD>     100  </numSystemsSD>
+        <sampleNumSystems> true </sampleNumSystems>
+    </EllipticalGalaxyGenerator>
+    
+Notice that the "sampleNumSystems" parameter has changed to true. Basically, 
+"sampleNumSystems" set to "true" means choose a random number of StarSystems, and 
+set to "false" means generate with a given number of StarSystems.
+
+This pattern can also be seen in <SimpleStarSystemGenerator>, with the <sampleNumPlanets>
+tag.
+--> 
+
+<config>
+    
     <EllipticalGalaxyGenerator>
         <numSystemsMean>    100     </numSystemsMean>
         <numSystemsSD>      10      </numSystemsSD>
@@ -25,5 +70,11 @@
 
     <SimplePlanetGenerator>
     </SimplePlanetGenerator>
+    
+    <JumpPointsGenerator>
+        <connectBlackHoles>   false </connectBlackHoles>
+        <threshold>           10    </threshold>
+        <constant>            1     </constant>
+    </JumpPointsGenerator>
 
 </config>

@@ -32,7 +32,7 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 	 */
 	private Double minPlanetSep;
 
-	/** The maximum distance of any planet in the generated StarSystem. */
+	/** The maximum distance from the stars of any planet in the generated StarSystem. */
 	private Double plutoDist;
 
 	public SimpleStarSystemGenerator() {

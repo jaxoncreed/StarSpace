@@ -143,7 +143,6 @@ public class RealTimeShipView extends Pane implements Initializable {
         if(event.isPressed(KeyCode.S)){
             controller.movePlayer(0f, .01f);
         }
-
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

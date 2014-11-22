@@ -5,3 +5,4 @@
 /.gradle
 *.class
 *.lock
+/fuck/.nb-gradle/private/

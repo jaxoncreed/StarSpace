@@ -5,26 +5,25 @@ import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.StarType;
 import java.util.List;
 /**
+ * A JumpPoint is placed between two StarSystems if they are sufficiently "attracted"
+ * to one another. This attraction is a function of the two star masses, of the
+ * distance between the StarSystems, and of a given "constant."
+ * 
  * @author Michael Lane <mlane@gatech.edu>
  */
 public class JumpPointsGenerator {
 
 	private Galaxy galaxy;
+    /** The constant used in the calculation of attraction; see the class javadoc. */
 	private double constant;
+    /** The minimum level of attraction required for two StarSystems to be connected
+     * by a JumpPoint; see the class javadoc.
+     */
 	private double threshold;
+    /** true iff black holes should always be connected; otherwise, black holes 
+     * are treated the same as any other StarType.
+     */
 	public boolean connectBlackHoles; 
-
-	public JumpPointsGenerator(
-		Galaxy galaxy,
-		double constant,
-		double threshold,
-		boolean connectBlackHoles) {
-
-		setGalaxy(galaxy);
-		setConstant(constant);
-		setThreshold(threshold);
-		this.connectBlackHoles = connectBlackHoles;
-	}
 
 	private double calculateAttraction(StarSystem system1, StarSystem system2) {
 		
@@ -72,7 +71,7 @@ public class JumpPointsGenerator {
 		this.galaxy = galaxy;
 	}
 
-	public final void setConstant(double constant) {
+	public final void setConstant(Double constant) {
 
 		if (constant <= 0) {
 			throw new IllegalArgumentException("constant = " + constant + " given; constant must be positive");
@@ -80,11 +79,16 @@ public class JumpPointsGenerator {
 		this.constant = constant;
 	}
 
-	public final void setThreshold(double threshold) {
+	public final void setThreshold(Double threshold) {
 
 		if (threshold <= 0) {
 			throw new IllegalArgumentException("threshold = " + threshold + " given; threshold must be positive");
 		}
 		this.threshold = threshold;
 	}
+    
+    public final void setConnectBlackHoles(Boolean connect){
+        this.connectBlackHoles = true;
+    }
+        
 }

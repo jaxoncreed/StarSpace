@@ -160,7 +160,6 @@ public class CreateCharacterView extends AbstractView implements Initializable {
             skill.setNavigation(navigation);
             skill.setPiloting(piloting);
             skill.setName(name.getText());
-            skill.save();
             System.out.println("Engineering:"+skill.getEngineering());
             System.out.println("Charisma:"+skill.getCharisma());
             System.out.println("Navigation:"+skill.getNavigation());

@@ -73,12 +73,11 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     public ControlShipView() {};
 
-    public ControlShipView(Window window, ControlShipCtrl shipCtrl, Stage stage, GameModel gameModel) {
+    public ControlShipView(Window window, ControlShipCtrl shipCtrl) {
         this.window = window;
         this.shipCtrl = shipCtrl;
 
-        // Prepare camera
-        this.player = gameModel.getPlayer();
+        this.player = GameModel.get().getPlayer();
         this.playerShip = player.getShip();
         this.camera = new Position(playerShip.getPosition());
 

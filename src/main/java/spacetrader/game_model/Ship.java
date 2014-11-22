@@ -42,6 +42,7 @@ public class Ship implements Tradeable, Serializable, Interactable {
         this.maxAngularSpeed = 10.0;
         this.interactionRange = 100.0;
     }
+
         
     public void jump(JumpPoint jumpPoint) {
         system.removeShip(this);

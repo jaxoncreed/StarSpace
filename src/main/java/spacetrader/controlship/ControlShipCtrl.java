@@ -18,15 +18,15 @@ import spacetrader.game_model.Planet;
 import spacetrader.game_model.StarSystem;
 import spacetrader.game_model.GameModel;
 import javafx.stage.Stage;
+import spacetrader.CtrlViewTypes;
+import spacetrader.ViewCtrlFactory;
 
 /**
  *
  * @author Jackson Morgan
  */
 public class ControlShipCtrl extends ViewCtrl {
-    ControlShipView view;
     MainCtrl mainCtrl;
-    private GameModel gameModel;
     private Player player;
     private Ship playerShip;
     private Interactable interactionEntity;
@@ -35,27 +35,29 @@ public class ControlShipCtrl extends ViewCtrl {
  
     public ControlShipCtrl(MainCtrl aParent, Window aWindow) {
         super(aParent, aWindow);
-        view = new ControlShipView(aWindow, this, stage, gameModel);
+        view = ViewCtrlFactory.getView(CtrlViewTypes.ControlShip, window, this);
         mainCtrl = aParent;
 
-        player = gameModel.getPlayer();
+        player = GameModel.get().getPlayer();
         playerShip = player.getShip();
         interactionEntity = null;
     }
 
     public void update() {
-
         spacetrader.PhysicsSimulator.simulate();
- 
-        // Update interaction opportunities
-        interactionEntity = null;
-        view.setInteractionMessage("");
+    }
+
+    public void performInteraction() {
+        if (interactionEntity != null) {
+            interactionEntity.interact(playerShip, GameModel.get());
+        }
+    }
+    public void checkInteraction(){
         StarSystem curSystem = player.getSystem();
         for (JumpPoint j : curSystem.getJumpPoints()) {
             double interactionRange = playerShip.getInteractionRange() + j.getInteractionRange();
             double distance = j.getPos().distTo(player.getPosition());
             if (distance <= interactionRange) {
-                view.setInteractionMessage(j.getInteractionMessage());
                 interactionEntity = j;
             }
         }
@@ -63,18 +65,17 @@ public class ControlShipCtrl extends ViewCtrl {
             double interactionRange = playerShip.getInteractionRange() + p.getInteractionRange();
             double distance = p.getPos().distTo(player.getPosition());
             if (distance <= interactionRange) {
-                view.setInteractionMessage(p.getInteractionMessage());
                 interactionEntity = p;
             }
         }
+        interactionEntity=null;
     }
-
-    public void performInteraction() {
-        if (interactionEntity != null) {
-            interactionEntity.interact(playerShip, gameModel);
-        }
+    public String getInteractionMessage(){
+        if(interactionEntity!=null)
+            return interactionEntity.getInteractionMessage();
+        else 
+            return null;
     }
-
     public void playerAccelerate() {
         playerShip.accelerate();
     }
@@ -93,12 +94,12 @@ public class ControlShipCtrl extends ViewCtrl {
 
     @Override
     public void startView() {
-        view.renderPilotingShip();
+        view.render();
     }
 
     @Override
     public void stopView() {
-        view.remove();
+        view.hide();
     }
     
     public void saveGame() {

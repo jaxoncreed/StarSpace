@@ -16,6 +16,8 @@ import spacetrader.maketrade.MakeTradeView;
 import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
+import spacetrader.CtrlViewTypes;
+import spacetrader.ViewCtrlFactory;
 import spacetrader.Window.JavaFXWindow;
 
 /**
@@ -23,20 +25,15 @@ import spacetrader.Window.JavaFXWindow;
  * @author Jackson Morgan
  */
 public class MakeTradeCtrl extends ViewCtrl {
-    MakeTradeView view;
     MainCtrl mainCtrl;
     Inventory store;
     Player player;
     
     public MakeTradeCtrl(MainCtrl aParent, Window window) {
         super(aParent, window);
-        view = new MakeTradeView((JavaFXWindow)window, this);
+        view = ViewCtrlFactory.getView(CtrlViewTypes.Trade, window, this);
         mainCtrl = aParent;
-        try {
-            this.player = GameModel.get().getPlayer();
-        } catch (GameModel.GameModelNotSetException ex) {
-            Logger.getLogger(MakeTradeCtrl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.player = GameModel.get().getPlayer();
     }
 
     public boolean sell(Item item,int amount) {
@@ -67,13 +64,12 @@ public class MakeTradeCtrl extends ViewCtrl {
     
     @Override
     public void startView() {
-        view.renderMakeTrade(player.getShip().getCargo().getItems(),
-                             player.getWoolongs(), store.getItems());
+        view.render();
     }
 
     @Override
     public void stopView() {
-        view.removeMakeTrade();
+        view.hide();
     }
     public void shipControl(){
     }

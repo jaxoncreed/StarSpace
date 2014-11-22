@@ -53,21 +53,15 @@ public class MakeTradeView extends AbstractView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-
-    @Override
-    public void render() {
-        
-    }
-
     @Override
     public void hide() {
-
+        window.clearFXML(curPane);
+        curPane = null;
     }
 
-    public void renderMakeTrade(List<Item> items, int woolongs, List<Item> items0) {
-        itemsP=(ArrayList<Item>) items;
-        itemsM=(ArrayList<Item>) items0;
-        System.out.println("Render Make Trade");
+    public void render() {
+        itemsP=(ArrayList<Item>) makeTradeCtrl.getItemsPlayer();
+        itemsM=(ArrayList<Item>) makeTradeCtrl.getItemsStore();
         FXMLLoader loader = new FXMLLoader((getClass().getResource("MakeTrade.fxml"))) ;
         loader.setController(this);
         try {
@@ -115,6 +109,5 @@ public class MakeTradeView extends AbstractView implements Initializable {
 
     }
     public void removeMakeTrade() {
-        System.out.println("remove make trade");
     }
 }

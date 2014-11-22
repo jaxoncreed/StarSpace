@@ -16,7 +16,7 @@ public class Player implements Serializable {
     private final Faction faction;
     private int woolongs; //currency
     private Ship ship;
-    
+    private Skillset skillSet;
     public Player(String name, Faction faction) {
         this.name = name;
         this.faction = faction;
@@ -59,5 +59,7 @@ public class Player implements Serializable {
     public void setSystem(StarSystem system) {
         ship.setSystem(system);
     }
-
+    public void setSkillset(Skillset skill){
+        skillSet=skill;
+    }
 }

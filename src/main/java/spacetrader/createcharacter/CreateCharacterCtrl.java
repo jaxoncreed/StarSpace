@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 import spacetrader.AbstractView;
 import spacetrader.CtrlViewTypes;
 import spacetrader.ViewCtrlFactory;
+import spacetrader.game_model.Faction;
+import spacetrader.game_model.Player;
+import spacetrader.game_model.Ship;
 
 /**
  *
@@ -31,6 +34,7 @@ public class CreateCharacterCtrl extends ViewCtrl {
 
     public CreateCharacterCtrl(MainCtrl parent,Window aWindow) {
         super(parent,aWindow);
+        mainCtrl=parent;
         view=ViewCtrlFactory.getView(CtrlViewTypes.CharacterCreator, window, this);
     }
 
@@ -45,9 +49,14 @@ public class CreateCharacterCtrl extends ViewCtrl {
     }
 
     void backout() {
+        mainCtrl.switchViews(CtrlViewTypes.MainMenu);
     }
 
     void creationDone(Skillset skill) {
+        Player player=new Player(skill.getName(),Faction.Test1);
+        GameModel.get().setPlayer(player);
+        GameModel.get().getPlayer().setSkillset(skill);
+        mainCtrl.switchViews(CtrlViewTypes.CreateGalaxy);
     }
     
 }

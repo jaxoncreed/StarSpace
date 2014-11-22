@@ -10,5 +10,5 @@ package spacetrader;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public enum CtrlViewTypes {
-    MainMenu,CharacterCreator,UniverseCreator,ControlShip,Trade,SaveGame,LoadGame,GalaxyMap
+    MainMenu,CharacterCreator,CreateGalaxy,ControlShip,Trade,SaveGame,LoadGame,GalaxyMap
 }

@@ -8,9 +8,9 @@ import java.io.Serializable;
  */
 public class GameModel implements Serializable {
     private static GameModel gameModel;
-    public static GameModel get() throws GameModelNotSetException{
+    public static GameModel get() {
         if(gameModel==null)
-            throw new GameModelNotSetException();
+            set(null,null);
         return gameModel;
     }
     public static GameModel set(Player player,Galaxy gal){

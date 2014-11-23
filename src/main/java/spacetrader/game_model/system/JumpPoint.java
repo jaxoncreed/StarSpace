@@ -62,6 +62,6 @@ public class JumpPoint implements Serializable, InteractableObject {
 
     @Override
     public InteractionType getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return InteractionType.Travel;
     }
 }

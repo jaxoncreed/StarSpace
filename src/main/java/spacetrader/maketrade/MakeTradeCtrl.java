@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import spacetrader.CtrlViewTypes;
 import spacetrader.ViewCtrlFactory;
 import spacetrader.Window.JavaFXWindow;
+import spacetrader.game_model.gameLogic.Market;
 
 /**
  *
@@ -31,12 +32,13 @@ public class MakeTradeCtrl extends ViewCtrl {
     MainCtrl mainCtrl;
     Inventory store;
     Player player;
-    
-    public MakeTradeCtrl(MainCtrl aParent, Window window) {
+    Market market;
+    public MakeTradeCtrl(MainCtrl aParent, Window window,Market m) {
         super(aParent, window);
         view = ViewCtrlFactory.getView(CtrlViewTypes.Trade, window, this);
         mainCtrl = aParent;
         this.player = GameModel.get().getPlayer();
+        market=m;
     }
 
     public boolean sell(Item item,int amount) {

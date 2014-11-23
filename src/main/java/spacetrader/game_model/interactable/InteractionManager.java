@@ -15,11 +15,10 @@ import spacetrader.game_model.gameLogic.Position;
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public abstract class InteractionManager {
+public class InteractionManager {
     public interface InteractAction{
         public void interact(InteractableObject obj);
     }
-    private HashMap<InteractionType,InteractAction> funcMap;
     private class NullInteraction implements InteractableObject{
         @Override
         public double getInteractionRange() {
@@ -40,11 +39,14 @@ public abstract class InteractionManager {
         }
     }
     private ArrayList<InteractableObject> objectList;
-    public interface InteractionInterface{
-        
-    }
+    private HashMap<InteractionType,InteractAction> funcMap;
+
     public InteractionManager(ArrayList<InteractableObject> object){
         objectList=object;
+        funcMap=new HashMap();
+        funcMap.put(InteractionType.Null, (InteractableObject obj)->{
+            
+        });
     }
     public InteractableObject getInteraction(Ship ship){
         for(InteractableObject object:objectList){

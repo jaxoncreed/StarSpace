@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 import spacetrader.CtrlViewTypes;
 import spacetrader.ViewCtrlFactory;
 import spacetrader.game_model.interactable.InteractionManager;
+import spacetrader.game_model.interactable.InteractionManager.InteractAction;
+import spacetrader.game_model.interactable.InteractionType;
 
 /**
  *
@@ -42,6 +44,17 @@ public class ControlShipCtrl extends ViewCtrl {
         
         player = GameModel.get().getPlayer();
         playerShip = player.getShip();
+        InteractAction tradeAction=(InteractableObject obj)->{
+            ViewCtrlFactory.setMarket(((Planet)obj).getMarket());
+            mainCtrl.switchViews(CtrlViewTypes.Trade);
+        };
+        InteractAction travelAction=(InteractableObject obj)->{
+            //Do the jumpPoint Travel stuff
+        };
+
+        interactionManager.setInteractFunction(InteractionType.Trade, tradeAction);
+        interactionManager.setInteractFunction(InteractionType.Travel, travelAction);
+        interactionManager=new InteractionManager(playerShip.getSystem().getInteractableObjects());
     }
 
     public void update() {

@@ -12,6 +12,7 @@ import spacetrader.createGalaxy.CreateGalaxyCtrl;
 import spacetrader.createGalaxy.CreateGalaxyViewFactory;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.createcharacter.CreateCharacterViewFactory;
+import spacetrader.game_model.gameLogic.Market;
 import spacetrader.loadGame.LoadGameCtrl;
 import spacetrader.loadGame.LoadGameViewFactory;
 import spacetrader.saveGame.SaveGameCtrl;
@@ -28,13 +29,14 @@ import spacetrader.viewGalaxyMap.GalaxyMapViewFactory;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public class ViewCtrlFactory {
+    private static Market market;
     public static ViewCtrl getViewCtrl(CtrlViewTypes type,MainCtrl ctrl,Window win){
         switch(type){
             case CharacterCreator:  return new CreateCharacterCtrl(ctrl,win);
             case MainMenu:          return new MenuCtrl(ctrl,win);
             case SaveGame:          return new SaveGameCtrl(ctrl,win);
             case LoadGame:          return new LoadGameCtrl(ctrl,win);
-            case Trade:             return new MakeTradeCtrl(ctrl,win);
+            case Trade:             return new MakeTradeCtrl(ctrl,win,market);
             case CreateGalaxy:      return new CreateGalaxyCtrl(ctrl,win);
             case ControlShip:       return new ControlShipCtrl(ctrl,win);
             case GalaxyMap:         return new GalaxyMapCtrl(ctrl,win);
@@ -48,10 +50,13 @@ public class ViewCtrlFactory {
             case SaveGame:          return new SaveGameViewFactory().getView(win, ctrl);
             case LoadGame:          return new LoadGameViewFactory().getView(win, ctrl);
             case Trade:             return new MakeTradeViewFactory().getView(win, ctrl);
-            case CreateGalaxy:    return new CreateGalaxyViewFactory().getView(win, ctrl);
+            case CreateGalaxy:      return new CreateGalaxyViewFactory().getView(win, ctrl);
             case ControlShip:       return new ControlShipViewFactory().getView(win, ctrl);
             case GalaxyMap:         return new GalaxyMapViewFactory().getView(win, ctrl);
         }
         return null;
+    }
+    public static void setMarket(Market market){
+        ViewCtrlFactory.market=market;
     }
 }

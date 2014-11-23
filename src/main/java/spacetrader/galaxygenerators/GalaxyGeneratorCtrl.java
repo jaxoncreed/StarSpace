@@ -14,6 +14,7 @@ import spacetrader.game_model.GameModel;
 
 import javafx.stage.Stage;
 import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.JumpPoint;
 import spacetrader.game_model.graph.DirectedEdge;
 import spacetrader.game_model.graph.Graph;
 
@@ -28,7 +29,7 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     CreateGalaxyView view;
     MainCtrl mainCtrl;
     GalaxyGenerator generator;
-    JumpPointGenerator jumpPointGenerator;
+    JumpPointsGenerator jumpPointGenerator;
     private GameModel gameModel;
     
     private static final String CONFIG_XML_FILE = "generator_config.xml";
@@ -65,9 +66,9 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
         Galaxy gax = generator.generate();
         jumpPointGenerator.setGalaxy(gax);
         jumpPointGenerator.generate();
-        List<DirectedEdge> edges = jumpPointGenerator.getJumpPoints();
+        List<JumpPoint> edges = jumpPointGenerator.getJumpPointList();
         gax.setJumpPoints(new Graph(edges, null));
-        gameModel.setGalaxy(gax);
-        
+        gameModel.setGalaxy(gax)
+;        
     }
 }

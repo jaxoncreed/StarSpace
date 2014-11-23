@@ -27,7 +27,7 @@ public class Graph {
     private Map<Node, List<Edge>> edgesByNode;
 //    private List<Node> expanded;
 
-    public Graph(List<DirectedEdge> directedEdges, List<UndirectedEdge> undirectedEdges) {
+    public Graph(List<? extends DirectedEdge> directedEdges, List<? extends UndirectedEdge> undirectedEdges) {
 
 //        prettyPrint("undirectedEdges", undirectedEdges, 1);
         
@@ -51,7 +51,7 @@ public class Graph {
         }
     }
     
-    public Graph(List<DirectedEdge> directedEdges, List<UndirectedEdge> undirectedEdges, 
+    public Graph(List<? extends DirectedEdge> directedEdges, List<? extends UndirectedEdge> undirectedEdges, 
     List<Node> isolatedNodes) {
         
         this(directedEdges, undirectedEdges);

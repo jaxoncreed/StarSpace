@@ -9,14 +9,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author fsanchez
  */
 public class Inventory implements Serializable {
-    private HashMap<Item,Integer> items;
+    private Map<Item,Integer> items;
     private int maxSize;
     private int size;
+    
     public Inventory(List<Item> inventory, int maxSize) {
         items=new HashMap<Item,Integer>();
         size=0;
@@ -27,10 +29,10 @@ public class Inventory implements Serializable {
         this.maxSize = maxSize;
     }
     public Inventory(int maxSize) {
-        this(new ArrayList<>(), maxSize);
+        this(new ArrayList(), maxSize);
     }
     public Inventory() {
-        this(new ArrayList<>(), 10);
+        this(new ArrayList(), 10);
     }
     public boolean add(Item item) {
         if (size < maxSize) {

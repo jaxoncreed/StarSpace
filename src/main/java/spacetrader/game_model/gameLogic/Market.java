@@ -16,7 +16,7 @@ import spacetrader.game_model.interactable.InteractableObject;
 public class Market implements Serializable {
 
     private Inventory cargo;
-    private final Planet planet;
+    private Planet planet;
     
     public Market(Inventory cargo, Planet planet) {
         this.cargo = cargo;

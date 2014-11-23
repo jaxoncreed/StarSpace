@@ -39,7 +39,16 @@ public class JumpPoint implements Serializable, InteractableObject {
 	}
 
 	public int getLevel(){
+        if (o == null || !(o instanceof JumpPoint)) {
 		return level;
+        }
+        JumpPoint that = (JumpPoint) o;
+        return 
+            this.getToNode().equals(that.getToNode()) 
+            && this.getFromNode().equals(that.getFromNode()) 
+            && this.getFromPosition().equals(that.getFromPosition()) 
+            && this.getToPosition().equals(that.getToPosition())
+            && this.getWeight() == that.getWeight();
 	}
 
 	public double getInteractionRange() {

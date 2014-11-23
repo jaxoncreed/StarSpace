@@ -7,18 +7,11 @@ import spacetrader.maketrade.MakeTradeCtrl;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import spacetrader.createcharacter.CreateCharacterCtrl;
-import spacetrader.game_model.Faction;
-import spacetrader.game_model.Inventory;
-import spacetrader.game_model.Player;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
 import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Galaxy;
-import spacetrader.game_model.GameModel;
-import spacetrader.game_model.StarSystem;
-import spacetrader.game_model.Item;
-import spacetrader.buyship.*;
+import spacetrader.game_model.*;
+
 /**
  * The overall centralized controller. Manages the other controllers
  * @author Jackson Morgan
@@ -37,7 +30,6 @@ public class MainCtrl extends Ctrl{
     //TODO: think of better way to get galaxy generated
     private ControlShipCtrl controlShipCtrl;
     private MakeTradeCtrl makeTradeCtrl;
-    private BuyShipCtrl buyShipCtrl;
     private ControlShipCtrl controlShip;
     private Galaxy gax; 
     private GameModel gameModel;
@@ -50,27 +42,55 @@ public class MainCtrl extends Ctrl{
      * @param aWindow: A class that will be the window for the project
      */
     public MainCtrl(Stage aStage, Window aWindow) throws Exception {
-        //TODO: load option model and dynamically set window settings
+        // TODO: load option model and dynamically set window settings
         stage = aStage;
         window = aWindow;
         
         gameModel = new GameModel();
-        //TODO: fix later. Players don't actually get set by character creator.
+
+        // TODO: Make galaxy generator set galaxy
+        Galaxy galaxy = new Galaxy(100, 100);
+
+        StarSystem sol        = new StarSystem("Sol",        new Position(10, 10), StarType.DWARF);
+        StarSystem andromeda  = new StarSystem("Andromeda",  new Position(30, 30), StarType.DWARF);
+        StarSystem yourmomeda = new StarSystem("Yourmomeda", new Position(50, 50), StarType.DWARF);
+
+        sol        .addJumpPoint(new Position(500, 500), andromeda,  new Position(300, 300));
+        andromeda  .addJumpPoint(new Position(100, 100), sol,        new Position(300, 300));
+        andromeda  .addJumpPoint(new Position(500, 500), yourmomeda, new Position(300, 300));
+        yourmomeda .addJumpPoint(new Position(100, 100), andromeda,  new Position(300, 300));
+        
+        sol        .addPlanet(new Planet("Earth", new Position(-100, -200)));
+        andromeda  .addPlanet(new Planet("Vulcan", new Position(-300, 200)));
+        yourmomeda .addPlanet(new Planet("SoFat", new Position(500, -100)));
+        yourmomeda .addPlanet(new Planet("SoDumb", new Position(-500, 100)));
+
+        galaxy.addSystem(sol);
+        galaxy.addSystem(andromeda);
+        galaxy.addSystem(yourmomeda);
+
+        gameModel.setGalaxy(galaxy);
+
+        // TODO: Make character creator do this work and set the player
         player = new Player("Bob", Faction.NoFaction);
-        
-        galaxyGenerator = new GalaxyGeneratorCtrl(this, window);
-        currentViewCtrl = new MenuCtrl(this, window);
-        menuCtrl = new MenuCtrl(this, window);
-        makeTradeCtrl = new MakeTradeCtrl(this, window, player);
-        buyShipCtrl = new BuyShipCtrl(this, window, player);
-        createCharacterCtrl = new CreateCharacterCtrl(this, window);
+        player.setSystem(sol);
+
+        sol.addShip(player.getShip());
+
+        gameModel.setPlayer(player);
+
+        spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
+
+        // Create controllers
+        createCharacterCtrl = new CreateCharacterCtrl (this, window, stage, gameModel);
+        currentViewCtrl     = new MenuCtrl            (this, window, stage, gameModel);
+        galaxyGenerator     = new GalaxyGeneratorCtrl (this, window, stage, gameModel);
+        makeTradeCtrl       = new MakeTradeCtrl       (this, window, stage, gameModel);
+        menuCtrl            = new MenuCtrl            (this, window, stage, gameModel);
+        controlShipCtrl         = null; // this is kind of a hack to make the buttons show up at startup
+        // Create game saver
         gameSaver = new GameSaver(gameModel);
-        
-        
-//        System.out.println(player.getShip().addToCargo(new Item("Block", 5)));
-        player.getShip().addToCargo(new Item("Block", 5));
-//        System.out.println(player.getShip().getCargo().getAmount(new Item("Block",5)));
-        player.getShip().addToCargo(new Item("Brick", 5));
+
         stage.setScene(new Scene(window));
         stage.show();
 
@@ -111,39 +131,19 @@ public class MainCtrl extends Ctrl{
         switchViews(galaxyGenerator);
     }
     
-    public void buyShip() {
-        switchViews(buyShipCtrl);
-        
-    }
 
     public void makeTrade(Inventory inv) {
-        /*List<Item> items = new ArrayList<>();
-        items.add(new Item("Block", 5, 3));
-        items.add(new Item("Brick", 5, 3));
-        items.add(new Item("Barrak", 5, 3));
-        items.add(new Item("Bloop", 5, 3));*/
-
         currentViewCtrl.stopView();
         makeTradeCtrl.renderMarket(inv);
         currentViewCtrl = makeTradeCtrl;
     }
     
     public void controlShip(){
-        controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+        if (controlShipCtrl == null) { // this is kind of a hack to make the buttons show up at startup
+            controlShipCtrl = new ControlShipCtrl(this, window, stage, gameModel);
+        }
+        controlShipCtrl = new ControlShipCtrl(this, window, stage, gameModel);
         switchViews(controlShipCtrl);
-    }
-    
-    public void setGalaxy(Galaxy gax) {
-        //TODO: Game model should not be instantiating player here
-        this.gax = gax;
-        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
-        this.gax.getSystems().get(0).getPlanets().get(0).getMarket().addItem(new Item("Barrak", 5));
-        gameModel.setGalaxy(this.gax);
-        gameModel.setPlayer(this.player);
-    }
-    
-    public Player getPlayer() {
-        return player;
     }
     
     public void saveGame() {
@@ -157,7 +157,7 @@ public class MainCtrl extends Ctrl{
             tempModel = gameSaver.loadGame();
             this.gax = tempModel.getGalaxy();
             this.player = tempModel.getPlayer();
-            controlShipCtrl = new ControlShipCtrl(this,window,gax.getSystems().get(0));
+            controlShipCtrl = new ControlShipCtrl(this, window, stage, tempModel);
             switchViews(controlShipCtrl);
         } catch (IOException ex) {
             System.out.println("Game could not be loaded. No such file.");

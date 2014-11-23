@@ -17,6 +17,9 @@ import spacetrader.ViewCtrl;
 import spacetrader.Window;
 import spacetrader.game_model.Skillset;
 import spacetrader.menu.MenuView;
+import spacetrader.game_model.GameModel;
+
+import javafx.stage.Stage;
 
 /**
  *
@@ -25,9 +28,10 @@ import spacetrader.menu.MenuView;
 public class CreateCharacterCtrl extends ViewCtrl {
     CreateCharacterView view;
     MainCtrl mainCtrl;
-    
-    public CreateCharacterCtrl(MainCtrl aParent, Window window) {
-        super(aParent, window);
+    GameModel gameModel;
+
+    public CreateCharacterCtrl(MainCtrl aParent, Window window, Stage stage, GameModel gameModel) {
+        super(aParent, window, stage, gameModel);
         view = new CreateCharacterView(window, this);
         mainCtrl = aParent;
     }

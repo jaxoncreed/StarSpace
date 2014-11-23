@@ -2,22 +2,26 @@ package spacetrader.game_model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import spacetrader.Interactable;
 import spacetrader.game_model.graph.Node;
-import spacetrader.game_model.graph.UndirectedEdge;
+import spacetrader.PhysicsSimulator;
+import spacetrader.game_model.graph.DirectedEdge;
 
-public class JumpPoint implements Serializable, UndirectedEdge {
-	private StarSystem system1;
-    private StarSystem system2;
-	private Position pos1;
-    private Position pos2;
-	public static final String term = "Hargin Point";
+public class JumpPoint implements Serializable, DirectedEdge, Interactable {
+	
+    public static final String TERM = "Hargin Point";
+    private StarSystem fromSystem;
+    private StarSystem toSystem;
+	private Position fromPos;
+    private Position toPos;
     private int level;
+    public static final double INTERACTION_RANGE = 0;
 
-	public JumpPoint(StarSystem system1, StarSystem system2, Position pos1, Position pos2) {
-		this.system1 = system1;
-		this.system2 = system2;
-		this.pos1 = pos1;
-        this.pos2 = pos2;
+	public JumpPoint(StarSystem fromSystem, StarSystem toSystem, Position fromPos, Position toPos) {
+		this.toSystem = toSystem;
+		this.fromSystem = toSystem;
+		this.fromPos = fromPos;
+        this.toPos = toPos;
         level=1;
 	}
     
@@ -25,24 +29,35 @@ public class JumpPoint implements Serializable, UndirectedEdge {
         return level;
     }
     
-    public Node getNode1() {
-        return system1;
+    @Override
+    public Node getFromNode() {
+        return fromSystem;
     }
     
-    public Node getNode2() {
-        return system2;
+    @Override
+    public Node getToNode() {
+        return toSystem;
     }
     
+    public StarSystem getTargetSystem() {
+        return (StarSystem) getToNode();
+    }
+    
+    @Override
     public double getWeight() {
         return 1;
     }
     
-    public Position getPosition1() {
-        return pos1;
+    public Position getToPosition() {
+        return toPos;
     }
     
-    public Position getPosition2() {
-        return pos2;
+    public Position getFromPosition() {
+        return fromPos;
+    }
+    
+    public Position getTargetPos() {
+        return getToPosition();
     }
     
     public boolean equals(Object o) {
@@ -50,30 +65,39 @@ public class JumpPoint implements Serializable, UndirectedEdge {
             return false;
         }
         JumpPoint that = (JumpPoint) o;
-        Node thisNode1 = this.getNode1();
-        Node thisNode2 = this.getNode2();
-        Node thatNode1 = that.getNode1();
-        Node thatNode2 = that.getNode2();
-        double thisW = this.getWeight();
-        double thatW = that.getWeight();
-        Position thisPos1 = this.getPosition1();
-        Position thisPos2 = this.getPosition2();
-        Position thatPos1 = that.getPosition1();
-        Position thatPos2 = that.getPosition2();
         return 
-            (thisNode1.equals(thatNode1) && thisNode2.equals(thatNode2) 
-                && thisPos1.equals(thatPos1) && thisPos2.equals(thatPos2))
-            || 
-            (thisNode1.equals(thatNode2) && thisNode2.equals(thatNode1) 
-                && thisPos1.equals(thatPos2) && thisPos2.equals(thatPos1))
-        &&  thisW == thatW;
+            this.getToNode().equals(that.getToNode()) 
+            && this.getFromNode().equals(that.getFromNode()) 
+            && this.getFromPosition().equals(that.getFromPosition()) 
+            && this.getToPosition().equals(that.getToPosition())
+            && this.getWeight() == that.getWeight();
     }
+
+	public double getInteractionRange() {
+		return INTERACTION_RANGE;
+	}
+
+        public String getInteractionMessage() {
+            return "Jump to " + toSystem.getName();
+        }
+        
+	public void interact(Ship ship, GameModel gm) {
+		ship.jump(this);
+
+		// If the ship belongs to the player,
+		// change the physics simulator's target system
+		if (gm.getPlayer().getShip().equals(ship)) {
+			PhysicsSimulator.setSystem(gm.getPlayer().getSystem());
+		}
+	}
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.system1) + Objects.hashCode(this.system2);
-        hash = 89 * hash + Objects.hashCode(this.pos1) + Objects.hashCode(this.pos2);
+        hash = 89 * hash + Objects.hashCode(this.toSystem);
+        hash = 89 * hash + Objects.hashCode(this.fromSystem);
+        hash = 89 * hash + Objects.hashCode(this.toPos);
+        hash = 89 * hash + Objects.hashCode(this.fromPos);
         hash = 89 * hash + Objects.hashCode(this.getWeight());
         return hash;
     }

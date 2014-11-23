@@ -1,24 +1,24 @@
 package spacetrader.game_model;
 
 import java.io.Serializable;
+import spacetrader.Interactable;
 
-public class Planet implements Serializable, Positionable {
+public class Planet implements Serializable, Positionable, Interactable {
 
-    //#todo need to implement id system
 	private Position pos;
-	private System system;
 	private int techLevel;
 	private String government;
 	private String name;
-        private Market market;
+    private Market market;
+    private double interactionRange;
 
 	public Planet(Position pos, System system, int techLevel, String government,
 		String name) {
 		this.name = name;
 		this.pos = pos;
-		this.system = system;
 		this.techLevel = techLevel;
 		this.government = government;
+                this.interactionRange = 200;
                 market=new Market(new Inventory(10),this);
 	}
 
@@ -47,10 +47,6 @@ public class Planet implements Serializable, Positionable {
 		this.pos = pos;
 	}
 
-	public System getSystem() {
-		return system;
-	}
-   
     public String getName(){
         return name;
     }
@@ -58,5 +54,20 @@ public class Planet implements Serializable, Positionable {
     @Override
     public Position getPosition() {
         return pos;
+    }
+    
+    public double getInteractionRange() {
+        return interactionRange;
+    }
+
+    @Override
+    public String getInteractionMessage() {
+        return "Trade with planet.";
+    }
+
+    @Override
+    public void interact(Ship ship, GameModel gm) {
+        //TODO: Switch to marketplace
+        System.out.println("Interaction with Planet.");
     }
 }

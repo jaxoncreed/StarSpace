@@ -1,1 +1,0 @@
-Here I will provide a short explanation of how galaxy generation works, and how you can extend the various classes to 

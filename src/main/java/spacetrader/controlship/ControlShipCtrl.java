@@ -6,13 +6,18 @@
 
 package spacetrader.controlship;
 
+import spacetrader.Interactable;
 import spacetrader.shared.Util;
+import spacetrader.game_model.*;
+import spacetrader.PhysicsSimulator;
 import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
 import spacetrader.game_model.Planet;
 import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.GameModel;
+import javafx.stage.Stage;
 
 /**
  *
@@ -21,68 +26,79 @@ import spacetrader.game_model.StarSystem;
 public class ControlShipCtrl extends ViewCtrl {
     ControlShipView view;
     MainCtrl mainCtrl;
-    private StarSystem sys;
-    private Planet planet;
-    
-    private static final double PIRATE_ATTACK_PROB = 0.1;
-    private static final int PIRATE_ATTACK_DAMAGE = 50;
-    private static final String PIRATE_ATTACK_MSG = 
-        "Oh no! You were attacked by pirates and lost " + PIRATE_ATTACK_DAMAGE + 
-        " health.";
+    private GameModel gameModel;
+    private Player player;
+    private Ship playerShip;
+    private Interactable interactionEntity;
+
+    protected Stage stage;
  
-    public ControlShipCtrl(MainCtrl aParent, Window aWindow,StarSystem s) {
-        super(aParent, aWindow);
-        view = new ControlShipView(aWindow, this);
+    public ControlShipCtrl(MainCtrl aParent, Window aWindow, Stage stage, GameModel gameModel) {
+        super(aParent, aWindow, stage, gameModel);
+        view = new ControlShipView(aWindow, this, stage, gameModel);
         mainCtrl = aParent;
-        sys=s;
-            int ii = 0;
-            for (Planet y : s.getPlanets()) {
-                if (ii < 4) {
-                    y.setTechLevel(10);
-                } else {
-                    y.setTechLevel(4);
-                }
-                ii++;
+
+        player = gameModel.getPlayer();
+        playerShip = player.getShip();
+        interactionEntity = null;
+    }
+
+    public void update() {
+
+        spacetrader.PhysicsSimulator.simulate();
+ 
+        // Update interaction opportunities
+        interactionEntity = null;
+        view.setInteractionMessage("");
+        StarSystem curSystem = player.getSystem();
+        for (JumpPoint j : curSystem.getJumpPoints()) {
+            double interactionRange = playerShip.getInteractionRange() + j.getInteractionRange();
+            double distance = j.getFromPosition().distTo(player.getPosition());
+            if (distance <= interactionRange) {
+                view.setInteractionMessage(j.getInteractionMessage());
+                interactionEntity = j;
             }
-        planet=s.getPlanets().get(0);
+        }
+        for (Planet p : curSystem.getPlanets()) {
+            double interactionRange = playerShip.getInteractionRange() + p.getInteractionRange();
+            double distance = p.getPos().distTo(player.getPosition());
+            if (distance <= interactionRange) {
+                view.setInteractionMessage(p.getInteractionMessage());
+                interactionEntity = p;
+            }
+        }
+    }
+
+    public void performInteraction() {
+        if (interactionEntity != null) {
+            interactionEntity.interact(playerShip, gameModel);
+        }
+    }
+
+    public void playerAccelerate() {
+        playerShip.accelerate();
+    }
+
+    public void playerTurnLeft() {
+        playerShip.turnLeft();
+    }
+
+    public void playerDecelerate() {
+        playerShip.decelerate();
+    }
+
+    public void playerTurnRight() {
+        playerShip.turnRight();
     }
 
     @Override
     public void startView() {
-        view.renderMainMenu();
+        view.renderPilotingShip();
     }
 
     @Override
     public void stopView() {
         view.remove();
-    }
-    
-    public List<Planet> getPlanets(){
-        return sys.getPlanets();
-    }
-    public Planet getPlanet(){
-        return planet;
-    }
-    
-    public void setPlanet(Planet p){
-        double sample = Util.sampleFromUniformReal(0, 1);
-        if (sample < PIRATE_ATTACK_PROB && !p.equals(planet)) {
-            mainCtrl.getPlayer().getShip().incrementHealth(PIRATE_ATTACK_DAMAGE);
-            System.out.println(PIRATE_ATTACK_MSG);
-        } else {
-           planet=p;
-        }
-    }
-    
-    void newTrade() {
-        mainCtrl.makeTrade(planet.getMarket().getCargo());
-    }
-    void buyShip() {
-        if (planet.getTechLevel() > 5) {
-            mainCtrl.buyShip();
-        } else {
-            System.out.println("Planet does not have high enough tech level");
-        }
     }
     
     public void saveGame() {

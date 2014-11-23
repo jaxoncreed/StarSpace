@@ -11,6 +11,9 @@ package spacetrader;
  */
 public abstract class AbstractView {
 
+    public static final int SCREEN_WIDTH = 1280;
+    public static final int SCREEN_HEIGHT = 720; 
+
     public abstract void render();
     public abstract void hide();
     

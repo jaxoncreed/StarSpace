@@ -18,7 +18,7 @@ public class Galaxy implements Serializable, Positionable {
 	private double height;
     private Graph jumpPoints; 
 
-	public Galaxy () {
+	public Galaxy() {
 		systems = new HashMap();
 		pos = Position.origin;
 	}
@@ -30,19 +30,18 @@ public class Galaxy implements Serializable, Positionable {
 	}
 
 	public void addSystem(StarSystem system) {
-		systems.put(system.getPosition(),system);
+		systems.put(system.getPosition(), system);
 	}
 
-        public Map<Position,StarSystem> getHashMap(){
-            return systems;
-        }
+    public Map<Position,StarSystem> getHashMap(){
+        return systems;
+    }
 
 	public List<StarSystem> getSystems() {
 		return new ArrayList<StarSystem>(systems.values());
 	}
 
 	public void replaceSystems(List<StarSystem> systems) {
-
 		this.systems = new HashMap();
 		for (StarSystem system : systems) {
 			addSystem(system);
@@ -73,6 +72,10 @@ public class Galaxy implements Serializable, Positionable {
     
     public Position getPosition(){
         return pos;
+    }
+    
+    public void setJumpPoints(Graph jumpPoints) {
+        this.jumpPoints = jumpPoints;
     }
 
 }

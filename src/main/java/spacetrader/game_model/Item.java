@@ -34,8 +34,8 @@ public class Item implements Tradeable, Serializable {
     public double getBasePrice() {
         return basePrice;
     }
+    
     @Override
-
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

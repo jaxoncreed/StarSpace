@@ -5,13 +5,9 @@
  */
 package spacetrader;
 
-import java.util.ArrayList;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
-import spacetrader.game_model.Inventory;
-import spacetrader.game_model.Item;
-import java.util.List;
 
 /**
  *
@@ -22,6 +18,10 @@ public class Start extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Window window = new Window();
+
+	    stage.setWidth(AbstractView.SCREEN_WIDTH);
+	    stage.setHeight(AbstractView.SCREEN_HEIGHT);
+
         MainCtrl mainCtrl = new MainCtrl(stage, window);
         mainCtrl.mainMenu();
     }

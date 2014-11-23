@@ -12,7 +12,7 @@ import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
 import spacetrader.galaxygenerators.EllipticalGalaxyGenerator;
 import spacetrader.galaxygenerators.GalaxyGenerator;
-import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.system.Galaxy;
 import spacetrader.game_model.GameModel;
 
 /**

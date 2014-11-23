@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
-import spacetrader.game_model.Skillset;
+import spacetrader.game_model.player.Skillset;
 import spacetrader.menu.MenuView;
 import spacetrader.game_model.GameModel;
 
@@ -21,7 +21,7 @@ import spacetrader.AbstractView;
 import spacetrader.CtrlViewTypes;
 import spacetrader.ViewCtrlFactory;
 import spacetrader.game_model.Faction;
-import spacetrader.game_model.Player;
+import spacetrader.game_model.player.Player;
 import spacetrader.game_model.Ship;
 
 /**

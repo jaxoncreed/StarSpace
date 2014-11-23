@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.game_model;
+package spacetrader.game_model.gameLogic;
 
 import java.io.Serializable;
 import java.util.Objects;
+import spacetrader.game_model.Tradeable;
 
 /**
  *

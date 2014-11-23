@@ -1,4 +1,4 @@
-package spacetrader.game_model;
+package spacetrader.game_model.gameLogic;
 
 import java.io.Serializable;
 import org.jbox2d.common.Vec2;

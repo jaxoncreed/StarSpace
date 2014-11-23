@@ -1,5 +1,9 @@
-package spacetrader.game_model;
+package spacetrader.game_model.system;
 
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.system.JumpPoint;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.system.StarType;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,6 +12,9 @@ import spacetrader.game_model.graph.Node;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
+import spacetrader.game_model.Faction;
+import spacetrader.game_model.Ship;
+import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.PositionContainer;
 
@@ -125,18 +132,6 @@ public class StarSystem implements Node {
         this.starMass = starMass;
     }
     
-    public List<Planet> getNearbyPlanets(Position p,int radius){
-        return null;
-    }
-    public List<Planet> getNearbyPlanets(PositionContainer container){
-        ArrayList<Planet> temp = new ArrayList<Planet>();
-        for(Planet p : planets){
-            if(container.contains(p.getPos()))
-                temp.add(p);
-        }
-        return temp;
-    }
-
     public double getStarMass() {
         return starMass;
     }
@@ -169,5 +164,15 @@ public class StarSystem implements Node {
             }
         }
         return new Bounds(minx,miny,maxx,maxy);
+    }
+    public ArrayList<InteractableObject> getInteractableObjects(){
+        ArrayList<InteractableObject> out=new ArrayList();
+        for(Planet p:this.planets){
+            out.add(p);
+        }
+        for(JumpPoint j:this.getJumpPoints()){
+            out.add(j);
+        }
+        return out;
     }
 }

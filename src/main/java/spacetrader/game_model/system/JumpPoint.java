@@ -1,10 +1,14 @@
-package spacetrader.game_model;
+package spacetrader.game_model.system;
 
 import java.io.Serializable;
-import spacetrader.Interactable;
+import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.PhysicsSimulator;
+import spacetrader.game_model.GameModel;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.Ship;
+import spacetrader.game_model.interactable.InteractionType;
 
-public class JumpPoint implements Serializable, Interactable {
+public class JumpPoint implements Serializable, InteractableObject {
 
 	public static final String TERM = "Hargin Point";
 
@@ -56,4 +60,8 @@ public class JumpPoint implements Serializable, Interactable {
 		}
 	}
 
+    @Override
+    public InteractionType getType() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

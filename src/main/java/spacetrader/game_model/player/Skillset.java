@@ -1,6 +1,9 @@
-package spacetrader.game_model;
+package spacetrader.game_model.player;
 
 // import org.json.JSONObject;
+
+import spacetrader.game_model.Savable;
+
  
 public class Skillset implements Savable {
 

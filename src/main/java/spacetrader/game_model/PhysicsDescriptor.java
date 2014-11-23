@@ -1,5 +1,6 @@
 package spacetrader.game_model;
 
+import spacetrader.game_model.gameLogic.Position;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.collision.shapes.CircleShape;

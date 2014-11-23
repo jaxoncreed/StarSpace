@@ -1,6 +1,10 @@
 
 package spacetrader.controlship;
 
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.system.JumpPoint;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.player.Player;
 import spacetrader.menu.*;
 import java.io.IOException;
 import java.net.URL;

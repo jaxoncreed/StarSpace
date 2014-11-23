@@ -6,7 +6,7 @@
 package spacetrader.game_model.graph;
 
 import spacetrader.game_model.Faction;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.StarSystem;
 
 /**
  *

@@ -1,8 +1,8 @@
 package spacetrader.galaxygenerators;
 
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Position;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.system.StarSystem;
 //import spacetrader.Util;
 
 /**

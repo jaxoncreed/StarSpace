@@ -5,8 +5,8 @@
  */
 package spacetrader.controlship.playerview;
 
-import spacetrader.game_model.Player;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.player.Player;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.positioncontainer.BoxCut;
 
 /**

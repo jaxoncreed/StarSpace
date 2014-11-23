@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.game_model.positioncontainer;
-
-import spacetrader.game_model.gameLogic.Position;
+package spacetrader.game_model.system;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public abstract class PositionContainer {
-    public abstract boolean contains(Position p);
+public class PlanetData {
+    
 }

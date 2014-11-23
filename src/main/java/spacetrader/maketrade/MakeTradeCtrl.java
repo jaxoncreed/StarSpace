@@ -5,6 +5,9 @@
  */
 package spacetrader.maketrade;
 
+import spacetrader.game_model.gameLogic.Inventory;
+import spacetrader.game_model.gameLogic.Item;
+import spacetrader.game_model.player.Player;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -3,7 +3,7 @@ package spacetrader.galaxygenerators;
 
 //import spacetrader.Util;
 import spacetrader.shared.Util;
-import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.system.Galaxy;
 
 /**
  * Shared properties among all generated galaxies

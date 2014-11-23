@@ -1,5 +1,7 @@
 package spacetrader.game_model;
 
+import spacetrader.game_model.system.Galaxy;
+import spacetrader.game_model.player.Player;
 import java.io.Serializable;
 
 /**

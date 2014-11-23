@@ -6,7 +6,7 @@
 package spacetrader.controlship.graphicsrender.javafxrenderer;
 
 import javafx.scene.paint.Color;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
 
 /**

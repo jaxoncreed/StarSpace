@@ -1,10 +1,11 @@
-package spacetrader.game_model;
+package spacetrader.game_model.system;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import spacetrader.game_model.gameLogic.Position;
 
 /**
  * Presently only a single galaxy will ever be instantiated.

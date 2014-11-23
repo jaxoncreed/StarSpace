@@ -1,8 +1,8 @@
 package spacetrader.galaxygenerators;
 
-import spacetrader.game_model.Galaxy;
-import spacetrader.game_model.StarSystem;
-import spacetrader.game_model.StarType;
+import spacetrader.game_model.system.Galaxy;
+import spacetrader.game_model.system.StarSystem;
+import spacetrader.game_model.system.StarType;
 import java.util.List;
 /**
  * A JumpPoint is placed between two StarSystems if they are sufficiently "attracted"

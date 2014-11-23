@@ -5,7 +5,7 @@
  */
 package spacetrader.game_model.positioncontainer;
 
-import spacetrader.game_model.Position;
+import spacetrader.game_model.gameLogic.Position;
 
 /**
  *

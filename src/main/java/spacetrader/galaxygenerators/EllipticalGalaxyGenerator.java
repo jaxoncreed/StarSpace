@@ -2,10 +2,10 @@ package spacetrader.galaxygenerators;
 
 //import spacetrader.Util;
 import spacetrader.shared.Util;
-import spacetrader.game_model.Galaxy;
-import spacetrader.game_model.Position;
-import spacetrader.game_model.StarType;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.Galaxy;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.system.StarType;
+import spacetrader.game_model.system.StarSystem;
 import java.util.List;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.distribution.UniformRealDistribution;

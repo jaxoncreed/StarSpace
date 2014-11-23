@@ -1,15 +1,20 @@
 package spacetrader.game_model;
 
+import spacetrader.game_model.system.StarSystem;
+import spacetrader.game_model.gameLogic.Inventory;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.gameLogic.Item;
+import spacetrader.game_model.system.JumpPoint;
 import java.io.Serializable;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
-import spacetrader.Interactable;
+import spacetrader.game_model.interactable.InteractableObject;
 
 /**
  * Ship model!
  */
-public class Ship implements Tradeable, Serializable, Interactable {
+public class Ship implements Tradeable, Serializable {
 
     private String name;
     private double basePrice;
@@ -183,17 +188,4 @@ public class Ship implements Tradeable, Serializable, Interactable {
         setPosition(new Position(physicsBody.getPosition().x, physicsBody.getPosition().y));
         physicsBody = null;
     }
-
-    public double getInteractionRange() {
-        return interactionRange;
-    }
-
-    public String getInteractionMessage() {
-        return "";
-    }
-    
-    public void interact(Ship ship, GameModel gm) {
-
-    }
-
 }

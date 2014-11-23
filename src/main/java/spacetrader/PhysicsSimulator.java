@@ -1,5 +1,6 @@
 package spacetrader;
 
+import spacetrader.game_model.system.StarSystem;
 import org.jbox2d.callbacks.*;
 import org.jbox2d.collision.*;
 import org.jbox2d.collision.shapes.*;

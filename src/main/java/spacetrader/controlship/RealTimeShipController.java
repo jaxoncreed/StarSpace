@@ -7,13 +7,13 @@ package spacetrader.controlship;
 
 import spacetrader.galaxygenerators.SimpleStarSystemGenerator;
 import spacetrader.game_model.Faction;
-import spacetrader.game_model.Galaxy;
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Player;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.system.Galaxy;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.player.Player;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
-import spacetrader.game_model.StarSystem;
-import spacetrader.game_model.StarType;
+import spacetrader.game_model.system.StarSystem;
+import spacetrader.game_model.system.StarType;
 
 /**
  *

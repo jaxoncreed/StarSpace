@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.game_model;
+package spacetrader.game_model.gameLogic;
+import spacetrader.game_model.gameLogic.Item;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;

@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.game_model;
+package spacetrader.game_model.player;
 
 import java.io.Serializable;
+import spacetrader.game_model.Faction;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.Ship;
+import spacetrader.game_model.system.StarSystem;
 
 /**
  *

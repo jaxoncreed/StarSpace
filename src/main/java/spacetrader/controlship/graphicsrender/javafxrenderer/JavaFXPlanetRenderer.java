@@ -7,8 +7,8 @@ package spacetrader.controlship.graphicsrender.javafxrenderer;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.gameLogic.Position;
 
 /**
  *

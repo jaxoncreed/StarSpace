@@ -35,7 +35,7 @@ public class ViewCtrlFactory {
             case SaveGame:          return new SaveGameCtrl(ctrl,win);
             case LoadGame:          return new LoadGameCtrl(ctrl,win);
             case Trade:             return new MakeTradeCtrl(ctrl,win);
-            case CreateGalaxy:    return new CreateGalaxyCtrl(ctrl,win);
+            case CreateGalaxy:      return new CreateGalaxyCtrl(ctrl,win);
             case ControlShip:       return new ControlShipCtrl(ctrl,win);
             case GalaxyMap:         return new GalaxyMapCtrl(ctrl,win);
         }

@@ -23,7 +23,7 @@ import javafx.scene.layout.Pane;
 import spacetrader.AbstractView;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.Window.Window;
-import spacetrader.game_model.Skillset;
+import spacetrader.game_model.player.Skillset;
 
 /**
  *

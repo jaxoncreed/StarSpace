@@ -30,11 +30,11 @@ import spacetrader.MultiKeyPressEventHandler;
 import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXBackgroundRender;
 import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXShipRender;
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Player;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.player.Player;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
 
 /**

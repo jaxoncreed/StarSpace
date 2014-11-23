@@ -1,4 +1,4 @@
-package spacetrader.game_model;
+package spacetrader.game_model.system;
 
 import java.io.Serializable;
 

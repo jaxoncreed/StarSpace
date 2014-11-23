@@ -44,6 +44,8 @@ public class ControlShipCtrl extends ViewCtrl {
         
         player = GameModel.get().getPlayer();
         playerShip = player.getShip();
+        
+        interactionManager=new InteractionManager(playerShip.getSystem().getInteractableObjects());
         InteractAction tradeAction=(InteractableObject obj)->{
             ViewCtrlFactory.setMarket(((Planet)obj).getMarket());
             mainCtrl.switchViews(CtrlViewTypes.Trade);
@@ -51,10 +53,8 @@ public class ControlShipCtrl extends ViewCtrl {
         InteractAction travelAction=(InteractableObject obj)->{
             //Do the jumpPoint Travel stuff
         };
-
         interactionManager.setInteractFunction(InteractionType.Trade, tradeAction);
         interactionManager.setInteractFunction(InteractionType.Travel, travelAction);
-        interactionManager=new InteractionManager(playerShip.getSystem().getInteractableObjects());
     }
 
     public void update() {

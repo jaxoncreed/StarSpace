@@ -12,6 +12,8 @@ import spacetrader.createGalaxy.CreateGalaxyViewFactory;
 import spacetrader.createGalaxy.GalaxyGeneratorCtrl;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.createcharacter.CreateCharacterViewFactory;
+import spacetrader.gameMenu.GameMenuCtrl;
+import spacetrader.gameMenu.GameMenuViewFactory;
 import spacetrader.game_model.gameLogic.Market;
 import spacetrader.loadGame.LoadGameCtrl;
 import spacetrader.loadGame.LoadGameViewFactory;
@@ -40,6 +42,7 @@ public class ViewCtrlFactory {
             case CreateGalaxy:      return new GalaxyGeneratorCtrl(ctrl,win);
             case ControlShip:       return new ControlShipCtrl(ctrl,win);
             case GalaxyMap:         return new GalaxyMapCtrl(ctrl,win);
+            case GameMenu:          return new GameMenuCtrl(ctrl,win);
         }
         return null;
     }
@@ -53,6 +56,7 @@ public class ViewCtrlFactory {
             case CreateGalaxy:      return new CreateGalaxyViewFactory().getView(win, ctrl);
             case ControlShip:       return new ControlShipViewFactory().getView(win, ctrl);
             case GalaxyMap:         return new GalaxyMapViewFactory().getView(win, ctrl);
+            case GameMenu:          return new GameMenuViewFactory().getView(win,ctrl);
         }
         return null;
     }

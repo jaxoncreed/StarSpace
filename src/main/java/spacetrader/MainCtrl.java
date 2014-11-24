@@ -1,19 +1,7 @@
 package spacetrader;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import spacetrader.maketrade.MakeTradeCtrl;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import spacetrader.Application.MainApplication;
 import static spacetrader.CtrlViewTypes.MainMenu;
 import spacetrader.Window.Window;
-import spacetrader.createcharacter.CreateCharacterCtrl;
-import spacetrader.menu.MenuCtrl;
-import spacetrader.controlship.ControlShipCtrl;
-import spacetrader.createGalaxy.GalaxyGeneratorCtrl;
-import spacetrader.game_model.*;
 
 /**
  * The overall centralized controller. Manages the other controllers

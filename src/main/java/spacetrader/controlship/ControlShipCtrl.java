@@ -99,10 +99,14 @@ public class ControlShipCtrl extends ViewCtrl {
     void performInteraction() {
         this.interactionManager.interact(playerShip);
     }
-    void switchToMarke(){
+    void switchToMarket(){
         Planet p=GameModel.get().getPlayer().getSystem().getPlanets().get(0);
         ViewCtrlFactory.setMarket(p.getMarket());
         this.mainCtrl.switchViews(CtrlViewTypes.Trade);
+    }
+    
+    void switchToGameMenu() {
+        mainCtrl.switchViews(CtrlViewTypes.GameMenu);
     }
 
     

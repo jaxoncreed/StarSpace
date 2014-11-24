@@ -10,7 +10,7 @@ import java.util.List;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window;
-import spacetrader.game_model.GameModel;
+import spacetrader.game_model.*;
 
 import javafx.stage.Stage;
 import spacetrader.game_model.Galaxy;
@@ -63,12 +63,26 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     }
     
     public void generate() {
+        // Generate the galaxy
         Galaxy gax = generator.generate();
         gameModel.setGalaxy(gax);
         jumpPointGenerator.setGameModel(gameModel);
         jumpPointGenerator.generate();
         List<JumpPoint> edges = jumpPointGenerator.getJumpPointList();
         gax.setJumpPoints(new Graph(edges, null));
-        gameModel.setGalaxy(gax);        
+        gameModel.setGalaxy(gax);
+
+        // Put player in a system
+        StarSystem starSystem = null;
+        for (StarSystem s : gax.getSystems()) {
+            if (s.getJumpPoints().size() > 0) {
+                starSystem = s;
+            }
+        }
+        starSystem.addShip(gameModel.getPlayer().getShip());
+        gameModel.getPlayer().setSystem(starSystem);
+        System.out.println("HELLO WORLD BEN YES HELLO");
+        System.out.println(gameModel.getPlayer().getSystem());
+        spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
     }
 }

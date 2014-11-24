@@ -49,6 +49,7 @@ public class MainCtrl extends Ctrl{
         gameModel = new GameModel();
 
         // TODO: Make galaxy generator set galaxy
+        /*
         Galaxy galaxy = new Galaxy(100, 100);
 
         StarSystem sol        = new StarSystem("Sol",        new Position(10, 10), StarType.DWARF);
@@ -70,16 +71,17 @@ public class MainCtrl extends Ctrl{
         galaxy.addSystem(yourmomeda);
 
         gameModel.setGalaxy(galaxy);
+        */
 
         // TODO: Make character creator do this work and set the player
         player = new Player("Bob", Faction.NoFaction);
-        player.setSystem(sol);
+        // player.setSystem(sol);
 
-        sol.addShip(player.getShip());
+        // sol.addShip(player.getShip());
 
         gameModel.setPlayer(player);
 
-        spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
+        // spacetrader.PhysicsSimulator.setSystem(gameModel.getPlayer().getSystem());
 
         // Create controllers
         createCharacterCtrl = new CreateCharacterCtrl (this, window, stage, gameModel);
@@ -128,7 +130,9 @@ public class MainCtrl extends Ctrl{
      * Starts generating the universe while disabling other functions.
      */
     public void generateUniverse() {
-        switchViews(galaxyGenerator);
+        // switchViews(galaxyGenerator);
+        galaxyGenerator.generate();
+        controlShip();
     }
     
 

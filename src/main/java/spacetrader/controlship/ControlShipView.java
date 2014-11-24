@@ -189,7 +189,7 @@ public class ControlShipView extends AbstractView implements Initializable {
         //Draw Planets
         for (Planet p : player.getSystem().getPlanets()) {
             gc.setFill(Color.YELLOW);
-            gc.fillOval(p.getPos().x - camera.x - 5, p.getPos().y - camera.y - 5, 200, 200);
+            gc.fillOval(p.getPos().x - camera.x - 5, p.getPos().y - camera.y - 5, 10, 10);
         }
 
         // Draw the ship's body

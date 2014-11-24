@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package spacetrader.game_model.interactable;
+package spacetrader;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public enum InteractionType {
-    Null,Trade,Travel
+public class Interactable {
+    
 }

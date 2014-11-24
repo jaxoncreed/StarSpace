@@ -44,9 +44,8 @@ public class PhysicsDescriptor {
     }
 
     public FixtureDef getFixtureDef() {
-        return fixtureDef;
-    }
-
+        return fixtureDef;    }
+    
     public Position getPosition() {
         return new Position(bodyDef.position.x, bodyDef.position.y);
     }
@@ -59,5 +58,4 @@ public class PhysicsDescriptor {
     public double getAngle() {
         return bodyDef.angle;
     }
-
 }

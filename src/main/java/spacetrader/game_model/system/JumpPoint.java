@@ -19,7 +19,7 @@ public class JumpPoint implements Serializable, DirectedEdge, InteractableObject
     private Position fromPos;
     private Position toPos;
     private int level;
-    public static final double INTERACTION_RANGE = 0;
+    public static final double INTERACTION_RANGE = 100;
 
 	public JumpPoint(StarSystem fromSystem, StarSystem toSystem, Position fromPos, Position toPos) {
 		this.toSystem = toSystem;
@@ -103,6 +103,6 @@ public class JumpPoint implements Serializable, DirectedEdge, InteractableObject
 
     @Override
     public InteractionType getType() {
-        return InteractionType.Null;
+        return InteractionType.Travel;
     }
 }

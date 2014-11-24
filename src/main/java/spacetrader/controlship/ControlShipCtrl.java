@@ -52,8 +52,9 @@ public class ControlShipCtrl extends ViewCtrl {
         };
         InteractAction travelAction=(InteractableObject obj)->{
             //Do the jumpPoint Travel stuff
+            GameModel.get().getPlayer().getShip().setPosition(((JumpPoint)obj).getToPosition());
+            GameModel.get().getPlayer().getShip().setSystem(((JumpPoint)obj).getTargetSystem());
             PhysicsSimulator.setSystem(((JumpPoint)obj).getTargetSystem());
-            GameModel.get().getPlayer().setSystem(((JumpPoint)obj).getTargetSystem());
         };
         InteractAction nullAction=(InteractableObject obj)->{
             

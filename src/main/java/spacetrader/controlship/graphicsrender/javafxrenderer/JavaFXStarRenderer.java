@@ -24,7 +24,10 @@ public class JavaFXStarRenderer extends JavaFXRenderer{
     
     @Override
     public void draw() {
+        double haloSize = 2048.0;
         graphics.drawImage(sprites.STAR_01, position.x*scale - sprites.STAR_01.getWidth()/2, position.y*scale - sprites.STAR_01.getHeight()/2);
+        graphics.drawImage(sprites.STAR_HALO, position.x*scale - haloSize/2, position.y*scale - haloSize/2, haloSize, haloSize);
+//        graphics.drawImage(sprites.STAR_HALO, position.x*scale - haloSize/4, position.y*scale - haloSize/4, haloSize/2, haloSize/2);
     }
 
     @Override

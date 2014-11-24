@@ -26,7 +26,9 @@ public class JavaFXPlanetRenderer extends JavaFXRenderer{
     }
     @Override
     public void draw() {
-        drawRotatedImage(sprites.ARID_01, planet.getPosition().toAngle(), (position.x*scale-sprites.ARID_01.getWidth()/2), (position.y*scale-sprites.ARID_01.getHeight()/2));
+        double pointX = (position.x*scale-sprites.ARID_01.getWidth()/2);
+        double pointY = (position.y*scale-sprites.ARID_01.getHeight()/2);
+        drawRotatedImage(sprites.ARID_01, -planet.getPosition().toAngle() - Math.PI, pointX, pointY);
     }
 
     @Override

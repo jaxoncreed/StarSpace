@@ -98,6 +98,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         BoxCut box=new BoxCut(neg,pos);
         // System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
 
+
+        System.out.println(player.getPosition());
+
         // Star
         JavaFXStarRenderer st = new JavaFXStarRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
         st.setScale(PIXELS_PER_DISTANCE);
@@ -121,6 +124,8 @@ public class ControlShipView extends AbstractView implements Initializable {
         }
         // Jump Points
         for(JumpPoint j : system.getJumpPoints() ) {
+            if (j == system.getJumpPoints().get(0))
+                System.out.println("\t" + j.getPos());
             JavaFXJumpPointRenderer jr = new JavaFXJumpPointRenderer(j,new BoxCut(neg,pos).normalize(j.getPos()));
             jr . setScale(PIXELS_PER_DISTANCE);
             jr . setGraphicsContext(canvas.getGraphicsContext2D());
@@ -162,7 +167,6 @@ public class ControlShipView extends AbstractView implements Initializable {
     public void render() {
         window.setKeyHandle((MultiKeyPressEventHandler.MultiKeyEvent event)->{
             handleMutliKey(event);
-            System.out.println("sub handle");
         });
         PIXELS_PER_DISTANCE=(int)(window.getWidth()/view_size);
         bounds=system.getBounds();
@@ -170,7 +174,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         bounds.setOffsetFar(new Position(600,600));
         canvasWidth=window.getWidth();
         canvasHeight=window.getHeight();
-        System.out.println(canvas);
         canvas.setWidth(canvasWidth);
         canvas.setHeight(canvasHeight);
         

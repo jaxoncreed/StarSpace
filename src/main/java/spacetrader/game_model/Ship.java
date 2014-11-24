@@ -153,7 +153,6 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
             Position force = new Position(linearThrust, 0.0);
             force.rotate(angle);
             force.y = -force.y;
-            System.out.println(force);
             Vec2 centerOfMass = physicsBody.getWorldCenter();
             physicsBody.applyForce(force.toVec2(), centerOfMass);
         }

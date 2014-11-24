@@ -62,10 +62,10 @@ tag.
         <numPlanetsMean>    9       </numPlanetsMean>
         <numPlanetsSD>      2       </numPlanetsSD>
         <sampleNumPlanets>  true    </sampleNumPlanets>
-        <planetSepMean>     100       </planetSepMean>
+        <planetSepMean>     150       </planetSepMean>
         <planetSepSD>       10       </planetSepSD>
         <minPlanetSep>      50       </minPlanetSep>
-        <plutoDist>         1500     </plutoDist>      
+        <plutoDist>         2000     </plutoDist>      
         <starMassMean>      100     </starMassMean>  
         <starMassSD>        10      </starMassSD>
     </SimpleStarSystemGenerator>

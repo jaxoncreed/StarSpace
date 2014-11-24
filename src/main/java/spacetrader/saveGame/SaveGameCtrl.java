@@ -15,9 +15,7 @@ import spacetrader.Window.Window;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public class SaveGameCtrl extends ViewCtrl{
-
     public SaveGameCtrl(Ctrl parent, Window window) {
         super(parent, window);
     }
-
 }

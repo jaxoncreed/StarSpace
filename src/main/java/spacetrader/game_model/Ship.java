@@ -59,6 +59,7 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
 
     public void setSystem(StarSystem system) {
         this.system = system;
+        system.addShip(this);
     }
 
     public StarSystem getSystem() {

@@ -38,6 +38,8 @@ public class JavaFXMainApplication extends MainApplication{
             MultiKeyPressEventHandler handler=new MultiKeyPressEventHandler((MultiKeyPressEventHandler.MultiKeyEvent event) -> {
                 mainApp.getWindow().keyHandle(event);//Make the key handler for the window trigger on events
             });
+            scene.setOnKeyPressed(handler);
+            scene.setOnKeyReleased(handler);
             primaryStage.show();
 
         }

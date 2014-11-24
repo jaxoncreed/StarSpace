@@ -9,6 +9,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Canvas fx:id="canvas" height="424.0" layoutX="14.0" layoutY="14.0" width="623.0" AnchorPane.bottomAnchor="1412.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+      <Canvas fx:id="canvas" height="424.0" layoutX="14.0" layoutY="14.0" width="623.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

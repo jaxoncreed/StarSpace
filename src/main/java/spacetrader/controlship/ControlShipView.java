@@ -83,7 +83,6 @@ public class ControlShipView extends AbstractView implements Initializable {
 
         // Background
         JavaFXBackgroundRender bg = new JavaFXBackgroundRender(canvasWidth,canvasHeight);
-        JavaFXForegroundRender fg = new JavaFXForegroundRender(canvasWidth,canvasHeight);
         bg.setGraphicsContext(canvas.getGraphicsContext2D());
         bg.setScale(PIXELS_PER_DISTANCE);
         bg.setOffset(player.getPosition());
@@ -113,6 +112,7 @@ public class ControlShipView extends AbstractView implements Initializable {
         playrend.draw();
 
         // Foreground
+        JavaFXForegroundRender fg = new JavaFXForegroundRender(canvasWidth,canvasHeight);
         fg.setGraphicsContext(canvas.getGraphicsContext2D());
         fg.setScale(PIXELS_PER_DISTANCE);
         fg.setOffset(player.getPosition());

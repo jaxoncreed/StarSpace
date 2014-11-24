@@ -50,13 +50,12 @@ public class InteractionManager {
         objectList = object;        funcMap = new HashMap();
         funcMap.put(InteractionType.Null, (InteractableObject obj) -> {
 
-
         });
     }
 
     public InteractableObject getInteraction(Ship ship) {
         for (InteractableObject object : objectList) {
-            if(object.getPos().distTo(ship.getPosition())>object.getInteractionRange()){
+            if(object.getPos().distTo(ship.getPosition())<object.getInteractionRange()){
                 return object;
             }
         }
@@ -65,6 +64,7 @@ public class InteractionManager {
 
     public void interact(Ship ship) {
         InteractableObject object = getInteraction(ship);
+        System.out.println(object.getType());
         funcMap.get(object.getType()).interact(object);
     }
 

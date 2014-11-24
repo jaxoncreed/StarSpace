@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -42,8 +43,10 @@ public class MakeTradeView extends AbstractView implements Initializable {
     VBox theirItemsContainer;
     @FXML
     Label money;
-    
-    
+    @FXML
+    SplitPane splitpane;
+    @FXML
+    Pane anchor;
     public MakeTradeView(JavaFXWindow window, MakeTradeCtrl ctrl) {
         this.window = window;
         this.makeTradeCtrl = ctrl;
@@ -71,8 +74,13 @@ public class MakeTradeView extends AbstractView implements Initializable {
             Logger.getLogger(MakeTradeView.class.getName()).log(Level.SEVERE, null, ex);
         }
         finishButton.setOnAction((ActionEvent event)->{
-            makeTradeCtrl.shipControl();
+            makeTradeCtrl.returnToControlShip();
         });
+        splitpane.setPrefWidth(window.getWidth());
+        splitpane.setPrefHeight(window.getHeight());
+        anchor.setPrefWidth(window.getWidth());
+        anchor.setPrefHeight(window.getHeight());
+
         updateLists();
     }
     public void updateLists(){

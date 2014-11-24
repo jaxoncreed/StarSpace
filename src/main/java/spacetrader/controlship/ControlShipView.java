@@ -131,6 +131,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         if(event.isPressed(KeyCode.S)){
             controller.playerDecelerate();
         }
+        if(event.isPressed(KeyCode.E)){
+            controller.switchToMarke();
+        }
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

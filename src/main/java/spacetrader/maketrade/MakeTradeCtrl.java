@@ -39,6 +39,7 @@ public class MakeTradeCtrl extends ViewCtrl {
         mainCtrl = aParent;
         this.player = GameModel.get().getPlayer();
         market=m;
+        this.store=market.getItems();
     }
 
     public boolean sell(Item item,int amount) {
@@ -60,13 +61,7 @@ public class MakeTradeCtrl extends ViewCtrl {
         cargo.add(item);
         player.setWoolongs(player.getWoolongs() - cost);
         return true;
-    }
-    
-    public void renderMarket(Inventory store) {
-        this.store = store;
-        startView();
-    }
-    
+    }    
     @Override
     public void startView() {
         view.render();

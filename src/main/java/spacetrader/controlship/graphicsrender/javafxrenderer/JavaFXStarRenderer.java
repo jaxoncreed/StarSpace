@@ -7,26 +7,24 @@ package spacetrader.controlship.graphicsrender.javafxrenderer;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.system.JumpPoint;
 import spacetrader.game_model.gameLogic.Position;
 
 /**
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
-public class JavaFXPlanetRenderer extends JavaFXRenderer{
-    private Planet planet;
-    private int sizex,sizey;
+public class JavaFXStarRenderer extends JavaFXRenderer{
     private Position position;
-    public JavaFXPlanetRenderer(Planet p,Position normalize,int sizex,int sizey) {
-        this.sizex=sizex;
-        this.sizey=sizey;
-        this.position=normalize;
-        this.planet=p;
+    public JavaFXStarRenderer(Position normalize) {
+        this.position = normalize;
     }
+    
+    
+    
     @Override
     public void draw() {
-        drawRotatedImage(sprites.ARID_01, planet.getPosition().toAngle(), (position.x*scale-sprites.ARID_01.getWidth()/2), (position.y*scale-sprites.ARID_01.getHeight()/2));
+        graphics.drawImage(sprites.STAR_01, position.x*scale - sprites.STAR_01.getWidth()/2, position.y*scale - sprites.STAR_01.getHeight()/2);
     }
 
     @Override

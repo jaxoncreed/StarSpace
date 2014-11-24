@@ -98,14 +98,27 @@ public class ControlShipView extends AbstractView implements Initializable {
         BoxCut box=new BoxCut(neg,pos);
         // System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
 
+        // Star
+        JavaFXStarRenderer st = new JavaFXStarRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
+        st.setScale(PIXELS_PER_DISTANCE);
+        st.setGraphicsContext(canvas.getGraphicsContext2D());
+        st.draw();
+
         // Planets
+        /*
         for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
             JavaFXPlanetRenderer pr = new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
             pr.setScale(PIXELS_PER_DISTANCE);
             pr.setGraphicsContext(canvas.getGraphicsContext2D());
             pr.draw();
         }
-
+        */
+        for (Planet p : system.getPlanets()) {
+            JavaFXPlanetRenderer pr = new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
+            pr.setScale(PIXELS_PER_DISTANCE);
+            pr.setGraphicsContext(canvas.getGraphicsContext2D());
+            pr.draw();            
+        }
         // Jump Points
         for(JumpPoint j : system.getJumpPoints() ) {
             JavaFXJumpPointRenderer jr = new JavaFXJumpPointRenderer(j,new BoxCut(neg,pos).normalize(j.getPos()));

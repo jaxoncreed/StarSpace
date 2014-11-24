@@ -2,15 +2,12 @@ package spacetrader.game_model.graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
-import spacetrader.game_model.Positionable;
-import spacetrader.game_model.StarSystem;
 
 /**
  * Nodes in a Graph can be connected with DirectedEdges or UndirectedEdges, or they

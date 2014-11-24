@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import spacetrader.game_model.graph.Node;
 import java.util.Map;
 import java.util.HashMap;
@@ -83,7 +84,7 @@ public class StarSystem implements Node, Positionable {
         planets.add(planet);
     }
 
-    public List<JumpPoint> addJumpPoint(StarSystem targetSys, Position pos, Position targetPos) {
+    public Collection<JumpPoint> addJumpPoint(StarSystem targetSys, Position pos, Position targetPos) {
         
         JumpPoint toJump = new JumpPoint(this, targetSys, pos, targetPos);
         JumpPoint fromJump = new JumpPoint(targetSys, this, targetPos, pos);

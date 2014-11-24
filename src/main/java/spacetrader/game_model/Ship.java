@@ -1,9 +1,9 @@
 package spacetrader.game_model;
 
+import spacetrader.game_model.gameLogic.Item;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.gameLogic.Inventory;
 import spacetrader.game_model.gameLogic.Position;
-import spacetrader.game_model.gameLogic.Item;
 import spacetrader.game_model.system.JumpPoint;
 import java.io.Serializable;
 import org.jbox2d.dynamics.Body;

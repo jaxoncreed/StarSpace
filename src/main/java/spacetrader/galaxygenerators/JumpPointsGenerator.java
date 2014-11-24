@@ -6,76 +6,83 @@ import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.system.StarType;
 import java.util.List;
 import spacetrader.game_model.GameModel;
-import spacetrader.game_model.JumpPoint;
-import spacetrader.game_model.Planet;
-import spacetrader.game_model.Position;
+import spacetrader.game_model.system.JumpPoint;
+import spacetrader.game_model.system.Planet;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.shared.Util;
+
 /**
- * A JumpPoint is placed between two StarSystems if they are sufficiently "attracted"
- * to one another. This attraction is a function of the two star masses, of the
- * distance between the StarSystems, and of a given "constant."
- * 
+ * A JumpPoint is placed between two StarSystems if they are sufficiently
+ * "attracted" to one another. This attraction is a function of the two star
+ * masses, of the distance between the StarSystems, and of a given "constant."
+ *
  * @author Michael Lane <mlane@gatech.edu>
  */
 public class JumpPointsGenerator {
 
-    /** The constant used in the calculation of attraction; see the class javadoc. */
-	private double constant;
-    /** The minimum level of attraction required for two StarSystems to be connected
-     * by a JumpPoint; see the class javadoc.
+    /**
+     * The constant used in the calculation of attraction; see the class
+     * javadoc.
      */
-	private double threshold;
-     /** true iff black holes should always be connected; otherwise, black holes 
+    private double constant;
+    /**
+     * The minimum level of attraction required for two StarSystems to be
+     * connected by a JumpPoint; see the class javadoc.
+     */
+    private double threshold;
+    /**
+     * true iff black holes should always be connected; otherwise, black holes
      * are treated the same as any other StarType.
      */
-	public boolean connectBlackHoles; 
-     
+    public boolean connectBlackHoles;
+
     private List<JumpPoint> jumpPoints;
     private GameModel gameModel;
 
-	public JumpPointsGenerator() {
+    public JumpPointsGenerator() {
         jumpPoints = new ArrayList();
-	}
+        gameModel=GameModel.get();
+    }
 
-	private double calculateAttraction(StarSystem system1, StarSystem system2) {
-		
-		double dist = system1.getPosition().distTo(system2.getPosition());
-		double starMass1 = system1.getStarMass();
-		double starMass2 = system2.getStarMass();
+    private double calculateAttraction(StarSystem system1, StarSystem system2) {
 
-		return constant * (starMass1 + starMass2) / 
-		     //----------------------------------
-		             Math.pow(dist, 1.5);
-	}
+        double dist = system1.getPosition().distTo(system2.getPosition());
+        double starMass1 = system1.getStarMass();
+        double starMass2 = system2.getStarMass();
 
-	public Galaxy generate() {
-		
+        return constant * (starMass1 + starMass2)
+                / //----------------------------------
+                Math.pow(dist, 1.5);
+    }
+
+    public Galaxy generate() {
+
         Galaxy galaxy = gameModel.getGalaxy();
-        
-		// #todo terribly inefficient
-		List<StarSystem> systems = galaxy.getSystems();
-		int numSystems = systems.size();
+
+        // #todo terribly inefficient
+        List<StarSystem> systems = galaxy.getSystems();
+        int numSystems = systems.size();
         boolean[] atleastOneConnection = new boolean[numSystems];
-		for (int i = 0; i < numSystems; i++) {
-			StarSystem system1 = systems.get(i);
-			for (int j = i + 1; j < numSystems; j++) {
-				StarSystem system2 = systems.get(j);
-				double attraction = calculateAttraction(system1, system2);
-				if (attraction >= threshold
-					|| (connectBlackHoles 
-						&& system1.getStarType() == StarType.BLACK_HOLE)
-						&& system2.getStarType() == StarType.BLACK_HOLE) {
-					
+        for (int i = 0; i < numSystems; i++) {
+            StarSystem system1 = systems.get(i);
+            for (int j = i + 1; j < numSystems; j++) {
+                StarSystem system2 = systems.get(j);
+                double attraction = calculateAttraction(system1, system2);
+                if (attraction >= threshold
+                        || (connectBlackHoles
+                        && system1.getStarType() == StarType.BLACK_HOLE)
+                        && system2.getStarType() == StarType.BLACK_HOLE) {
+
                     atleastOneConnection[i] = true;
                     Position pos1 = makePosition(system1);
                     Position pos2 = makePosition(system2);
-					jumpPoints.addAll(system1.addJumpPoint(system2, pos1, pos2));
-				}
-			}
-		}
-        
+                    jumpPoints.addAll(system1.addJumpPoint(system2, pos1, pos2));
+                }
+            }
+        }
+
         for (int i = 0; i < numSystems; i++) {
             if (!atleastOneConnection[i]) {
                 StarSystem system1 = systems.get(i);
@@ -86,9 +93,9 @@ public class JumpPointsGenerator {
             }
         }
 
-		galaxy.replaceSystems(systems);
-		return galaxy;
-	}
+        galaxy.replaceSystems(systems);
+        return galaxy;
+    }
 
     private Position makePosition(StarSystem system) {
         System.out.println("sup");
@@ -113,33 +120,28 @@ public class JumpPointsGenerator {
         }
         return null;
     }
-    
 
-	public final void setConstant(Double constant) {
+    public final void setConstant(Double constant) {
 
-		if (constant <= 0) {
-			throw new IllegalArgumentException("constant = " + constant + " given; constant must be positive");
-		}
-		this.constant = constant;
-	}
+        if (constant <= 0) {
+            throw new IllegalArgumentException("constant = " + constant + " given; constant must be positive");
+        }
+        this.constant = constant;
+    }
 
-	public final void setThreshold(Double threshold) {
+    public final void setThreshold(Double threshold) {
 
-		if (threshold < 0) {
-			throw new IllegalArgumentException("threshold = " + threshold + " given; threshold must be nonnegative");
-		}
-		this.threshold = threshold;
-	}
-    
+        if (threshold < 0) {
+            throw new IllegalArgumentException("threshold = " + threshold + " given; threshold must be nonnegative");
+        }
+        this.threshold = threshold;
+    }
+
     public List<JumpPoint> getJumpPointList() {
         return jumpPoints;
     }
 
-    public final void setConnectBlackHoles(Boolean connect){
+    public final void setConnectBlackHoles(Boolean connect) {
         this.connectBlackHoles = true;
-    }
-        
-    public final void setGameModel(GameModel gameModel) {
-        this.gameModel = gameModel;
     }
 }

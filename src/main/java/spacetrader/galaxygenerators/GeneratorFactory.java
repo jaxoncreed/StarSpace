@@ -35,9 +35,9 @@ public class GeneratorFactory {
         classMap.put("SimplePlanetGenerator",new SimplePlanetGenerator().getClass());
 
         genMap.put("JumpPointsGenerator", ()->{
-            return new JumpPointsGenerator(GameModel.get());
+            return new JumpPointsGenerator();
         });
-        classMap.put("JumpPointsGenerator",new JumpPointsGenerator(GameModel.get()).getClass());
+        classMap.put("JumpPointsGenerator",new JumpPointsGenerator().getClass());
 
     }
     public Object getGenerator(String type){

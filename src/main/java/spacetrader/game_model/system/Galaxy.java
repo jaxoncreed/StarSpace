@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import spacetrader.game_model.Positionable;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.graph.Graph;
 
 /**

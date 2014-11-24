@@ -2,21 +2,21 @@ package spacetrader.game_model.system;
 
 import java.io.Serializable;
 import java.util.Objects;
-import spacetrader.game_model.interactable.InteractableObject;
+import spacetrader.Interactable;
 import spacetrader.game_model.graph.Node;
 import spacetrader.PhysicsSimulator;
-import spacetrader.game_model.GameModel;
 import spacetrader.game_model.gameLogic.Position;
-
 import spacetrader.game_model.graph.DirectedEdge;
+import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.interactable.InteractionType;
+import spacetrader.game_model.system.StarSystem;
 
 public class JumpPoint implements Serializable, DirectedEdge, InteractableObject {
 	
     public static final String TERM = "Hargin Point";
     private StarSystem fromSystem;
     private StarSystem toSystem;
-	private Position fromPos;
+    private Position fromPos;
     private Position toPos;
     private int level;
     public static final double INTERACTION_RANGE = 0;
@@ -77,13 +77,14 @@ public class JumpPoint implements Serializable, DirectedEdge, InteractableObject
             && this.getWeight() == that.getWeight();
     }
 
-	public double getInteractionRange() {
-		return INTERACTION_RANGE;
-	}
+    public double getInteractionRange() {
+	return INTERACTION_RANGE;
+    }
 
-        public String getInteractionMessage() {
-            return "Jump to " + toSystem.getName();
-        }
+    public String getInteractionMessage() {
+        return "Jump to " + toSystem.getName();
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -97,11 +98,11 @@ public class JumpPoint implements Serializable, DirectedEdge, InteractableObject
 
     @Override
     public Position getPos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return fromPos;
     }
 
     @Override
     public InteractionType getType() {
-        return InteractionType.Travel;
+        return InteractionType.Null;
     }
 }

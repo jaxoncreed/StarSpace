@@ -26,6 +26,7 @@ import spacetrader.galaxygenerators.StarSystemGenerator;
 import spacetrader.game_model.system.Galaxy;
 import spacetrader.game_model.system.JumpPoint;
 import spacetrader.game_model.graph.Graph;
+import spacetrader.game_model.system.StarSystem;
 
 /**
  * To generate a galaxy, simply instantiate this class, and call the generate() 
@@ -76,12 +77,17 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     
     public void generate() {
         Galaxy gax = generator.generate();
-        jumpPointGenerator.setGalaxy(gax);
+        GameModel.get().setGalaxy(gax);
         jumpPointGenerator.generate();
         List<JumpPoint> edges = jumpPointGenerator.getJumpPointList();
         gax.setJumpPoints(new Graph(edges, null));
         GameModel.get().setGalaxy(gax);
-        GameModel.get().getPlayer().getShip().setSystem(gax.getSystems().get(0));
-
+        StarSystem starSystem = null;
+        for (StarSystem s : gax.getSystems()) {
+            if (s.getJumpPoints().size() > 0) {
+                starSystem = s;
+            }
+        }
+        starSystem.addShip(GameModel.get().getPlayer().getShip());
     }
 }

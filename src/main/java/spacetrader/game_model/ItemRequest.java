@@ -5,6 +5,9 @@
  */
 package spacetrader.game_model;
 
+import spacetrader.game_model.gameLogic.Item;
+import spacetrader.game_model.gameLogic.Market;
+
 /**
  * 
  * @author Michael Lane

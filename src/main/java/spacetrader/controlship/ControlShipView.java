@@ -39,6 +39,7 @@ import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
+import spacetrader.game_model.positioncontainer.BoxCut;
 
 /**
  *
@@ -54,7 +55,7 @@ public class ControlShipView extends AbstractView implements Initializable {
     private int PIXELS_PER_DISTANCE=400;
     private double canvasWidth,canvasHeight;
     private Bounds bounds;
-    private double view_size=600;
+    private double view_size=500;
 
     private ControlShipCtrl controller;
     
@@ -79,19 +80,25 @@ public class ControlShipView extends AbstractView implements Initializable {
         bg.setGraphicsContext(canvas.getGraphicsContext2D());
         bg.setScale(PIXELS_PER_DISTANCE);
         bg.draw();
-        for(Planet p:system.getPlanets()){
-            JavaFXPlanetRenderer pr=new JavaFXPlanetRenderer(p,bounds.normalize(p.getPos()),100,100);
+        Position neg=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
+        neg.sub(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2,(this.canvasHeight/PIXELS_PER_DISTANCE)/2));
+        Position pos=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
+        pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2,(this.canvasHeight/PIXELS_PER_DISTANCE)/2));
+        BoxCut box=new BoxCut(neg,pos);
+        System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
+        for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
+            JavaFXPlanetRenderer pr=new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
             pr.setScale(PIXELS_PER_DISTANCE);
             pr.setGraphicsContext(canvas.getGraphicsContext2D());
             pr.draw();
         }
         Ship s=player.getShip();
-        JavaFXShipRender playrend=new JavaFXShipRender(s,bounds.normalize(s.getPosition()));
+        JavaFXShipRender playrend=new JavaFXShipRender(s,new BoxCut(neg,pos).normalize(s.getPosition()));
         playrend.setGraphicsContext(canvas.getGraphicsContext2D());
         playrend.setScale(PIXELS_PER_DISTANCE);
         playrend.draw();
-        canvas.setTranslateX(-(bounds.normalize(s.getPosition()).x*PIXELS_PER_DISTANCE-.5*window.getWidth()));
-        canvas.setTranslateY(-(bounds.normalize(s.getPosition()).y*PIXELS_PER_DISTANCE-.5*window.getHeight()));
+        //canvas.setTranslateX(-(bounds.normalize(s.getPosition()).x*PIXELS_PER_DISTANCE-.5*window.getWidth()));
+        //canvas.setTranslateY(-(bounds.normalize(s.getPosition()).y*PIXELS_PER_DISTANCE-.5*window.getHeight()));
         
     }
     public void handleKey(KeyEvent t){/*
@@ -103,13 +110,11 @@ public class ControlShipView extends AbstractView implements Initializable {
             Position p=new Position(-1,0);
             canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
             canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-
         }
         if (t.getCode() == KeyCode.W) {
             Position p=new Position(0,-1);
             canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
             canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-
         } else if (t.getCode() == KeyCode.S) {
             Position p=new Position(0,1);
             canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
@@ -119,7 +124,6 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
         if(event.isPressed(KeyCode.D)){
-            controller.playerTurnRight();
             System.out.println("D");
         }
         if(event.isPressed(KeyCode.A)){
@@ -147,12 +151,12 @@ public class ControlShipView extends AbstractView implements Initializable {
         });
         PIXELS_PER_DISTANCE=(int)(window.getWidth()/view_size);
         bounds=system.getBounds();
-        bounds.setOffsetNear(new Position(600,500));
+        bounds.setOffsetNear(new Position(600,600));
         bounds.setOffsetFar(new Position(600,600));
-        canvasWidth=(bounds.getDistanceX())*PIXELS_PER_DISTANCE;
-        canvasHeight=(bounds.getDistanceY())*PIXELS_PER_DISTANCE;
+        canvasWidth=window.getWidth();
+        canvasHeight=window.getHeight();
         System.out.println(canvas);
-        canvas.setWidth((int)canvasWidth);
+        canvas.setWidth(canvasWidth);
         canvas.setHeight(canvasHeight);
         
         ControlShipView tt=this;

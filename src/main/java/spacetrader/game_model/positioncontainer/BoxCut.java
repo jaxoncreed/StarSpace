@@ -23,8 +23,18 @@ public class BoxCut extends PositionContainer{
     @Override
     public boolean contains(Position p) {
         Position temp=new Position(p);
-        temp.sub(this.farRelative);
-        return temp.x>=0&&temp.y>=0;
+        temp.sub(this.origin);
+        if(temp.x<0||temp.y<0){
+            return false;
+        }
+        Position temp2=new Position(farRelative);
+        temp2.sub(temp);
+        return temp2.x>=0&&temp2.y>=0;
+    }
+    public Position normalize(Position p){
+        Position pos=new Position(p.x,p.y);
+        pos.sub(origin);
+        return pos;
     }
     
 }

@@ -21,7 +21,6 @@ import spacetrader.shared.Util;
  */
 public class JumpPointsGenerator {
 
-	private Galaxy galaxy;
     /** The constant used in the calculation of attraction; see the class javadoc. */
 	private double constant;
     /** The minimum level of attraction required for two StarSystems to be connected
@@ -36,8 +35,7 @@ public class JumpPointsGenerator {
     private List<JumpPoint> jumpPoints;
     private GameModel gameModel;
 
-	public JumpPointsGenerator(GameModel gameModel) {
-        this.gameModel = gameModel;
+	public JumpPointsGenerator() {
         jumpPoints = new ArrayList();
 	}
 
@@ -54,6 +52,8 @@ public class JumpPointsGenerator {
 
 	public Galaxy generate() {
 		
+        Galaxy galaxy = gameModel.getGalaxy();
+        
 		// #todo terribly inefficient
 		List<StarSystem> systems = galaxy.getSystems();
 		int numSystems = systems.size();
@@ -115,13 +115,6 @@ public class JumpPointsGenerator {
 		return galaxy;
 	}
 
-	public final void setGalaxy(Galaxy galaxy) {
-		
-		if (galaxy == null) {
-			throw new IllegalArgumentException("galaxy must be non-null");
-		}
-		this.galaxy = galaxy;
-	}
 
 	public final void setConstant(Double constant) {
 
@@ -147,4 +140,7 @@ public class JumpPointsGenerator {
         this.connectBlackHoles = true;
     }
         
+    public final void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
+    }
 }

@@ -37,6 +37,7 @@ public class GeneratorConfigParser {
 		_galaxyGenerators = new ArrayList();
 		_starSystemGenerators = new ArrayList();
 		_planetGenerators = new ArrayList();
+        _jumpPointsGenerators = new ArrayList();
 	}
 
 	public void createGenerators() throws Exception {
@@ -55,6 +56,7 @@ public class GeneratorConfigParser {
                     " XML file " + _filename);
                 System.exit(1);
             }
+            System.out.println(this.getClass().getPackage().getName() + "." + type);
 			Object gen = genClass.newInstance();
 
 			// read the properties and set them

@@ -64,11 +64,11 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     
     public void generate() {
         Galaxy gax = generator.generate();
-        jumpPointGenerator.setGalaxy(gax);
+        gameModel.setGalaxy(gax);
+        jumpPointGenerator.setGameModel(gameModel);
         jumpPointGenerator.generate();
         List<JumpPoint> edges = jumpPointGenerator.getJumpPointList();
         gax.setJumpPoints(new Graph(edges, null));
-        gameModel.setGalaxy(gax)
-;        
+        gameModel.setGalaxy(gax);        
     }
 }

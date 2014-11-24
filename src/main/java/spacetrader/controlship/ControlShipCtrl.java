@@ -39,12 +39,18 @@ public class ControlShipCtrl extends ViewCtrl {
  
     public ControlShipCtrl(MainCtrl aParent, Window aWindow) {
         super(aParent, aWindow);
-                
+
+        // Get player                
         player = GameModel.get().getPlayer();
         playerShip = player.getShip();
-        System.out.println(playerShip);
+
+        // Prepare the physics simulator
         PhysicsSimulator.setSystem(playerShip.getSystem());
+
+        // Prepare window
         mainCtrl = aParent;
+
+        // Prepare interaction detection
         interactionManager=new InteractionManager(playerShip.getSystem().getInteractableObjects());
         InteractAction tradeAction=(InteractableObject obj)->{
             ViewCtrlFactory.setMarket(((Planet)obj).getMarket());
@@ -57,15 +63,19 @@ public class ControlShipCtrl extends ViewCtrl {
         };
         interactionManager.setInteractFunction(InteractionType.Trade, tradeAction);
         interactionManager.setInteractFunction(InteractionType.Travel, travelAction);
+
+        // Prepare view
         view = ViewCtrlFactory.getView(CtrlViewTypes.ControlShip, window, this);
     }
 
     public void update() {
         spacetrader.PhysicsSimulator.simulate();
     }
+
     public String getInteractionMessage(){
         return this.interactionManager.getInteractionMessage(playerShip);
     }
+    
     public void playerAccelerate() {
         playerShip.accelerate();
     }

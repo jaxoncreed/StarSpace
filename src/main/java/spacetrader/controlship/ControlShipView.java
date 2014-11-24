@@ -31,6 +31,7 @@ import spacetrader.MultiKeyPressEventHandler;
 import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXBackgroundRender;
+import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXForegroundRender;
 import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXShipRender;
 import spacetrader.game_model.GameModel;
 import spacetrader.game_model.system.Planet;
@@ -76,63 +77,46 @@ public class ControlShipView extends AbstractView implements Initializable {
             Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void draw(){
-        controller.update();
-        if(turnLeft){
-            controller.playerTurnLeft();
-        }
-        if(turnRight){
-            controller.playerTurnRight();
-        }
-        if(acclerate){
-            controller.playerAccelerate();
-        }
-        if(declerate){
-            controller.playerDecelerate();
-        }
+    public void draw() {
+        // Set system
         system=player.getSystem();
-        JavaFXBackgroundRender bg=new JavaFXBackgroundRender(canvasWidth,canvasHeight);
+
+        // Background
+        JavaFXBackgroundRender bg = new JavaFXBackgroundRender(canvasWidth,canvasHeight);
+        JavaFXForegroundRender fg = new JavaFXForegroundRender(canvasWidth,canvasHeight);
         bg.setGraphicsContext(canvas.getGraphicsContext2D());
         bg.setScale(PIXELS_PER_DISTANCE);
+        bg.setOffset(player.getPosition());
         bg.draw();
+
+        // Calculate area to render
         Position neg=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
         neg.sub(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         Position pos=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
         pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         BoxCut box=new BoxCut(neg,pos);
+        // System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
+
+        // Planets
         for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
             JavaFXPlanetRenderer pr=new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
             pr.setScale(PIXELS_PER_DISTANCE);
             pr.setGraphicsContext(canvas.getGraphicsContext2D());
             pr.draw();
         }
+
+        // Ship
         Ship s=player.getShip();
         JavaFXShipRender playrend=new JavaFXShipRender(s,new BoxCut(neg,pos).normalize(s.getPosition()));
         playrend.setGraphicsContext(canvas.getGraphicsContext2D());
         playrend.setScale(PIXELS_PER_DISTANCE);
         playrend.draw();
-        //canvas.setTranslateX(-(bounds.normalize(s.getPosition()).x*PIXELS_PER_DISTANCE-.5*window.getWidth()));
-        //canvas.setTranslateY(-(bounds.normalize(s.getPosition()).y*PIXELS_PER_DISTANCE-.5*window.getHeight()));
-    }
-    public void handleKey(KeyEvent t){/*
-        if (t.getCode() == KeyCode.D ) {
-            Position p=new Position(1,0);
-            canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
-            canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-        } else if (t.getCode() == KeyCode.A ) {
-            Position p=new Position(-1,0);
-            canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
-            canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-        }
-        if (t.getCode() == KeyCode.W) {
-            Position p=new Position(0,-1);
-            canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
-            canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-        } else if (t.getCode() == KeyCode.S) {
-            Position p=new Position(0,1);
-            canvas.setTranslateX(-(bounds.normalize(p).x*PIXELS_PER_DISTANCE-.5*anchor.getWidth()));
-            canvas.setTranslateY(-(bounds.normalize(p).y*PIXELS_PER_DISTANCE-.5*anchor.getHeight()));
-        }*/
+
+        // Foreground
+        fg.setGraphicsContext(canvas.getGraphicsContext2D());
+        fg.setScale(PIXELS_PER_DISTANCE);
+        fg.setOffset(player.getPosition());
+        fg.draw();
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
@@ -172,6 +156,19 @@ public class ControlShipView extends AbstractView implements Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                controller.update();
+                if(turnLeft){
+                    controller.playerTurnLeft();
+                }
+                if(turnRight){
+                    controller.playerTurnRight();
+                }
+                if(acclerate){
+                    controller.playerAccelerate();
+                }
+                if(declerate){
+                    controller.playerDecelerate();
+                }
                 tt.draw();
             }
         };

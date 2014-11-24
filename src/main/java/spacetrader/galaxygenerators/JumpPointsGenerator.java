@@ -91,6 +91,7 @@ public class JumpPointsGenerator {
 	}
 
     private Position makePosition(StarSystem system) {
+        System.out.println("sup");
         Bounds bounds = system.getBounds();
         boolean tryAgain = true;
         double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
@@ -124,8 +125,8 @@ public class JumpPointsGenerator {
 
 	public final void setThreshold(Double threshold) {
 
-		if (threshold <= 0) {
-			throw new IllegalArgumentException("threshold = " + threshold + " given; threshold must be positive");
+		if (threshold < 0) {
+			throw new IllegalArgumentException("threshold = " + threshold + " given; threshold must be nonnegative");
 		}
 		this.threshold = threshold;
 	}

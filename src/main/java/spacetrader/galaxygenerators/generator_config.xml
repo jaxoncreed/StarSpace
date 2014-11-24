@@ -46,26 +46,26 @@ tag.
 <config>
     
     <EllipticalGalaxyGenerator>
-        <numSystemsMean>    100     </numSystemsMean>
-        <numSystemsSD>      10      </numSystemsSD>
+        <numSystemsMean>    10     </numSystemsMean>
+        <numSystemsSD>      1      </numSystemsSD>
         <sampleNumSystems>  true    </sampleNumSystems>
         <minSystemDist>     210     </minSystemDist>
-        <width>             10000   </width>
-        <height>            10000   </height>
-        <xSD>               1500    </xSD>
-        <ySD>               1500    </ySD>
-        <xBound>            3500    </xBound>
-        <yBound>            3500    </yBound>
+        <width>             1600   </width>
+        <height>            900    </height>
+        <xSD>               300    </xSD>
+        <ySD>               200    </ySD>
+        <xBound>            450    </xBound>
+        <yBound>            450    </yBound>
     </EllipticalGalaxyGenerator>
 
     <SimpleStarSystemGenerator>
         <numPlanetsMean>    9       </numPlanetsMean>
         <numPlanetsSD>      2       </numPlanetsSD>
         <sampleNumPlanets>  true    </sampleNumPlanets>
-        <planetSepMean>     7       </planetSepMean>
-        <planetSepSD>       2       </planetSepSD>
-        <minPlanetSep>      2       </minPlanetSep>
-        <plutoDist>         100     </plutoDist>      
+        <planetSepMean>     100       </planetSepMean>
+        <planetSepSD>       10       </planetSepSD>
+        <minPlanetSep>      50       </minPlanetSep>
+        <plutoDist>         1500     </plutoDist>      
         <starMassMean>      100     </starMassMean>  
         <starMassSD>        10      </starMassSD>
     </SimpleStarSystemGenerator>
@@ -75,7 +75,7 @@ tag.
     
     <JumpPointsGenerator>
         <connectBlackHoles>   false </connectBlackHoles>
-        <threshold>           10    </threshold>
+        <threshold>           100    </threshold>
         <constant>            1     </constant>
     </JumpPointsGenerator>
 

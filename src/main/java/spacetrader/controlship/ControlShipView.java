@@ -56,7 +56,10 @@ public class ControlShipView extends AbstractView implements Initializable {
     private double canvasWidth,canvasHeight;
     private Bounds bounds;
     private double view_size=500;
-
+    private boolean turnLeft=false;
+    private boolean turnRight=false;
+    private boolean acclerate=false;
+    private boolean declerate=false;
     private ControlShipCtrl controller;
     
     public ControlShipView(JavaFXWindow win,ControlShipCtrl c){
@@ -75,6 +78,18 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
     public void draw(){
         controller.update();
+        if(turnLeft){
+            controller.playerTurnLeft();
+        }
+        if(turnRight){
+            controller.playerTurnRight();
+        }
+        if(acclerate){
+            controller.playerAccelerate();
+        }
+        if(declerate){
+            controller.playerDecelerate();
+        }
         system=player.getSystem();
         JavaFXBackgroundRender bg=new JavaFXBackgroundRender(canvasWidth,canvasHeight);
         bg.setGraphicsContext(canvas.getGraphicsContext2D());
@@ -99,7 +114,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         playrend.draw();
         //canvas.setTranslateX(-(bounds.normalize(s.getPosition()).x*PIXELS_PER_DISTANCE-.5*window.getWidth()));
         //canvas.setTranslateY(-(bounds.normalize(s.getPosition()).y*PIXELS_PER_DISTANCE-.5*window.getHeight()));
-        
     }
     public void handleKey(KeyEvent t){/*
         if (t.getCode() == KeyCode.D ) {
@@ -123,18 +137,10 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
-        if(event.isPressed(KeyCode.D)){
-            System.out.println("D");
-        }
-        if(event.isPressed(KeyCode.A)){
-            controller.playerTurnLeft();
-        }
-        if(event.isPressed(KeyCode.W)){
-            controller.playerAccelerate();
-        }
-        if(event.isPressed(KeyCode.S)){
-            controller.playerDecelerate();
-        }
+        turnRight=event.isPressed(KeyCode.D);
+        turnLeft=event.isPressed(KeyCode.A);
+        acclerate=event.isPressed(KeyCode.W);
+        declerate=event.isPressed(KeyCode.S);
         if(event.isPressed(KeyCode.E)){
             controller.switchToMarke();
         }

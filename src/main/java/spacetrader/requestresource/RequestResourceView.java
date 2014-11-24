@@ -3,7 +3,7 @@ package spacetrader.requestresource;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import spacetrader.Window.Window;
+import spacetrader.Window;
 
 /**
  *

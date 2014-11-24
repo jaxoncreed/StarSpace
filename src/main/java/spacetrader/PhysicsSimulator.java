@@ -32,12 +32,12 @@ public class PhysicsSimulator {
             assert(system!=null);
        
             // Initialize world (no gravity)
-		world = new World(GRAVITY);
-
+            world = new World(GRAVITY);
+            
 		// Add all physics objects
-		for (Ship ship : system.getShips()) {
-			ship.enablePhysicalSimulation(world);
-		}
+            for (Ship ship : system.getShips()) {
+		ship.enablePhysicalSimulation(world);
+            }
 	}
 
 	public static void simulate() {

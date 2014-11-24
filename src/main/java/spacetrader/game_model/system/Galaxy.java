@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import spacetrader.game_model.Positionable;
-import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.graph.Graph;
 
 /**
@@ -78,6 +76,6 @@ public class Galaxy implements Serializable, Positionable {
     
     public void setJumpPoints(Graph jumpPoints) {
         this.jumpPoints = jumpPoints;
-	}
+    }
 
 }

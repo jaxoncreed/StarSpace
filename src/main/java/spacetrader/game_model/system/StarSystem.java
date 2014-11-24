@@ -145,6 +145,18 @@ public class StarSystem implements Node, Positionable {
         this.starMass = starMass;
     }
     
+    public List<Planet> getNearbyPlanets(Position p,int radius){
+        return null;
+    }
+    public List<Planet> getNearbyPlanets(PositionContainer container){
+        ArrayList<Planet> temp = new ArrayList<Planet>();
+        for(Planet p : planets){
+            if(container.contains(p.getPos()))
+                temp.add(p);
+        }
+        return temp;
+    }
+
     public double getStarMass() {
         return starMass;
     }

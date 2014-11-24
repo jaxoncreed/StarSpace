@@ -10,6 +10,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 import spacetrader.game_model.Positionable;
+import spacetrader.game_model.StarSystem;
 
 /**
  * Nodes in a Graph can be connected with DirectedEdges or UndirectedEdges, or they

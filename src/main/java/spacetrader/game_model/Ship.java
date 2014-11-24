@@ -57,6 +57,7 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
         this.setPosition(jumpPoint.getTargetPos());
     }
 
+
     public void setSystem(StarSystem system) {
         this.system = system;
         system.addShip(this);

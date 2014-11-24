@@ -5,8 +5,6 @@
  */
 package spacetrader.game_model;
 
-import spacetrader.game_model.gameLogic.Position;
-
 /**
  *
  * @author michael

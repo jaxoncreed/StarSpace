@@ -8,8 +8,8 @@ package spacetrader;
 import spacetrader.Window.Window;
 import spacetrader.controlship.ControlShipCtrl;
 import spacetrader.controlship.ControlShipViewFactory;
-import spacetrader.createGalaxy.CreateGalaxyCtrl;
 import spacetrader.createGalaxy.CreateGalaxyViewFactory;
+import spacetrader.createGalaxy.GalaxyGeneratorCtrl;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.createcharacter.CreateCharacterViewFactory;
 import spacetrader.game_model.gameLogic.Market;
@@ -37,7 +37,7 @@ public class ViewCtrlFactory {
             case SaveGame:          return new SaveGameCtrl(ctrl,win);
             case LoadGame:          return new LoadGameCtrl(ctrl,win);
             case Trade:             return new MakeTradeCtrl(ctrl,win,market);
-            case CreateGalaxy:      return new CreateGalaxyCtrl(ctrl,win);
+            case CreateGalaxy:      return new GalaxyGeneratorCtrl(ctrl,win);
             case ControlShip:       return new ControlShipCtrl(ctrl,win);
             case GalaxyMap:         return new GalaxyMapCtrl(ctrl,win);
         }

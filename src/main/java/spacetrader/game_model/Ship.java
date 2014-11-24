@@ -10,11 +10,12 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import spacetrader.game_model.interactable.InteractableObject;
+import spacetrader.game_model.interactable.InteractionType;
 
 /**
  * Ship model!
  */
-public class Ship implements Tradeable, Serializable {
+public class Ship implements Tradeable, Serializable,InteractableObject {
 
     private String name;
     private double basePrice;
@@ -187,5 +188,25 @@ public class Ship implements Tradeable, Serializable {
     public void disablePhysicalSimulation() {
         setPosition(new Position(physicsBody.getPosition().x, physicsBody.getPosition().y));
         physicsBody = null;
+    }
+
+    @Override
+    public double getInteractionRange() {
+        return this.interactionRange;
+    }
+
+    @Override
+    public String getInteractionMessage() {
+        return "";
+    }
+
+    @Override
+    public Position getPos() {
+        return this.getPosition();
+    }
+
+    @Override
+    public InteractionType getType() {
+        return InteractionType.Null;
     }
 }

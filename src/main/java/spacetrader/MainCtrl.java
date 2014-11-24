@@ -12,7 +12,7 @@ import spacetrader.Window.Window;
 import spacetrader.createcharacter.CreateCharacterCtrl;
 import spacetrader.menu.MenuCtrl;
 import spacetrader.controlship.ControlShipCtrl;
-import spacetrader.galaxygenerators.GalaxyGeneratorCtrl;
+import spacetrader.createGalaxy.GalaxyGeneratorCtrl;
 import spacetrader.game_model.*;
 
 /**

@@ -28,6 +28,9 @@ public class PhysicsSimulator {
 		}                
             }
             system = s;
+            System.out.println(system);
+            assert(system!=null);
+       
             // Initialize world (no gravity)
 		world = new World(GRAVITY);
 

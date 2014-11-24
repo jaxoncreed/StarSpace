@@ -11,9 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import spacetrader.game_model.Position;
-import spacetrader.game_model.StarSystem;
-import spacetrader.game_model.StarType;
+import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.system.StarSystem;
+import spacetrader.game_model.system.StarType;
 
 /**
  *

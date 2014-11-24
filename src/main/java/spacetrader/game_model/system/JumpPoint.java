@@ -11,7 +11,7 @@ import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.graph.DirectedEdge;
 import spacetrader.game_model.interactable.InteractionType;
 
-public class JumpPoint implements Serializable, DirectedEdge, Interactable {
+public class JumpPoint implements Serializable, DirectedEdge, InteractableObject {
 	
     public static final String TERM = "Hargin Point";
     private StarSystem fromSystem;
@@ -84,17 +84,6 @@ public class JumpPoint implements Serializable, DirectedEdge, Interactable {
         public String getInteractionMessage() {
             return "Jump to " + toSystem.getName();
         }
-        
-	public void interact(Ship ship, GameModel gm) {
-		ship.jump(this);
-
-		// If the ship belongs to the player,
-		// change the physics simulator's target system
-		if (gm.getPlayer().getShip().equals(ship)) {
-			PhysicsSimulator.setSystem(gm.getPlayer().getSystem());
-		}
-	}
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -104,5 +93,15 @@ public class JumpPoint implements Serializable, DirectedEdge, Interactable {
         hash = 89 * hash + Objects.hashCode(this.fromPos);
         hash = 89 * hash + Objects.hashCode(this.getWeight());
         return hash;
+    }
+
+    @Override
+    public Position getPos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public InteractionType getType() {
+        return InteractionType.Travel;
     }
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Objects;
 import spacetrader.game_model.Faction;
+import spacetrader.game_model.Positionable;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.positioncontainer.Bounds;
@@ -184,7 +185,7 @@ public class StarSystem implements Node, Positionable {
         return new Bounds(minx,miny,maxx,maxy);
     }
     public ArrayList<InteractableObject> getInteractableObjects(){
-        ArrayList<InteractableObject> out=new ArrayList();
+        ArrayList<InteractableObject> out=new ArrayList<InteractableObject>();
         for(Planet p:this.planets){
             out.add(p);
         }

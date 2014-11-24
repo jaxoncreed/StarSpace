@@ -47,9 +47,9 @@ public class InteractionManager {
     private HashMap<InteractionType, InteractAction> funcMap;
 
     public InteractionManager(ArrayList<InteractableObject> object) {
-        objectList = object;
-        funcMap = new HashMap();
+        objectList = object;        funcMap = new HashMap();
         funcMap.put(InteractionType.Null, (InteractableObject obj) -> {
+
 
         });
     }

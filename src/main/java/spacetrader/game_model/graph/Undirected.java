@@ -1,7 +1,7 @@
 package spacetrader.game_model.graph;
 
 import java.util.Objects;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.StarSystem;
 
 /**
  *

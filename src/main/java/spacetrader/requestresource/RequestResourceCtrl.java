@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import spacetrader.Ctrl;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
-import spacetrader.Window;
+import spacetrader.Window.Window;
 import spacetrader.createcharacter.CreateCharacterView;
 import spacetrader.game_model.GameModel;
 
@@ -26,7 +26,7 @@ public class RequestResourceCtrl extends ViewCtrl {
 //    }
 
     public RequestResourceCtrl(Ctrl parent, Window window, Stage stage, GameModel gameModel) {
-        super(parent, window, stage, gameModel);
+        super(parent, window);
     }
     
 }

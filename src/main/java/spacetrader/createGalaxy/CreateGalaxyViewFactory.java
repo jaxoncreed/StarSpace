@@ -8,6 +8,7 @@ package spacetrader.createGalaxy;
 import spacetrader.AbstractView;
 import spacetrader.Ctrl;
 import spacetrader.ViewFactory;
+import spacetrader.Window.JavaFXWindow;
 import spacetrader.Window.Window;
 
 /**
@@ -18,7 +19,10 @@ public class CreateGalaxyViewFactory extends ViewFactory{
 
     @Override
     public AbstractView getView(Window win, Ctrl ctrl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(win.getType()){
+            case JavaFX: return new CreateGalaxyView((JavaFXWindow)win,(GalaxyGeneratorCtrl)ctrl);
+        }
+        return null;
     }
     
 }

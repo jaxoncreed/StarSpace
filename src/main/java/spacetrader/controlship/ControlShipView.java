@@ -1,4 +1,3 @@
-
 package spacetrader.controlship;
 
 import spacetrader.game_model.gameLogic.Position;
@@ -37,34 +36,33 @@ import javafx.scene.*;
 import javafx.scene.canvas.*;
 import javafx.scene.paint.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import javafx.stage.Stage;
 
 import spacetrader.AbstractView;
+import spacetrader.MultiKeyPressEventHandler;
+import spacetrader.Window.JavaFXWindow;
 
 /**
-*
-* @author Jackson Morgan
-*/
+ *
+ * @author Jackson Morgan
+ */
 public class ControlShipView extends AbstractView implements Initializable {
 
     // TODO: Move images into their own class
     // public static final Image PLAYER_SHIP = new Image("lasher_ff.png");
-
-    public Window window;
+    public JavaFXWindow window;
     public ControlShipCtrl shipCtrl;
     public Pane curPane;
 
     private static final int FRAMES_PER_SECOND = 60;
-    
+
     private Position camera;
     private Player player;
     private Ship playerShip;
-
-    private Stage stage;
-    private Group root;
-    private Scene scene;
+    @FXML
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -75,27 +73,30 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     private String interactionMessage = "";
 
-    public ControlShipView() {};
+    public ControlShipView() {
+    }
 
-    public ControlShipView(Window window, ControlShipCtrl shipCtrl) {
+    ;
+
+    public ControlShipView(JavaFXWindow window, ControlShipCtrl shipCtrl) {
         this.window = window;
         this.shipCtrl = shipCtrl;
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("ControlShip.fxml"))) ;
+        loader.setController(this);
+        try {
+            curPane = loader.load();
+            window.loadFXML(curPane);
+        } catch (IOException ex) {
+            Logger.getLogger(MenuView.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         this.player = GameModel.get().getPlayer();
         this.playerShip = player.getShip();
         this.camera = new Position(playerShip.getPosition());
-
-        // Prepare and show canvas
-        root = new Group();
-        //scene = new Scene(root, AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT, Color.BLACK);
-        //canvas = new Canvas(AbstractView.SCREEN_WIDTH, AbstractView.SCREEN_HEIGHT);
-        gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
-        stage.setScene(scene);
-        stage.show();
-
+        
+        this.gc=canvas.getGraphicsContext2D();
         // Prepare game loop
-        final Duration oneFrameAmt = Duration.millis(1000/FRAMES_PER_SECOND);
+        final Duration oneFrameAmt = Duration.millis(1000 / FRAMES_PER_SECOND);
         EventHandler eventHandler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -127,46 +128,23 @@ public class ControlShipView extends AbstractView implements Initializable {
         shouldTurnRight = false;
         shouldDecelerate = false;
         shouldTurnLeft = false;
-        scene.setOnKeyPressed((KeyEvent t) -> {
-            switch (t.getCode().toString()) {
-                case "W":
-                    shouldAccelerate = true;
-                    break;
-                case "A":
-                    shouldTurnLeft = true;
-                    break;
-                case "S":
-                    shouldDecelerate = true;
-                    break;
-                case "D":
-                    shouldTurnRight = true;
-                    break;
-                case "E":
-                    shipCtrl.performInteraction();
-                    break;
+        window.setKeyHandle((MultiKeyPressEventHandler.MultiKeyEvent event) -> {
+            if (event.isPressed(KeyCode.W)) {
+                shouldAccelerate = true;
+            }if(event.isPressed(KeyCode.A)){
+                shouldTurnLeft = true;
+            }if(event.isPressed(KeyCode.S)){
+                shouldDecelerate=true;
+            }if(event.isPressed(KeyCode.D)){
+                this.shouldTurnRight=true;
+            }if(event.isPressed(KeyCode.E)){
+                shipCtrl.performInteraction();
             }
-        });
-        scene.setOnKeyReleased((KeyEvent t) -> {
-            switch (t.getCode().toString()) {
-                case "W":
-                    shouldAccelerate = false;
-                    break;
-                case "A":
-                    shouldTurnLeft = false;
-                    break;
-                case "S":
-                    shouldDecelerate = false;
-                    break;
-                case "D":
-                    shouldTurnRight = false;
-                    break;
-            }
-        });        
+        });  
         
         final KeyFrame oneFrame = new KeyFrame(oneFrameAmt, eventHandler);
 
-        TimelineBuilder.create()
-        .cycleCount(Animation.INDEFINITE)
+    TimelineBuilder.create ().cycleCount(Animation.INDEFINITE)
         .keyFrames(oneFrame)
         .build()
         .play();
@@ -176,10 +154,10 @@ public class ControlShipView extends AbstractView implements Initializable {
 
     public void renderPilotingShip() {
         // Camera smoothly follows ship
-        //camera.average(new Position(playerShip.getPosition().x - AbstractView.SCREEN_WIDTH/2 + 50, playerShip.getPosition().y - AbstractView.SCREEN_HEIGHT/2 + 50), 0.05);
+        camera.average(new Position(playerShip.getPosition().x - window.getWidth()/2 + 50, playerShip.getPosition().y - window.getHeight()/2 + 50), 0.05);
 
         // Clear the frame
-        //gc.clearRect(0,0,AbstractView.SCREEN_WIDTH,AbstractView.SCREEN_HEIGHT);
+        gc.clearRect(0,0,window.getWidth(),window.getHeight());
         
         // Draw the jump points
         for (JumpPoint j : player.getSystem().getJumpPoints()) {
@@ -216,12 +194,12 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
 
     @Override
-    public void render() {
+        public void render() {
         renderPilotingShip();
     }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+        public void initialize(URL url, ResourceBundle rb) {
 
     }
 
@@ -230,7 +208,7 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
 
     @Override
-    public void hide() {
+        public void hide() {
         
     }
 

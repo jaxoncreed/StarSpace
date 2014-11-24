@@ -16,16 +16,20 @@ import spacetrader.MultiKeyPressEventHandler;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public class JavaFXWindow extends Window{
-    public interface JavaFXKeyHandler extends Handler{
+    public interface JavaFXKeyHandler{
         public void handle(MultiKeyPressEventHandler.MultiKeyEvent e);
     }
     private Pane windowPane;
+    private JavaFXKeyHandler handleKey;
     public JavaFXWindow(){
         this.type=JavaFX;
         windowPane=new Pane();
     }
     public void keyHandle(MultiKeyPressEventHandler.MultiKeyEvent e){
-        ((JavaFXKeyHandler)this.handleKey).handle(e);
+        this.handleKey.handle(e);
+    }
+    public void setKeyHandle(JavaFXKeyHandler handle){
+        handleKey=handle;
     }
     public void loadFXML(Pane pane) throws IOException {
         windowPane.getChildren().add(pane);

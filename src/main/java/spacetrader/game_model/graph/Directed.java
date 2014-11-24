@@ -1,7 +1,7 @@
 package spacetrader.game_model.graph;
 
 import java.util.Objects;
-import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.system.StarSystem;
 
 /**
  *
@@ -9,11 +9,11 @@ import spacetrader.game_model.StarSystem;
  */
 public class Directed implements DirectedEdge {
 
-    private StarSystem fromNode;
-    private StarSystem toNode;
+    private Node fromNode;
+    private Node toNode;
     private double weight;
     
-    public Directed(StarSystem fromNode, StarSystem toNode, double weight) {
+    public Directed(Node fromNode, Node toNode, double weight) {
         this.fromNode = fromNode;
         this.toNode = toNode;
         this.weight = weight;

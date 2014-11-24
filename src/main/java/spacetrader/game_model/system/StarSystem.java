@@ -18,7 +18,7 @@ import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.PositionContainer;
 
-public class StarSystem implements Node {
+public class StarSystem implements Node, Positionable {
 
     private String name;
     private Position pos;
@@ -28,11 +28,14 @@ public class StarSystem implements Node {
     private Map<Node, JumpPoint> jumpPoints;
     private Faction faction;
     private List<Ship> ships;
+    private double width;
+    private double height;
 
-    public Position getPosition() {
-        return pos;
-    }
 
+	public Position getPosition() {
+		return pos;
+	}
+    
     public StarSystem(String name, Position pos, StarType starType) {
         this.name = name;
         this.pos = pos;
@@ -79,9 +82,17 @@ public class StarSystem implements Node {
         planets.add(planet);
     }
 
-    public void addJumpPoint(Position pos, StarSystem targetSys, Position targetPos) {
-        jumpPoints.put(targetSys, new JumpPoint(pos, targetSys, targetPos));
-        targetSys.asymmetricalAddJumpPoint(this, new JumpPoint(targetPos, this, pos));
+    public List<JumpPoint> addJumpPoint(StarSystem targetSys, Position pos, Position targetPos) {
+        
+        JumpPoint toJump = new JumpPoint(this, targetSys, pos, targetPos);
+        JumpPoint fromJump = new JumpPoint(targetSys, this, targetPos, pos);
+        this.asymmetricalAddJumpPoint(targetSys, new JumpPoint(this, targetSys, pos, targetPos));
+        targetSys.asymmetricalAddJumpPoint(this, new JumpPoint(targetSys, this, targetPos, pos));
+        
+        List<JumpPoint> toReturn = new ArrayList();
+        toReturn.add(toJump);
+        toReturn.add(fromJump);
+        return toReturn;
     }
 
     public List<Planet> getPlanets() {
@@ -92,13 +103,14 @@ public class StarSystem implements Node {
         jumpPoints.put(from, jumpPoint);
     }
 
-    public ArrayList<StarSystem> getNeighbors() {
+    public List<StarSystem> getNeighbors() {
         ArrayList<StarSystem> out = new ArrayList();
         jumpPoints.forEach((k, v) -> {
-            out.add(v.getTargetSystem());
+            out.add((StarSystem) v.getToNode());
         });
         return out;
     }
+
 
     public JumpPoint getJumpPoint(StarSystem s) {
         return jumpPoints.get(s);
@@ -147,6 +159,12 @@ public class StarSystem implements Node {
     public StarType getStarType() {
         return starType;
     }
+
+    public String toString() {
+        return getName();
+    }
+
+
     public Bounds getBounds(){
         Position minx=new Position(0,0),miny=new Position(0,0),maxx=new Position(0,0),maxy =new Position(0,0);
         for(Planet p:planets){

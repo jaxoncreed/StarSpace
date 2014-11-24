@@ -1,9 +1,17 @@
 package spacetrader.galaxygenerators;
 
-import spacetrader.game_model.system.Galaxy;
-import spacetrader.game_model.system.StarSystem;
-import spacetrader.game_model.system.StarType;
+import java.util.ArrayList;
+import spacetrader.game_model.Galaxy;
+import spacetrader.game_model.StarSystem;
+import spacetrader.game_model.StarType;
 import java.util.List;
+import spacetrader.game_model.GameModel;
+import spacetrader.game_model.JumpPoint;
+import spacetrader.game_model.Planet;
+import spacetrader.game_model.Position;
+import spacetrader.game_model.Ship;
+import spacetrader.game_model.positioncontainer.Bounds;
+import spacetrader.shared.Util;
 /**
  * A JumpPoint is placed between two StarSystems if they are sufficiently "attracted"
  * to one another. This attraction is a function of the two star masses, of the
@@ -20,10 +28,18 @@ public class JumpPointsGenerator {
      * by a JumpPoint; see the class javadoc.
      */
 	private double threshold;
-    /** true iff black holes should always be connected; otherwise, black holes 
+     /** true iff black holes should always be connected; otherwise, black holes 
      * are treated the same as any other StarType.
      */
 	public boolean connectBlackHoles; 
+     
+    private List<JumpPoint> jumpPoints;
+    private GameModel gameModel;
+
+	public JumpPointsGenerator(GameModel gameModel) {
+        this.gameModel = gameModel;
+        jumpPoints = new ArrayList();
+	}
 
 	private double calculateAttraction(StarSystem system1, StarSystem system2) {
 		
@@ -51,10 +67,46 @@ public class JumpPointsGenerator {
 						&& system1.getStarType() == StarType.BLACK_HOLE)
 						&& system2.getStarType() == StarType.BLACK_HOLE) {
 					
-					system1.addJumpPoint(
-						system1.getPosition(), 
-						system2, 
-						system2.getPosition());
+                    Bounds bounds1 = system1.getBounds();
+                    Bounds bounds2 = system2.getBounds();
+                    Position pos1 = null;
+                    Position pos2 = null;
+                    boolean tryAgain = true;
+                    double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
+                    while (tryAgain) {
+                        double x1 = Util.sampleFromUniformReal(bounds1.getMinX(), bounds1.getMaxX());
+                        double y1 = Util.sampleFromUniformReal(bounds1.getMinY(), bounds1.getMaxY());
+                        pos1 = new Position(x1, y1);
+                        boolean broken = false;
+                        for (Planet p : system1.getPlanets()) {
+                            double dist = pos1.distTo(p.getPosition());
+                            if (dist < p.getInteractionRange() + shipInteraction + JumpPoint.INTERACTION_RANGE) {
+                                broken = true;
+                                break;
+                            }
+                        }
+                        if (!broken) {
+                            tryAgain = false;
+                        }
+                    }
+                    tryAgain = true;
+                    while (tryAgain) {
+                        double x2 = Util.sampleFromUniformReal(bounds2.getMinX(), bounds2.getMaxX());
+                        double y2 = Util.sampleFromUniformReal(bounds2.getMinY(), bounds2.getMaxY());
+                        pos2 = new Position(x2, y2);
+                        boolean broken = false;
+                        for (Planet p : system2.getPlanets()) {
+                            double dist = pos2.distTo(p.getPosition());
+                            if (dist < p.getInteractionRange() + shipInteraction + JumpPoint.INTERACTION_RANGE) {
+                                broken = true;
+                                break;
+                            }
+                        }
+                        if (!broken) {
+                            tryAgain = false;
+                        }
+                    }
+					jumpPoints.addAll(system1.addJumpPoint(system2, pos1, pos2));
 				}
 			}
 		}
@@ -87,6 +139,10 @@ public class JumpPointsGenerator {
 		this.threshold = threshold;
 	}
     
+    public List<JumpPoint> getJumpPointList() {
+        return jumpPoints;
+    }
+
     public final void setConnectBlackHoles(Boolean connect){
         this.connectBlackHoles = true;
     }

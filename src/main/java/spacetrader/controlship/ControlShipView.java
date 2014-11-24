@@ -184,9 +184,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         // Draw the jump points
         for (JumpPoint j : player.getSystem().getJumpPoints()) {
             gc.setFill(Color.BLUE);
-            gc.fillOval(j.getPos().x - camera.x - 5, j.getPos().y - camera.y - 5, 10, 10);
+            gc.fillOval(j.getFromPosition().x - camera.x - 5, j.getFromPosition().y - camera.y - 5, 10, 10);
             gc.setFill(Color.WHITE);
-            gc.fillText("To " + j.getTargetSystem().getName(), j.getPos().x - camera.x - 5, j.getPos().y - camera.y - 5);
+            gc.fillText("To " + j.getTargetSystem().getName(), j.getFromPosition().x - camera.x - 5, j.getFromPosition().y - camera.y - 5);
         }
         
         //Draw Planets

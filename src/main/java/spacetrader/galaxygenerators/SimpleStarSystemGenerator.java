@@ -3,10 +3,10 @@ package spacetrader.galaxygenerators;
 
 //import spacetrader.Util;
 import spacetrader.shared.Util;
-import spacetrader.game_model.system.StarSystem;
+import spacetrader.game_model.StarSystem;
 import java.util.List;
 import java.util.ArrayList;
-import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.Position;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 /**
@@ -16,23 +16,20 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
 	/** 
 	 * The expected value of the separation between the orbits of planets
-	 * in the generated StarSystem.
-	 */
+     */
 	private Double planetSepMean;
 
 	/** 
-	 * The standard deviation of the separation between the orbits of planets
-	 * in the generated StarSystem.
+	 * The standard deviation of the separation between the orbits of planets.
 	 */
 	private Double planetSepSD;
 
 	/**
-	 * The min distance of the separation between the orbits of planets
-	 * in the generated StarSystem.
+	 * The min separation between the orbits of planets.
 	 */
 	private Double minPlanetSep;
 
-	/** The maximum distance from the stars of any planet in the generated StarSystem. */
+	/** The maximum distance of a planet from its home star.  */
 	private Double plutoDist;
 
 	public SimpleStarSystemGenerator() {
@@ -91,7 +88,7 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 		boolean tryAgain = true;
 		while (tryAgain) {
 			for (int i = 0; i < getNumPlanets(); i++) {
-				float sample = (float) distr.sample();
+				double sample =  distr.sample();
 				// if this planet's orbit is too close to the previous
 				if (minPlanetSep != null && sample < minPlanetSep) {
 					// then try again
@@ -104,9 +101,7 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
 			// if the furthest planet is within plutoDist from the center,
 			// and if the orbit of the furthest planet does not exist the bounds of the galaxy
-			if (total <= plutoDist
-				&& Math.abs(pos.x) + total < galaxy.getWidth()/2
-				&& Math.abs(pos.y) + total < galaxy.getHeight()/2) {
+			if (total <= plutoDist) {
 				tryAgain = false;
 			} else {
 				distsFromStar = new ArrayList();
@@ -121,10 +116,10 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 			double theta = Util.sampleFromUniformReal(0, Math.PI);
 			double x = dist * Math.cos(theta);
 			double y = dist * Math.sin(theta);
-			Position posAboutStar = new Position((float)x, (float)y);
+			Position posAboutStar = new Position(x, y);
             posAboutStar.rotate(theta);
-            Position planetPos = new Position(pos.x + posAboutStar.x, pos.y + posAboutStar.y);
-            // SET PROPERTIES FOR PLANET GENERATION HEREI
+            Position planetPos = new Position(posAboutStar.x, posAboutStar.y);
+            // SET PROPERTIES FOR PLANET GENERATION HERE
             planetGenerator.setName(name + ", Planet " + i);
             planetGenerator.setPosition(planetPos);
 			system.addPlanet(planetGenerator.generate());

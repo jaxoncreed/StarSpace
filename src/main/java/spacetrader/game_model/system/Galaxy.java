@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.graph.Graph;
 
 /**
  * Presently only a single galaxy will ever be instantiated.
  */
-public class Galaxy implements Serializable {
+public class Galaxy implements Serializable, Positionable {
 
 	private Map<Position,StarSystem> systems;
 	private Position pos;
 	private double width;
 	private double height;
+    private Graph jumpPoints; 
 
 	public Galaxy() {
 		systems = new HashMap();
@@ -67,6 +68,14 @@ public class Galaxy implements Serializable {
 	}
 	public double getHeight() {
 		return height;
+	}
+    
+    public Position getPosition(){
+        return pos;
+    }
+    
+    public void setJumpPoints(Graph jumpPoints) {
+        this.jumpPoints = jumpPoints;
 	}
 
 }

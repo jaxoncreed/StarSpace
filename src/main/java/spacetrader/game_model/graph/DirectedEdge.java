@@ -7,9 +7,10 @@ package spacetrader.game_model.graph;
 
 /**
  *
- * @author Tyler Allen <tallen40@gatech.edu>
+ * @author michael
  */
-public interface Node {
+public interface DirectedEdge extends Edge {
     
-    
+    public Node getFromNode();
+    public Node getToNode();
 }

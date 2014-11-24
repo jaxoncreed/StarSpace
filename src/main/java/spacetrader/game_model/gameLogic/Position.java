@@ -61,6 +61,18 @@ public class Position implements Serializable {
 	public double distTo(Position that) {
 		return Math.sqrt((this.x - that.x) * (this.x - that.x) + (this.y - that.y) * (this.y - that.y));
 	}
+    
+    /**
+     * I (Michael) used this for testing/debugging purposes; it prolly won't be used
+     * elsewhere.
+     * @param that
+     * @return 
+     */
+    public double manhattanDistTo(Position that) {
+        double dx = Math.abs(that.x - this.x);
+        double dy = Math.abs(that.y - this.y);
+        return dx + dy;
+    }
 
 	public double angleTo(Position that) {
 		return Math.atan2(this.y - that.y, this.x - that.x);

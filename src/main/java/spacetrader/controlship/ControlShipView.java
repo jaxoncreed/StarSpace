@@ -100,7 +100,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         Position pos=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
         pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         BoxCut box=new BoxCut(neg,pos);
-        System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
         for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
             JavaFXPlanetRenderer pr=new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
             pr.setScale(PIXELS_PER_DISTANCE);
@@ -145,7 +144,7 @@ public class ControlShipView extends AbstractView implements Initializable {
         acclerate=event.isPressed(KeyCode.W);
         declerate=event.isPressed(KeyCode.S);
         if(event.isPressed(KeyCode.E)){
-            controller.switchToMarket();
+            this.controller.performInteraction();
         }
     }
     @Override

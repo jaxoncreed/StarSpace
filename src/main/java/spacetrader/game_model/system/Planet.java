@@ -25,13 +25,15 @@ private Position pos;
 		this.pos = pos;
 		this.techLevel = techLevel;
 		this.government = government;
-                this.interactionRange = 200;
+                this.interactionRange = 50;
                 market=new Market(new Inventory(10),this);
 	}
 
     public Planet(String name, Position pos) {
         this.name=name;
         this.pos=pos;
+        this.interactionRange = 50;
+
         market=new Market(new Inventory(10),this);
 
     }
@@ -45,10 +47,9 @@ private Position pos;
     public Market getMarket() {
         return market;
     }
-
-	public Position getPos() {
-		return pos;
-	}
+    public Position getPos() {
+	return pos;
+    }
 
 	public void setPos(Position pos) {
 		this.pos = pos;

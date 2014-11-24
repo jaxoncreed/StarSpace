@@ -55,8 +55,13 @@ public class ControlShipCtrl extends ViewCtrl {
             PhysicsSimulator.setSystem(((JumpPoint)obj).getTargetSystem());
             GameModel.get().getPlayer().setSystem(((JumpPoint)obj).getTargetSystem());
         };
+        InteractAction nullAction=(InteractableObject obj)->{
+            
+        };
         interactionManager.setInteractFunction(InteractionType.Trade, tradeAction);
         interactionManager.setInteractFunction(InteractionType.Travel, travelAction);
+        interactionManager.setInteractFunction(InteractionType.Null, nullAction);
+
         view = ViewCtrlFactory.getView(CtrlViewTypes.ControlShip, window, this);
     }
 
@@ -104,11 +109,8 @@ public class ControlShipCtrl extends ViewCtrl {
         ViewCtrlFactory.setMarket(p.getMarket());
         this.mainCtrl.switchViews(CtrlViewTypes.Trade);
     }
-    
+  
     void switchToGameMenu() {
         mainCtrl.switchViews(CtrlViewTypes.GameMenu);
     }
-
-    
-    
 }

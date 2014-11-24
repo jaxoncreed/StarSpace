@@ -66,6 +66,9 @@ public class MakeTradeCtrl extends ViewCtrl {
     public void startView() {
         view.render();
     }
+    public void returnToControlShip(){
+        mainCtrl.switchViews(CtrlViewTypes.ControlShip);
+    }
 
     @Override
     public void stopView() {

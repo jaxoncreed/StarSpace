@@ -54,7 +54,7 @@ public class ControlShipView extends AbstractView implements Initializable {
     private int PIXELS_PER_DISTANCE=400;
     private double canvasWidth,canvasHeight;
     private Bounds bounds;
-    private double view_size=50;
+    private double view_size=600;
 
     private ControlShipCtrl controller;
     
@@ -144,8 +144,8 @@ public class ControlShipView extends AbstractView implements Initializable {
         });
         PIXELS_PER_DISTANCE=(int)(window.getWidth()/view_size);
         bounds=system.getBounds();
-        bounds.setOffsetNear(new Position(50,50));
-        bounds.setOffsetFar(new Position(50,50));
+        bounds.setOffsetNear(new Position(600,500));
+        bounds.setOffsetFar(new Position(600,600));
         canvasWidth=(bounds.getDistanceX())*PIXELS_PER_DISTANCE;
         canvasHeight=(bounds.getDistanceY())*PIXELS_PER_DISTANCE;
         System.out.println(canvas);

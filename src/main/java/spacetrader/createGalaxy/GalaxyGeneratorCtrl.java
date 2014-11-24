@@ -88,6 +88,6 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
                 starSystem = s;
             }
         }
-        starSystem.addShip(GameModel.get().getPlayer().getShip());
+        GameModel.get().getPlayer().getShip().setSystem(starSystem);
     }
 }

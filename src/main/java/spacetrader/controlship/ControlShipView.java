@@ -137,10 +137,11 @@ public class ControlShipView extends AbstractView implements Initializable {
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
-        turnRight=event.isPressed(KeyCode.D);
-        turnLeft=event.isPressed(KeyCode.A);
-        acclerate=event.isPressed(KeyCode.W);
-        declerate=event.isPressed(KeyCode.S);
+        turnRight = event.isPressed(KeyCode.D);
+        turnLeft  = event.isPressed(KeyCode.A);
+        acclerate = event.isPressed(KeyCode.W);
+        declerate = event.isPressed(KeyCode.S);
+        
         if(event.isPressed(KeyCode.E)){
             controller.switchToMarke();
         }

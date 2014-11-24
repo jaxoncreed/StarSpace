@@ -30,6 +30,7 @@ public class MultiKeyPressEventHandler implements EventHandler<KeyEvent>{
             multiKeyEventHandler.handle(mkEvent);
         }else if (KeyEvent.KEY_RELEASED.equals(event.getEventType())) {
             buffer.remove(code);
+            multiKeyEventHandler.handle(mkEvent);
         }
         event.consume();
     }

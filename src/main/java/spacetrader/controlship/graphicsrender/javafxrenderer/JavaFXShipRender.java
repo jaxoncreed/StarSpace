@@ -31,9 +31,17 @@ public class JavaFXShipRender extends JavaFXRenderer{
     @Override
     public void draw() {
         this.graphics.setFill(Color.BLUE);
-        double[] xpoint={(position.x*scale-sizex/2),(position.x*scale+sizex/2),(position.x*scale)};
-        double[] ypoint={(position.y*scale-sizey/2),(position.y*scale-sizey/2),(position.y*scale+sizey/2)};
-        this.graphics.fillPolygon(xpoint, ypoint, 3);
+        double xpoint = position.x*scale;
+        double ypoint = position.y*scale;
+        // this.graphics.fillPolygon(xpoint, ypoint, 3);
+
+        // Draw the ship's body
+        this.graphics.setFill(Color.GREEN);
+        this.graphics.fillOval(xpoint, ypoint, 100, 100);
+
+        // Draw the ship's heading
+        this.graphics.setFill(Color.RED);
+        this.graphics.fillOval(xpoint + 50*Math.sin(ship.getAngle() + Math.PI/2) + 45, ypoint + 50*Math.cos(ship.getAngle() + Math.PI/2) + 45, 10, 10);
     }
 
     @Override

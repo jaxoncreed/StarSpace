@@ -96,9 +96,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         bg.setScale(PIXELS_PER_DISTANCE);
         bg.draw();
         Position neg=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
-        neg.sub(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2,(this.canvasHeight/PIXELS_PER_DISTANCE)/2));
+        neg.sub(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         Position pos=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
-        pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2,(this.canvasHeight/PIXELS_PER_DISTANCE)/2));
+        pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         BoxCut box=new BoxCut(neg,pos);
         System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
         for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
@@ -176,8 +176,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1/60)));
         timeline.play();
         timer.start();
-
-
     }
 
     @Override

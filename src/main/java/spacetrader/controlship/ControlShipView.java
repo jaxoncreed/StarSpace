@@ -30,10 +30,9 @@ import spacetrader.AbstractView;
 import spacetrader.MultiKeyPressEventHandler;
 import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.Window.JavaFXWindow;
-import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXBackgroundRender;
-import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXForegroundRender;
-import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXShipRender;
+import spacetrader.controlship.graphicsrender.javafxrenderer.*;
 import spacetrader.game_model.GameModel;
+import spacetrader.game_model.system.*;
 import spacetrader.game_model.system.Planet;
 import spacetrader.game_model.player.Player;
 import spacetrader.game_model.gameLogic.Position;
@@ -77,7 +76,10 @@ public class ControlShipView extends AbstractView implements Initializable {
             Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private int animationStep = 0;
     public void draw() {
+        animationStep++;
         // Set system
         system=player.getSystem();
 
@@ -98,10 +100,18 @@ public class ControlShipView extends AbstractView implements Initializable {
 
         // Planets
         for(Planet p:system.getNearbyPlanets(new BoxCut(neg,pos))){
-            JavaFXPlanetRenderer pr=new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
+            JavaFXPlanetRenderer pr = new JavaFXPlanetRenderer(p,new BoxCut(neg,pos).normalize(p.getPos()),50*PIXELS_PER_DISTANCE,50*PIXELS_PER_DISTANCE);
             pr.setScale(PIXELS_PER_DISTANCE);
             pr.setGraphicsContext(canvas.getGraphicsContext2D());
             pr.draw();
+        }
+
+        // Jump Points
+        for(JumpPoint j : system.getJumpPoints() ) {
+            JavaFXJumpPointRenderer jr = new JavaFXJumpPointRenderer(j,new BoxCut(neg,pos).normalize(j.getPos()));
+            jr . setScale(PIXELS_PER_DISTANCE);
+            jr . setGraphicsContext(canvas.getGraphicsContext2D());
+            jr . draw(animationStep);
         }
 
         // Ship

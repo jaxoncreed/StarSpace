@@ -21,6 +21,7 @@ public class SpriteManager {
     public static Image STAR_1;
     public static Image STAR_2;
     public static Image STAR_3;
+    public static Image WORMHOLE_CORONA_TRANS;
    
     public SpriteManager() {
     	LASHER_FF = new Image(getClass().getResourceAsStream("lasher_ff.png"));
@@ -30,6 +31,7 @@ public class SpriteManager {
     	STAR_1 = new Image(getClass().getResourceAsStream("star1.png"));
     	STAR_2 = new Image(getClass().getResourceAsStream("star2.png"));
     	STAR_3 = new Image(getClass().getResourceAsStream("star3.png"));
+    	WORMHOLE_CORONA_TRANS = new Image(getClass().getResourceAsStream("wormhole_corona_66a.png"));
     }
     
 }

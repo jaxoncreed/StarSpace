@@ -9,12 +9,10 @@ package spacetrader.gameMenu;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
-import spacetrader.game_model.GameModel;
-
-import javafx.stage.Stage;
 import spacetrader.CtrlViewTypes;
+import spacetrader.GameSaver;
 import spacetrader.ViewCtrlFactory;
-import spacetrader.Window.JavaFXWindow;
+import spacetrader.game_model.GameModel;
 
 /**
  *
@@ -47,7 +45,8 @@ public class GameMenuCtrl extends ViewCtrl {
     }
 
     void saveGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        GameSaver saver = new GameSaver(GameModel.get());
+        saver.saveGame();
     }
 
     void retunToGame() {

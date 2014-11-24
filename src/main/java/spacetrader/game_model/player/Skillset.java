@@ -2,10 +2,11 @@ package spacetrader.game_model.player;
 
 // import org.json.JSONObject;
 
+import java.io.Serializable;
 import spacetrader.game_model.Savable;
 
  
-public class Skillset implements Savable {
+public class Skillset implements Serializable {
 
 	private int piloting;
 	private int navigation;

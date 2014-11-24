@@ -20,7 +20,7 @@ import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.PositionContainer;
 
-public class StarSystem implements Node, Positionable {
+public class StarSystem implements Node, Positionable, Serializable {
 
     private String name;
     private Position pos;

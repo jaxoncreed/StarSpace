@@ -5,6 +5,7 @@
  */
 package spacetrader.game_model.graph;
 
+import java.io.Serializable;
 import spacetrader.game_model.Faction;
 import spacetrader.game_model.system.StarSystem;
 
@@ -13,7 +14,7 @@ import spacetrader.game_model.system.StarSystem;
  * @author Tyler Allen <tallen40@gatech.edu>
  * @param <F>
  */
-public class FactionSelector extends GraphGrower<StarSystem>{
+public class FactionSelector extends GraphGrower<StarSystem> implements Serializable {
     private Faction faction;
     private boolean done;
     public FactionSelector(Heurstic h,Faction f) {

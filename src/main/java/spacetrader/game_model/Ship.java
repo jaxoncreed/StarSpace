@@ -24,8 +24,8 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     private int health;
     private int maxHealth;
     private StarSystem system;
-    private Body physicsBody;
-    private PhysicsDescriptor physicsDescriptor;
+    private transient Body physicsBody;
+    private transient PhysicsDescriptor physicsDescriptor;
     private double linearThrust;
     private double maxLinearSpeed;
     private double angularThrust;

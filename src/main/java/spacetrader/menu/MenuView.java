@@ -53,6 +53,9 @@ public class MenuView extends AbstractView implements Initializable {
         start.setOnAction((ActionEvent event)->{
             menuCtrl.startGame();
         });
+        loadButton.setOnAction((ActionEvent event)->{
+            menuCtrl.loadGame();
+        });
     }
 
     @Override

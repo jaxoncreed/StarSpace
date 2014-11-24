@@ -1,5 +1,6 @@
 package spacetrader.game_model.graph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Objects;
  *
  * @author Michael Lane <mlane@gatech.edu>
  */
-public class Graph {
+public class Graph implements Serializable {
 
     private Map<NodePair, Edge> edges;
     private Map<Node, List<Node>> neighborsByNode;
@@ -463,7 +464,7 @@ public class Graph {
 //        return expanded;
 //    }
     
-    private class NodePair {
+    private class NodePair implements Serializable {
 
         Node node1;
         Node node2;

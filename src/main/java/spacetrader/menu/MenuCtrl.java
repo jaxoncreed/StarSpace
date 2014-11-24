@@ -6,15 +6,17 @@
 
 package spacetrader.menu;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
 import spacetrader.game_model.GameModel;
 
-import javafx.stage.Stage;
 import spacetrader.CtrlViewTypes;
+import spacetrader.GameSaver;
 import spacetrader.ViewCtrlFactory;
-import spacetrader.Window.JavaFXWindow;
 
 /**
  *
@@ -41,8 +43,19 @@ public class MenuCtrl extends ViewCtrl {
     public void exit(){
         mainCtrl.close();
     }
-    public void loadGame(){
-        mainCtrl.switchViews(CtrlViewTypes.LoadGame);
+    public void loadGame() {
+        //TODO: Make a view to dynamically load a game
+        //mainCtrl.switchViews(CtrlViewTypes.LoadGame);
+        System.out.println("It is here");
+        GameSaver saver = new GameSaver(GameModel.get());
+        try {
+            saver.loadGame();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuCtrl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mainCtrl.switchViews(CtrlViewTypes.ControlShip);
     }
 
     void startGame() {

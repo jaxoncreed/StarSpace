@@ -31,10 +31,26 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 
 	/** The maximum distance of a planet from its home star.  */
 	private Double plutoDist;
+    
+    /** mean star mass */
+    private Double starMassMean;
+    
+    /** star mass sd */
+    private Double starMassSD;
 
-	public SimpleStarSystemGenerator() {
-
-	}		
+    /**
+     * @param starMassMean nonnegative
+     */
+    public final void setStarMassMean(Double starMassMean) {
+        this.starMassMean = starMassMean;
+    }
+    
+    /**
+     * @param starMassSD positive
+     */
+    public final void setStarMassSD(Double starMassSD) {
+        this.starMassSD = starMassSD;
+    }
 
 	/**
 	 * @param planetSepMean must be nonnegative
@@ -110,6 +126,8 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 		}
 
 		StarSystem system = new StarSystem(name, pos, starType);
+        double mass = Util.sampleFromNormal(starMassMean, starMassSD);
+        system.setStarMass((mass > 0) ? mass : starMassMean);
 		for (int i = 0; i < getNumPlanets(); i++) {
 			float dist = distsFromStar.get(i);
 			// randomly generate a position, given a distance

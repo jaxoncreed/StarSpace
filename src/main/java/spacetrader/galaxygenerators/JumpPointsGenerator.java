@@ -57,6 +57,7 @@ public class JumpPointsGenerator {
 		// #todo terribly inefficient
 		List<StarSystem> systems = galaxy.getSystems();
 		int numSystems = systems.size();
+        boolean[] atleastOneConnection = new boolean[numSystems];
 		for (int i = 0; i < numSystems; i++) {
 			StarSystem system1 = systems.get(i);
 			for (int j = i + 1; j < numSystems; j++) {
@@ -67,54 +68,51 @@ public class JumpPointsGenerator {
 						&& system1.getStarType() == StarType.BLACK_HOLE)
 						&& system2.getStarType() == StarType.BLACK_HOLE) {
 					
-                    Bounds bounds1 = system1.getBounds();
-                    Bounds bounds2 = system2.getBounds();
-                    Position pos1 = null;
-                    Position pos2 = null;
-                    boolean tryAgain = true;
-                    double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
-                    while (tryAgain) {
-                        double x1 = Util.sampleFromUniformReal(bounds1.getMinX(), bounds1.getMaxX());
-                        double y1 = Util.sampleFromUniformReal(bounds1.getMinY(), bounds1.getMaxY());
-                        pos1 = new Position(x1, y1);
-                        boolean broken = false;
-                        for (Planet p : system1.getPlanets()) {
-                            double dist = pos1.distTo(p.getPosition());
-                            if (dist < p.getInteractionRange() + shipInteraction + JumpPoint.INTERACTION_RANGE) {
-                                broken = true;
-                                break;
-                            }
-                        }
-                        if (!broken) {
-                            tryAgain = false;
-                        }
-                    }
-                    tryAgain = true;
-                    while (tryAgain) {
-                        double x2 = Util.sampleFromUniformReal(bounds2.getMinX(), bounds2.getMaxX());
-                        double y2 = Util.sampleFromUniformReal(bounds2.getMinY(), bounds2.getMaxY());
-                        pos2 = new Position(x2, y2);
-                        boolean broken = false;
-                        for (Planet p : system2.getPlanets()) {
-                            double dist = pos2.distTo(p.getPosition());
-                            if (dist < p.getInteractionRange() + shipInteraction + JumpPoint.INTERACTION_RANGE) {
-                                broken = true;
-                                break;
-                            }
-                        }
-                        if (!broken) {
-                            tryAgain = false;
-                        }
-                    }
+                    atleastOneConnection[i] = true;
+                    Position pos1 = makePosition(system1);
+                    Position pos2 = makePosition(system2);
 					jumpPoints.addAll(system1.addJumpPoint(system2, pos1, pos2));
 				}
 			}
 		}
+        
+        for (int i = 0; i < numSystems; i++) {
+            if (!atleastOneConnection[i]) {
+                StarSystem system1 = systems.get(i);
+                StarSystem system2 = systems.get((int) Util.sampleFromUniformReal(0, systems.size()));
+                Position pos1 = makePosition(system1);
+                Position pos2 = makePosition(system2);
+                jumpPoints.addAll(system1.addJumpPoint(system2, pos1, pos2));
+            }
+        }
 
 		galaxy.replaceSystems(systems);
 		return galaxy;
 	}
 
+    private Position makePosition(StarSystem system) {
+        Bounds bounds = system.getBounds();
+        boolean tryAgain = true;
+        double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
+        while (tryAgain) {
+            double x1 = Util.sampleFromUniformReal(bounds.getMinX(), bounds.getMaxX());
+            double y1 = Util.sampleFromUniformReal(bounds.getMinY(), bounds.getMaxY());
+            Position pos = new Position(x1, y1);
+            boolean broken = false;
+            for (Planet p : system.getPlanets()) {
+                double dist = pos.distTo(p.getPosition());
+                if (dist < p.getInteractionRange() + shipInteraction + JumpPoint.INTERACTION_RANGE) {
+                    broken = true;
+                    break;
+                }
+            }
+            if (!broken) {
+                return pos;
+            }
+        }
+        return null;
+    }
+    
 
 	public final void setConstant(Double constant) {
 

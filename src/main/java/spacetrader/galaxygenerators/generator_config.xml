@@ -65,7 +65,9 @@ tag.
         <planetSepMean>     7       </planetSepMean>
         <planetSepSD>       2       </planetSepSD>
         <minPlanetSep>      2       </minPlanetSep>
-        <plutoDist>         100     </plutoDist>        
+        <plutoDist>         100     </plutoDist>      
+        <starMassMean>      100     </starMassMean>  
+        <starMassSD>        10      </starMassSD>
     </SimpleStarSystemGenerator>
 
     <SimplePlanetGenerator>

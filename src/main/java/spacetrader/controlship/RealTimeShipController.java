@@ -12,6 +12,7 @@ import spacetrader.game_model.system.Planet;
 import spacetrader.game_model.player.Player;
 import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
+import spacetrader.game_model.ShipDef;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.system.StarType;
 
@@ -29,7 +30,7 @@ class RealTimeShipController {
         system.addPlanet(new Planet("TEST3",new Position (0,-1)));
         system.addPlanet(new Planet("TEST4",new Position (0,1)));
         player=new Player("TEST",Faction.Test1);
-        Ship s=new Ship("TEST SHIP");
+        Ship s=new Ship(new ShipDef());
         s.setPosition(Position.origin);
         player.setShip(s);
     }

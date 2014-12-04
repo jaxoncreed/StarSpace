@@ -26,6 +26,7 @@ import spacetrader.ViewCtrlFactory;
 import spacetrader.game_model.Faction;
 import spacetrader.game_model.player.Player;
 import spacetrader.game_model.Ship;
+import spacetrader.game_model.ShipDef;
 
 /**
  *
@@ -57,7 +58,7 @@ public class CreateCharacterCtrl extends ViewCtrl {
 
     void creationDone(Skillset skill) {
         Player player=new Player(skill.getName(),Faction.Test1);
-        player.setShip(new Ship("TEST"));
+        player.setShip(new Ship(new ShipDef()));
         GameModel.get().setPlayer(player);
         GameModel.get().getPlayer().setSkillset(skill);
         mainCtrl.switchViews(CtrlViewTypes.CreateGalaxy);

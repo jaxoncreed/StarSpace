@@ -35,6 +35,7 @@ public class JavaFXShipRender extends JavaFXRenderer{
         double ypoint = position.y*scale;
 
         drawRotatedImage(sprites.LASHER_FF, ship.getAngle() - Math.PI/2, xpoint, ypoint);
+//        this.graphics.strokeOval(xpoint, ypoint, ship.getRadius(), ship.getRadius());
     }
 
     @Override

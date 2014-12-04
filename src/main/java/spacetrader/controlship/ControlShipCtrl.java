@@ -88,6 +88,14 @@ public class ControlShipCtrl extends ViewCtrl {
         playerShip.turnRight();
     }
 
+    public void playerAngularBrake() {
+        playerShip.angularBrake();
+    }
+
+    public void playerLinearBrake() {
+        playerShip.linearBrake();
+    }
+
     @Override
     public void startView() {
         view.render();

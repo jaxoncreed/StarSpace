@@ -9,6 +9,7 @@ import java.io.Serializable;
 import spacetrader.game_model.Faction;
 import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
+import spacetrader.game_model.ShipDef;
 import spacetrader.game_model.system.StarSystem;
 
 /**
@@ -25,7 +26,9 @@ public class Player implements Serializable {
         this.name = name;
         this.faction = faction;
         woolongs = 10000;
-        ship = new Ship("Fart Duster");
+        ShipDef shipDef = new ShipDef();
+        shipDef.name = "Fart Duster";
+        ship = new Ship(shipDef);
     }
     
     public void setWoolongs(int i) {

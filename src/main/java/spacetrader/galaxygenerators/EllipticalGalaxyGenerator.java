@@ -28,18 +28,19 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 
     @Override
 	public Galaxy generate() {
-
+        
 		NormalDistribution xDistr = new NormalDistribution(0, _xSD);
 		NormalDistribution yDistr = new NormalDistribution(0, _ySD);
 		Galaxy gax = new Galaxy(width, height);
 		starSystemGenerator.setGalaxy(gax);
 		for (int i = 0; i < getNumSystems(); i++) {
              
-            System.out.println(i);
 			// randomly generate position
-			float x = (float) xDistr.sample();
-			float y = (float) yDistr.sample();
+			double x = xDistr.sample();
+			double y = yDistr.sample();
 			Position pos = new Position(x, y);
+            _tiltRads = Util.sampleFromUniformReal(0, Math.PI);
+			pos.rotate(_tiltRads);
 
 			// calculate the distance from pos to all other StarSystems already generated
 			boolean tooClose = false;
@@ -63,8 +64,6 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 
 			// otherwise make the system in all its glory
 			} else {
-                _tiltRads = Util.sampleFromUniformReal(0, Math.PI);
-				pos.rotate(_tiltRads);
 				// SET PROPERTIES FOR STARSYSTEM GENERATION HERE
 				starSystemGenerator.setName("System " + i);
 				starSystemGenerator.setPosition(pos);

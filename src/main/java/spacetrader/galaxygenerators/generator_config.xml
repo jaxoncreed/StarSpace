@@ -46,10 +46,10 @@ tag.
 <config>
     
     <EllipticalGalaxyGenerator>
-        <numSystemsMean>    1000     </numSystemsMean>
+        <numSystemsMean>    50     </numSystemsMean>
         <numSystemsSD>      1      </numSystemsSD>
         <sampleNumSystems>  true    </sampleNumSystems>
-        <minSystemDist>     0     </minSystemDist>
+        <minSystemDist>     50     </minSystemDist>
         <width>             1600   </width>
         <height>            900    </height>
         <xSD>               300    </xSD>

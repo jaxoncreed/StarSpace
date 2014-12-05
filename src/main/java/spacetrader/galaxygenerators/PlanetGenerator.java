@@ -18,6 +18,8 @@ public abstract class PlanetGenerator {
 
 	/** The StarSystem that this Planet belongs to */
 	protected StarSystem system;
+    
+    protected MarketGenerator marketGen;
 
 	/**
 	 * @return Returns a Planet with the given specifications. 
@@ -53,5 +55,9 @@ public abstract class PlanetGenerator {
 		}
 		this.system = system;
 	}
+    
+    public final void setMarketGenerator(MarketGenerator marketGen) {
+        this.marketGen = marketGen;
+    }
 
 }

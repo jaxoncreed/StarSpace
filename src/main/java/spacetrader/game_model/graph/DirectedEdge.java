@@ -9,8 +9,8 @@ package spacetrader.game_model.graph;
  *
  * @author michael
  */
-public interface DirectedEdge extends Edge {
+public interface DirectedEdge<N extends Node> extends Edge<N> {
     
-    public Node getFromNode();
-    public Node getToNode();
+    public N getFromNode();
+    public N getToNode();
 }

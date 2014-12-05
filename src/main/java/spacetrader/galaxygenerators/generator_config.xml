@@ -75,8 +75,13 @@ tag.
     
     <JumpPointsGenerator>
         <connectBlackHoles>   false </connectBlackHoles>
-        <threshold>           100    </threshold>
-        <constant>            1     </constant>
+        <numJumpsMean>        4     </numJumpsMean>
+        <numJumpsSD>          1     </numJumpsSD>
     </JumpPointsGenerator>
+    
+    <SimpleMarketGenerator>
+        <numItemsSD>          5     </numItemsSD>
+        <numItemsMean>        2     </numItemsMean>
+    </SimpleMarketGenerator>
 
 </config>

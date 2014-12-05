@@ -80,4 +80,13 @@ public class Galaxy implements Serializable, Positionable {
         this.jumpPoints = jumpPoints;
     }
 
+    public Map<StarSystem, Double> getDistancesTo(StarSystem system) {
+        Map<StarSystem, Double> dists = new HashMap();
+        Position pos = system.getPosition();
+        Iterable<StarSystem> starSystems = systems.values();
+        for (StarSystem sys : starSystems) {
+            dists.put(sys, pos.distTo(sys.getPosition()));
+        }
+        return dists;
+    }
 }

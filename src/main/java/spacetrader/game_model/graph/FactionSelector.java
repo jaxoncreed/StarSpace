@@ -31,8 +31,8 @@ public class FactionSelector extends GraphGrower<StarSystem> implements Serializ
                 done=true;
                 return;
             }
-        }while(sys.getFaction()!=Faction.NoFaction);
-        if(sys.getFaction()==Faction.NoFaction){
+        }while(sys.getFaction()!=Faction.No_Faction);
+        if(sys.getFaction()==Faction.No_Faction){
             sys.setFaction(faction);
             //System.out.println(sys.getFaction());
             addToSet(sys);

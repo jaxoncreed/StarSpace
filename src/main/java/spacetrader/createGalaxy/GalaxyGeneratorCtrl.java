@@ -21,6 +21,7 @@ import spacetrader.Window.JavaFXWindow;
 import spacetrader.galaxygenerators.GalaxyGenerator;
 import spacetrader.galaxygenerators.GeneratorConfigParser;
 import spacetrader.galaxygenerators.JumpPointsGenerator;
+import spacetrader.galaxygenerators.MarketGenerator;
 import spacetrader.galaxygenerators.PlanetGenerator;
 import spacetrader.galaxygenerators.StarSystemGenerator;
 import spacetrader.game_model.system.Galaxy;
@@ -51,11 +52,17 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
             parser = new GeneratorConfigParser(CONFIG_XML_FILE);
             parser.createGenerators();
             generator = parser.getGalaxyGenerators().get(0);
+            if (generator == null) {
+               System.out.println("umm1");
+            }
             StarSystemGenerator sysGen = parser.getStarSystemGenerators().get(0);
             PlanetGenerator planetGen = parser.getPlanetGenerators().get(0);
+            MarketGenerator marketGen = parser.getMarketGenerators().get(0);
+            planetGen.setMarketGenerator(marketGen);
             sysGen.setPlanetGenerator(planetGen);
             generator.setStarSystemGenerator(sysGen);
             jumpPointGenerator = parser.getJumpPointsGenerators().get(0);
+            
         } catch (Exception ex) {
             Logger.getLogger(GalaxyGeneratorCtrl.class.getName()).log(Level.SEVERE, null, ex);
             mainCtrl.switchViews(CtrlViewTypes.MainMenu);
@@ -76,10 +83,13 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     }
     
     public void generate() {
+        if (generator == null) {
+            System.out.println("umm");
+        }
         Galaxy gax = generator.generate();
         GameModel.get().setGalaxy(gax);
         jumpPointGenerator.generate();
-        List<JumpPoint> edges = jumpPointGenerator.getJumpPointList();
+        List<JumpPoint> edges = jumpPointGenerator.getJumpPoints();
         gax.setJumpPoints(new Graph(edges, null));
         GameModel.get().setGalaxy(gax);
         StarSystem starSystem = null;

@@ -106,6 +106,7 @@ public class ControlShipView extends AbstractView implements Initializable {
 
         // Star
         JavaFXStarRenderer st = new JavaFXStarRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
+        st.setRandomStarSeed(system.getPosition().x * system.getPosition().y);
         st.setScale(PIXELS_PER_DISTANCE);
         st.setGraphicsContext(canvas.getGraphicsContext2D());
         st.draw();

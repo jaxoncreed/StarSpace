@@ -87,15 +87,16 @@ public class GalaxyMapView extends AbstractView implements Initializable {
         GraphicsContext gc=canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvasWidth, canvasHeight);
+        gc.drawImage(SpriteManager.DIGITAL_BG_ALPHA, 0, 0);
         for(JumpPoint j:jumpPoints){
             Position p1=camera.normalize(j.getFromNode().getPosition());
             Position p2=camera.normalize(j.getToNode().getPosition());
             if(GameModel.get().getPlayer().getJumpPath().contains(j)){
-                gc.setStroke(Color.YELLOW);
+                gc.setStroke(Color.WHITE);
                 gc.setLineWidth(3);
             }
             else{
-                gc.setStroke(Color.GREEN);
+                gc.setStroke(Color.web("#00e7ff", .5));
                 gc.setLineWidth(1);
 
             }
@@ -104,7 +105,15 @@ public class GalaxyMapView extends AbstractView implements Initializable {
         for(StarSystem sys:systems){
            //System.out.println(camera.normalize(sys.getPosition()));
            gc.setFill(Color.BLUE);
-           gc.fillOval((camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE);
+           double xDraw = (camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE;
+           double yDraw = (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE;
+           double xHaloDraw = (camera.normalize(sys.getPosition()).x-10*2)*this.PIXELS_PER_DISTANCE;
+           double yHaloDraw = (camera.normalize(sys.getPosition()).y-10*2)*this.PIXELS_PER_DISTANCE;
+           double widthDraw = 20*PIXELS_PER_DISTANCE;
+           double heightDraw = 20*PIXELS_PER_DISTANCE;
+           gc.drawImage(SpriteManager.STAR_HALO, xHaloDraw, yHaloDraw, widthDraw*2, heightDraw*2);
+           gc.drawImage(SpriteManager.getRandomStar(sys.getPosition().x * sys.getPosition().y), xDraw, yDraw, widthDraw, heightDraw);
+           gc.drawImage(SpriteManager.STAR_HALO_CORE, xHaloDraw, yHaloDraw, widthDraw*2, heightDraw*2);
         }
         for(StarSystem sys:systems){
            gc.setStroke(Color.RED);
@@ -115,16 +124,16 @@ public class GalaxyMapView extends AbstractView implements Initializable {
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
         if(event.isPressed(KeyCode.W)){
-            camera.move(new Position(0,1));
+            camera.move(new Position(0,-2));
         }        
         if(event.isPressed(KeyCode.S)){
-            camera.move(new Position(0,-1));
+            camera.move(new Position(0,2));
         }
         if(event.isPressed(KeyCode.A)){
-            camera.move(new Position(-1,0));
+            camera.move(new Position(-2,0));
         }
         if(event.isPressed(KeyCode.D)){
-            camera.move(new Position(1,0));
+            camera.move(new Position(2,0));
         }
     }
     public void handleMouseClick(MouseEvent e){

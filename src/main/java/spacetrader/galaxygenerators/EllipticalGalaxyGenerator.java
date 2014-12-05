@@ -33,7 +33,8 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 		Galaxy gax = new Galaxy(width, height);
 		starSystemGenerator.setGalaxy(gax);
 		for (int i = 0; i < getNumSystems(); i++) {
-                       
+             
+            System.out.println(i);
 			// randomly generate position
 			float x = (float) xDistr.sample();
 			float y = (float) yDistr.sample();
@@ -70,6 +71,7 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 				gax.addSystem(starSystemGenerator.generate());
 			}
 		}
+        System.out.println("end");
 		return gax;
 	}
 

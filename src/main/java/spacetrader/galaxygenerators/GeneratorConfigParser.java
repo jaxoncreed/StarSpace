@@ -49,8 +49,8 @@ public class GeneratorConfigParser {
         for (Element genTag : genTags) {
             // get the generator type
             String type = genTag.getTagName();
-            Object gen = new GeneratorFactory().getGenerator(type);
-            Class<?> genClass = new GeneratorFactory().getGeneratorClass(type);
+            Class<?> genClass = Class.forName(this.getClass().getPackage().getName()+ "." + type);
+            Object gen = genClass.newInstance();
             // read the properties and set them
             List<Element> propTags = getChildElements(genTag);
             for (Element propTag : propTags) {

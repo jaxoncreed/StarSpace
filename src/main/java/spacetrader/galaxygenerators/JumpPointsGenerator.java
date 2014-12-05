@@ -104,13 +104,14 @@ public class JumpPointsGenerator {
             double sample = Util.sampleFromNormal(numJumpsMean, numJumpsSD);
             int numJumps = (sample >= 1) ? (int) sample : 1;
             Map<StarSystem, Double> dists = gax.getDistancesTo(system1);
-            Util.sortUsingValuesInMap(systems, dists);
-            Iterator<StarSystem> iter = systems.iterator();
+            List<StarSystem> sortedSystems = new ArrayList(systems);
+            Util.sortUsingValuesInMap(sortedSystems, dists);
+            Iterator<StarSystem> iter = sortedSystems.iterator();
             // throw out the first item in the sorted list, which will be the item
             // "system"
             if (iter.hasNext()) iter.next();
             int i = 0;
-            while (iter.hasNext() && i < numJumps) {
+            while (iter.hasNext() && i++ < numJumps) {
                 StarSystem system2 = iter.next();
                 Position fromPos = this.makePosition(system1);
                 Position toPos = this.makePosition(system2);

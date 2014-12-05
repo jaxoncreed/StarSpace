@@ -18,7 +18,7 @@ public class GraphGrower <N extends Node>{
     private PriorityQueue<N> neighbors;
     private ArrayList<N> set;
     private Heurstic<N> heurstic;
-    GraphGrower(Heurstic h){
+    public GraphGrower(Heurstic h){
         heurstic=h;
         neighbors=new PriorityQueue(h);
         set=new ArrayList();

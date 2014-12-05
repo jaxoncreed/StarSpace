@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.controlship.ControlShipView;
+import spacetrader.game_model.Faction;
 
 /**
  *

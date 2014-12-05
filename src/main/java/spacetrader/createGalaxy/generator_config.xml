@@ -73,8 +73,8 @@ tag.
     
     <JumpPointsGenerator>
         <connectBlackHoles>   false </connectBlackHoles>
-        <threshold>           10    </threshold>
-        <constant>            1     </constant>
+        <jumpsMean>           10    </threshold>
+        <jumpsSD>            1     </constant>
     </JumpPointsGenerator>
 
 </config>

@@ -46,16 +46,16 @@ tag.
 <config>
     
     <EllipticalGalaxyGenerator>
-        <numSystemsMean>    10     </numSystemsMean>
+        <numSystemsMean>    1000     </numSystemsMean>
         <numSystemsSD>      1      </numSystemsSD>
         <sampleNumSystems>  true    </sampleNumSystems>
-        <minSystemDist>     210     </minSystemDist>
+        <minSystemDist>     0     </minSystemDist>
         <width>             1600   </width>
         <height>            900    </height>
         <xSD>               300    </xSD>
         <ySD>               200    </ySD>
-        <xBound>            450    </xBound>
-        <yBound>            450    </yBound>
+        <xBound>            426    </xBound>
+        <yBound>            300    </yBound>
     </EllipticalGalaxyGenerator>
 
     <SimpleStarSystemGenerator>
@@ -75,8 +75,13 @@ tag.
     
     <JumpPointsGenerator>
         <connectBlackHoles>   false </connectBlackHoles>
-        <threshold>           100    </threshold>
-        <constant>            1     </constant>
+        <numJumpsMean>        9     </numJumpsMean>
+        <numJumpsSD>          0.001     </numJumpsSD>
     </JumpPointsGenerator>
+    
+    <SimpleMarketGenerator>
+        <numItemsSD>          5     </numItemsSD>
+        <numItemsMean>        2     </numItemsMean>
+    </SimpleMarketGenerator>
 
 </config>

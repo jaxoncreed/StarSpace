@@ -18,21 +18,23 @@ private Position pos;
     private String name;
     private Market market;
     private double interactionRange;
+    private StarSystem system;
 
-	public Planet(Position pos, System system, int techLevel, String government,
+	public Planet(Position pos, StarSystem system, int techLevel, String government,
 		String name) {
 		this.name = name;
 		this.pos = pos;
 		this.techLevel = techLevel;
 		this.government = government;
-                this.interactionRange = 50;
-                market=new Market(new Inventory(10),this);
+        this.interactionRange = 50;
+        this.system = system;
+        market=new Market(new Inventory(10),this);
 	}
 
     public Planet(String name, Position pos) {
         this.name=name;
         this.pos=pos;
-        this.interactionRange = 50;
+        this.interactionRange = 100;
 
         market=new Market(new Inventory(10),this);
 
@@ -74,5 +76,17 @@ private Position pos;
     @Override
     public InteractionType getType() {
         return InteractionType.Trade;
+    }
+    
+    public void setMarket(Market market) {
+        this.market = market;
+    }
+    
+    public void setSystem(StarSystem system) {
+        this.system = system;
+    }
+    
+    public StarSystem getSystem() {
+        return system;
     }
 }

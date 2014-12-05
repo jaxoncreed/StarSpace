@@ -4,8 +4,8 @@ package spacetrader.game_model.graph;
  *
  * @author Michael Lane
  */
-public interface UndirectedEdge extends Edge {
+public interface UndirectedEdge<N extends Node> extends Edge<N> {
     
-    public Node getNode1();
-    public Node getNode2();
+    public N getNode1();
+    public N getNode2();
 }

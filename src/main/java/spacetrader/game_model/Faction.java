@@ -15,12 +15,5 @@ import java.io.Serializable;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public enum Faction implements Serializable {
-    NoFaction,Test1,Test2;
-    public static class Test1Heurstic { //extends Heurstic<StarSystem>{
-
-//        @Override
-        public int calculate(StarSystem n1, StarSystem n2) {
-            return n1.getJumpPoint(n2).getLevel();
-        }
-    }
+    Asdf, Ghjk, No_Faction, Test1, Test2;
 }

@@ -5,6 +5,7 @@
  */
 package spacetrader.game_model.positioncontainer;
 
+import java.util.ArrayList;
 import spacetrader.game_model.gameLogic.Position;
 
 /**
@@ -20,6 +21,20 @@ public class Bounds extends PositionContainer{
         this.miny=miny;
         this.maxx=maxx;
         this.maxy=maxy;
+        origin=new Position(minx.x,miny.y);
+        far=new Position(maxx.x,maxy.y);
+    }
+    public Bounds(ArrayList<Position> list){
+        this.minx=list.get(0);
+        this.miny=list.get(0);
+        this.maxx=list.get(0);
+        this.maxy=list.get(0);
+        for(Position p:list){
+            this.minx=(p.x<this.minx.x)?p:this.minx;
+            this.miny=(p.y<this.miny.y)?p:this.miny;
+            this.maxx=(p.x>this.maxx.x)?p:this.maxx;
+            this.maxy=(p.y>this.maxy.y)?p:this.maxy;
+        }     
         origin=new Position(minx.x,miny.y);
         far=new Position(maxx.x,maxy.y);
     }
@@ -40,6 +55,9 @@ public class Bounds extends PositionContainer{
         temp.sub(origin);
         return temp;
     }
+    public Position getOrigin(){
+        return origin;
+    }
     public double getDistanceX(){
         return getMaxX()-getMinX();
     }
@@ -55,7 +73,37 @@ public class Bounds extends PositionContainer{
 
     @Override
     public boolean contains(Position p) {
-        return false;
+        return new BoxCut(this.origin,this.far).contains(p);
+    }
+
+    public Position distanceOutOf(Position point) {
+        Position pos1=new Position(point);
+        Position o2=new Position(origin);
+        pos1.sub(o2);
+        System.out.println("Distance to origin:"+o2);
+        double x=0,y=0;
+        if(pos1.x<0){
+            x=pos1.x;
+        }
+        if(pos1.y<0){
+            y=pos1.y;
+        }
+        pos1=new Position(point);
+        o2=new Position(far);
+        pos1.sub(o2);
+        System.out.println("Distance to far:"+pos1);
+
+        if(pos1.x>0){
+            x=pos1.x;
+        }
+        if(pos1.y>0){
+            y=pos1.y;
+        }
+        return new Position(x,y);
+    }
+
+    public Position getFar() {
+        return new Position(far);
     }
     
 }

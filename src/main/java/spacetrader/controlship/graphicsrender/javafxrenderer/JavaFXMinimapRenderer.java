@@ -59,9 +59,9 @@ public class JavaFXMinimapRenderer extends JavaFXRenderer{
             Position pos = new Position(jumpPoint.getFromPosition());
             pos.scale(mapScale);
             pos.add(zero);
-            System.out.println(GameModel.get().getPlayer().getNextJumpPoint()+" "+jumpPoint);
+//            System.out.println(GameModel.get().getPlayer().getNextJumpPoint()+" "+jumpPoint);
             
-            System.out.println(jumpPoint.equals(GameModel.get().getPlayer().getNextJumpPoint()));
+//            System.out.println(jumpPoint.equals(GameModel.get().getPlayer().getNextJumpPoint()));
 
             if(jumpPoint.equals(GameModel.get().getPlayer().getNextJumpPoint())){
                 graphics.setFill(Color.WHITE);
@@ -78,6 +78,10 @@ public class JavaFXMinimapRenderer extends JavaFXRenderer{
         pos.add(zero);
         graphics.fillOval(pos.x, pos.y, 10, 10);
  
+        //Text
+        graphics.setFill(Color.web("#00e7ff"));
+        graphics.fillText(system.getName(), zero.x + 150, zero.y);
+        
         graphics.drawImage(SpriteManager.MINIMAP_FRAME, 0, 0);
     }
 

@@ -121,7 +121,10 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             camera.move(new Position(1,0));
         }
     }
-    public void handleMouseClick(MouseEvent e){
+    private double ox;
+    private double oy;
+    private boolean dragInProgress=false;
+    public void handleMouse(MouseEvent e){
         if(e.isPrimaryButtonDown()){
             double x=e.getSceneX()/PIXELS_PER_DISTANCE;
             double y=e.getSceneY()/PIXELS_PER_DISTANCE;
@@ -130,6 +133,19 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             System.out.println((selected));
             System.out.println(selected.getPosition());
             this.controller.findPath(selected);
+        }
+        if(!e.isSecondaryButtonDown()&&dragInProgress){
+            dragInProgress=false;
+            double tx=e.getSceneX()-ox;
+            double ty=e.getSceneY()-oy;
+            camera.move(new Position(tx,ty));
+        }
+        if(e.isSecondaryButtonDown()&&e.isDragDetect()){
+            dragInProgress=true;
+        }
+        else if(e.isSecondaryButtonDown()&&!dragInProgress){
+            ox=e.getSceneX();
+            oy=e.getSceneY();
         }
     }
     @Override
@@ -146,7 +162,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             handleMutliKey(event);
         });
         window.setMouseHandle((MouseEvent e)->{
-            handleMouseClick(e);
+            handleMouse(e);
         });
         Galaxy gal=GameModel.get().getGalaxy();
         List<StarSystem> systems=gal.getSystems();

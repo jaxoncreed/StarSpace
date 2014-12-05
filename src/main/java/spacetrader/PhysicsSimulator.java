@@ -13,35 +13,40 @@ import spacetrader.game_model.*;
 
 public class PhysicsSimulator {
 
+	public static final double SCALE = 1000;
+
 	private static final float TIME_STEP = 1.0f/60.0f;
 	private static final int VELOCITY_ITERATIONS = 10;
 	private static final int POSITION_ITERATIONS = 10;
 
 	private static final Vec2 GRAVITY = new Vec2(0.0f, 0.0f);
 	private static World world;
-        private static StarSystem system = null;
-            
+	private static StarSystem system = null;
+
 	public static void setSystem(StarSystem s) {
-            if (system != null) {
-		for (Ship ship : system.getShips()) {
-			ship.disablePhysicalSimulation();
-		}                
-            }
-            system = s;
-            System.out.println(system);
-            assert(system!=null);
-       
+		if (system != null) {
+			for (Ship ship : system.getShips()) {
+				ship.disablePhysicalSimulation();
+			}                
+		}
+		system = s;
+		System.out.println(system);
+		assert(system!=null);
+
             // Initialize world (no gravity)
-            world = new World(GRAVITY);
-            
+		world = new World(GRAVITY);
+
 		// Add all physics objects
-            for (Ship ship : system.getShips()) {
-		ship.enablePhysicalSimulation(world);
-            }
+		for (Ship ship : system.getShips()) {
+			ship.enablePhysicalSimulation(world);
+		}
 	}
 
 	public static void simulate() {
 		world.step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+                for (Ship ship : system.getShips()) {
+        		ship.physicsUpdate();
+		}                
 	}
 
 }

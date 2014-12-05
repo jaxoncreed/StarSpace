@@ -29,7 +29,6 @@ public class JavaFXWindow extends Window{
         };
     }
     public void keyHandle(MultiKeyPressEventHandler.MultiKeyEvent e){
-        System.out.println("HANDLE");
         this.handleKey.handle(e);
     }
     public void setKeyHandle(JavaFXKeyHandler handle){

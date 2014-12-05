@@ -58,10 +58,13 @@ public class ControlShipView extends AbstractView implements Initializable {
     private double view_size=500;
     private boolean turnLeft=false;
     private boolean turnRight=false;
-    private boolean acclerate=false;
-    private boolean declerate=false;
+    private boolean accelerate=false;
+    private boolean decelerate=false;
     private ControlShipCtrl controller;
     
+    private Timeline timeline;
+    private AnimationTimer timer;
+
     public ControlShipView(JavaFXWindow win,ControlShipCtrl c){
         FXMLLoader loader = new FXMLLoader((getClass().getResource("ControlShip.fxml"))) ;
         loader.setController(this);
@@ -96,10 +99,10 @@ public class ControlShipView extends AbstractView implements Initializable {
         Position pos=new Position(player.getShip().getPosition().x,player.getShip().getPos().y);
         pos.add(new Position((this.canvasWidth/PIXELS_PER_DISTANCE)/2+10,(this.canvasHeight/PIXELS_PER_DISTANCE)/2+10));
         BoxCut box=new BoxCut(neg,pos);
-        // System.out.println(box.normalize(player.getShip().getPos()).x+" "+box.normalize(player.getShip().getPos()).y);
 
 
-        System.out.println(player.getPosition());
+
+
 
         // Star
         JavaFXStarRenderer st = new JavaFXStarRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
@@ -124,8 +127,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         }
         // Jump Points
         for(JumpPoint j : system.getJumpPoints() ) {
-            if (j == system.getJumpPoints().get(0))
-                System.out.println("\t" + j.getPos());
             JavaFXJumpPointRenderer jr = new JavaFXJumpPointRenderer(j,new BoxCut(neg,pos).normalize(j.getPos()));
             jr . setScale(PIXELS_PER_DISTANCE);
             jr . setGraphicsContext(canvas.getGraphicsContext2D());
@@ -153,8 +154,8 @@ public class ControlShipView extends AbstractView implements Initializable {
         }
         turnRight=event.isPressed(KeyCode.D);
         turnLeft=event.isPressed(KeyCode.A);
-        acclerate=event.isPressed(KeyCode.W);
-        declerate=event.isPressed(KeyCode.S);
+        accelerate=event.isPressed(KeyCode.W);
+        decelerate=event.isPressed(KeyCode.S);
         if(event.isPressed(KeyCode.E)){
             this.controller.performInteraction();
         }
@@ -162,6 +163,10 @@ public class ControlShipView extends AbstractView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    // public void stop() {
+        // timeline.stop();
+    // }
 
     @Override
     public void render() {
@@ -178,7 +183,6 @@ public class ControlShipView extends AbstractView implements Initializable {
         canvas.setHeight(canvasHeight);
         
         ControlShipView tt=this;
-        AnimationTimer timer;
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -189,22 +193,30 @@ public class ControlShipView extends AbstractView implements Initializable {
                 if(turnRight){
                     controller.playerTurnRight();
                 }
-                if(acclerate){
+                if(accelerate){
                     controller.playerAccelerate();
                 }
-                if(declerate){
+                if(decelerate){
                     controller.playerDecelerate();
+                }
+                if (!(accelerate || decelerate)) {
+                    controller.playerLinearBrake();
+                }
+                if (!(turnLeft || turnRight)) {
+                    controller.playerAngularBrake();
                 }
                 tt.draw();
             }
         };
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1/60)));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1/60)));
         timeline.play();
         timer.start();
     }
 
     @Override
     public void hide() {
+        timeline.pause();
+        timer.stop();
         window.clearFXML(curPane);
     }
 }

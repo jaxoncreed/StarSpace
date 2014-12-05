@@ -1,5 +1,6 @@
 package spacetrader.game_model;
 
+import spacetrader.PhysicsSimulator;
 import spacetrader.game_model.gameLogic.Item;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.gameLogic.Inventory;
@@ -11,56 +12,64 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.interactable.InteractionType;
+import org.jbox2d.dynamics.*;
 
 /**
  * Ship model!
  */
 public class Ship implements Tradeable, Serializable,InteractableObject {
 
-    private String name;
-    private double basePrice;
-    private int firePower;
-    private Inventory cargo;
-    private int health;
-    private int maxHealth;
+    public String      name;
+    public double      basePrice;
+    public int         firePower;
+    public Inventory   cargo;
+    public int         health;
+    public int         maxHealth;
+    public double      linearThrust;
+    public double      maxLinearSpeed;
+    public float       linearBrake;
+    public double      angularThrust;
+    public double      maxAngularSpeed;
+    public float       angularBrake;
+    public double      interactionRange;
+
     private StarSystem system;
     private transient Body physicsBody;
     private transient PhysicsDescriptor physicsDescriptor;
-    private double linearThrust;
-    private double maxLinearSpeed;
-    private double angularThrust;
-    private double maxAngularSpeed;
-    private double interactionRange;
 
-    public Ship(String name) {
-        this.basePrice = 1000;
-        this.name = name;
-        this.firePower = 10;
-        this.cargo = new Inventory();
+    public Ship (ShipDef shipDef) {
+        this.name              = shipDef.name;
+        this.basePrice         = shipDef.basePrice;
+        this.firePower         = shipDef.firePower;
+        this.cargo             = shipDef.cargo;
+        this.health            = shipDef.health;
+        this.maxHealth         = shipDef.maxHealth;
+        this.linearThrust      = shipDef.linearThrust;
+        this.maxLinearSpeed    = shipDef.maxLinearSpeed;
+        this.linearBrake       = shipDef.linearBrake;
+        this.angularThrust     = shipDef.angularThrust;
+        this.maxAngularSpeed   = shipDef.maxAngularSpeed;
+        this.angularBrake      = shipDef.angularBrake;
+        this.interactionRange  = shipDef.interactionRange;
+
+        this.cargo             = new Inventory();
         this.physicsDescriptor = new PhysicsDescriptor();
-        this.health = 100;
-        this.maxHealth = 100;
-        this.system = null;
-        this.physicsBody = null;
-        this.linearThrust = 1000000.0;
-        this.maxLinearSpeed = 10.0;
-        this.angularThrust = 100000000.0;
-        this.maxAngularSpeed = 10.0;
-        this.interactionRange = 100.0;
+        this.system            = null;
+        this.physicsBody       = null;
     }
-
         
     public void jump(JumpPoint jumpPoint) {
-        system.removeShip(this);
-        jumpPoint.getTargetSystem().addShip(this);
         this.setSystem(jumpPoint.getTargetSystem());
         this.setPosition(jumpPoint.getTargetPos());
     }
 
 
     public void setSystem(StarSystem system) {
-        this.system = system;
+        if (this.system != null) {
+            system.removeShip(this);
+        }
         system.addShip(this);
+        this.system = system;
     }
 
     public StarSystem getSystem() {
@@ -113,10 +122,6 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     }
     
     public Position getPosition() {
-        if (physicsBody != null) {
-            Vec2 pos = physicsBody.getWorldCenter();
-            return new Position(pos.x, pos.y);
-        }
         return physicsDescriptor.getPosition();
     }
 
@@ -125,6 +130,10 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
             return physicsBody.getAngle();
         }
         return physicsDescriptor.getAngle();
+    }
+    
+    public double getRadius() {
+        return physicsDescriptor.getRadius();
     }
     
     public void setMaxHealth(int maxHealth) {
@@ -149,39 +158,74 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
 
     public void accelerate() {
         if (physicsBody != null) {
+            physicsBody.setLinearDamping(0.0f);
             double angle = physicsBody.getAngle();
             Position force = new Position(linearThrust, 0.0);
             force.rotate(angle);
             force.y = -force.y;
             Vec2 centerOfMass = physicsBody.getWorldCenter();
             physicsBody.applyForce(force.toVec2(), centerOfMass);
+            if (Math.abs(physicsBody.getLinearVelocity().length()) > maxLinearSpeed) {
+                linearBrake();
+            }
         }
     }
     
     public void turnLeft() {
         if (physicsBody != null) {
+            physicsBody.setAngularDamping(0.0f);
             physicsBody.applyTorque((float)(angularThrust));
+            if (Math.abs(physicsBody.getAngularVelocity()) > maxAngularSpeed) {
+                angularBrake();
+            }
         }
     }
     
     public void decelerate() {
         if (physicsBody != null) {
+            physicsBody.setLinearDamping(0.0f);
             double angle = physicsBody.getAngle();
             Position force = new Position(-linearThrust, 0.0);
             force.rotate(angle);
             force.y = -force.y;
             Vec2 centerOfMass = physicsBody.getWorldCenter();
             physicsBody.applyForce(force.toVec2(), centerOfMass);
+            if (Math.abs(physicsBody.getLinearVelocity().length()) > maxLinearSpeed) {
+                linearBrake();
+            }
         }
     }
     
     public void turnRight() {
         if (physicsBody != null) {
+            physicsBody.setAngularDamping(0.0f);
             physicsBody.applyTorque((float)(-angularThrust));
+            if (Math.abs(physicsBody.getAngularVelocity()) > maxAngularSpeed) {
+                angularBrake();
+            }
         }
     }
 
+    // private int cnt = 0;
+    public void linearBrake() {
+        // System.out.println("LinearBreak" + (cnt++));
+        physicsBody.setLinearDamping(linearBrake);
+    }
+
+    public void angularBrake() {
+        physicsBody.setAngularDamping(angularBrake);
+    }
+    
+    public void physicsUpdate() {
+        BodyDef physDef = physicsDescriptor.getBodyDef();
+        physDef.angle = physicsBody.getAngle();
+        physDef.position = physicsBody.getWorldCenter();
+        physDef.linearDamping = physicsBody.getLinearDamping();
+        physDef.angularDamping = physicsBody.getAngularDamping();
+    }
+
     public void enablePhysicalSimulation(World world) {
+        System.out.println(physicsDescriptor.getPosition());
         physicsBody = world.createBody(physicsDescriptor.getBodyDef());
         physicsBody.createFixture(physicsDescriptor.getFixtureDef());
     }

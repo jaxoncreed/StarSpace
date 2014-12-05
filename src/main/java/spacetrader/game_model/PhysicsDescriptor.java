@@ -1,5 +1,6 @@
 package spacetrader.game_model;
 
+import spacetrader.PhysicsSimulator;
 import spacetrader.game_model.gameLogic.Position;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.common.Vec2;
@@ -15,13 +16,13 @@ public class PhysicsDescriptor {
         bodyDef.active            = true; 
         // bodyDef.allowSleep     = 
         bodyDef.angle             = 0.0f;
-        bodyDef.angularDamping    = 0.1f;
+        bodyDef.angularDamping    = 0.0f;
         bodyDef.angularVelocity   = 0.0f;
         // bodyDef.awake          = 
         bodyDef.bullet            = false;
         bodyDef.fixedRotation     = false;
         // bodyDef.gravityScale   = 
-        bodyDef.linearDamping     = 0.1f;
+        bodyDef.linearDamping     = 0.0f;
         bodyDef.linearVelocity    = new Vec2(0.0f, 0.0f);
         bodyDef.position          = new Vec2(0.0f, 0.0f);
         bodyDef.type              = BodyType.DYNAMIC;
@@ -35,7 +36,7 @@ public class PhysicsDescriptor {
         // fixtureDef.isSensor    =
         fixtureDef.restitution    = 0.2f;
         fixtureDef.shape          = new CircleShape();
-        fixtureDef.shape.m_radius = 100.0f;
+        fixtureDef.shape.m_radius = 0.1f;
         // fixtureDef.userData    =
     }
 
@@ -43,11 +44,17 @@ public class PhysicsDescriptor {
         return bodyDef;
     }
 
+    public double getRadius() {
+        return fixtureDef.shape.m_radius * PhysicsSimulator.SCALE;
+    }
+    
     public FixtureDef getFixtureDef() {
         return fixtureDef;    }
     
     public Position getPosition() {
-        return new Position(bodyDef.position.x, bodyDef.position.y);
+        Position pos = new Position(bodyDef.position.x, bodyDef.position.y);
+        pos.scale(PhysicsSimulator.SCALE);
+        return (pos);
     }
 
     public void setPosition(Position pos) {

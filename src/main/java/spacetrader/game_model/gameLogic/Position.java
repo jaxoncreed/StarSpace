@@ -47,6 +47,13 @@ public class Position implements Serializable {
 		this.y = (this.y + that.y * weight) / (1.0f + weight);
 	}
 
+        public void scale(double delta) {
+            double angle = toAngle();
+            rotate(-angle);
+            this.x *= delta;
+            rotate(angle);
+        }
+        
 	/**
 	* Reflects the vector about the input vector
 	* @param n the vector perpendicular to the surface of the reflecting object

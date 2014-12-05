@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
@@ -13,7 +14,10 @@
       <TextField fx:id="name" layoutX="494.0" layoutY="121.0" opacity="0.41" prefHeight="52.0" prefWidth="449.0">
          <font>
             <Font size="20.0" />
-         </font></TextField>
+         </font>
+         <effect>
+            <Bloom threshold="0.0" />
+         </effect></TextField>
       
       <!--Piloting-->
       <Button fx:id="pilotingNegative" layoutX="208.0" layoutY="313.0" mnemonicParsing="false" text="-" />

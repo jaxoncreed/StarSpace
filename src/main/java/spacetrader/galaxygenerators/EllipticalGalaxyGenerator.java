@@ -68,7 +68,6 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
 				gax.addSystem(starSystemGenerator.generate());
 			}
 		}
-        System.out.println("end");
         return gax;
     }
 

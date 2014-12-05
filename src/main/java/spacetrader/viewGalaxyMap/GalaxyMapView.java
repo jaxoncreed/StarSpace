@@ -99,6 +99,12 @@ public class GalaxyMapView extends AbstractView implements Initializable {
            gc.setLineWidth(1);
            gc.strokeText(sys.getName(),(camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE);
         }
+        for(StarSystem sys:systems){
+           gc.setStroke(Color.WHITE);
+           gc.setLineWidth(1);
+           gc.strokeText(sys.getFaction().toString(),(camera.normalize(sys.getPosition()).x+10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y+10)*this.PIXELS_PER_DISTANCE);
+        }
+
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){

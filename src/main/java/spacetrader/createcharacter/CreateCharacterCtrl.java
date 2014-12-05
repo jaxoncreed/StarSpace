@@ -57,7 +57,7 @@ public class CreateCharacterCtrl extends ViewCtrl {
     }
 
     void creationDone(Skillset skill) {
-        Player player=new Player(skill.getName(),Faction.Space_People);
+        Player player=new Player(skill.getName(),Faction.Space_Alliance);
         player.setShip(new Ship(new ShipDef()));
         GameModel.get().setPlayer(player);
         GameModel.get().getPlayer().setSkillset(skill);

@@ -8,6 +8,7 @@ package spacetrader.createGalaxy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,14 +103,19 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
             factionSelectors.get(f).addToSet(home);
             factionSelectors.get(f).addNeighbor(home.getNeighbors());
         }
-        for(Faction f:factionSelectors.keySet()){
-            FactionSelector fs=factionSelectors.get(f);
-            fs.update();
-            if(fs.isDone()){
-               factionSelectors.remove(f);
+        System.out.println("Starting Faction Generation");
+        while(!factionSelectors.keySet().isEmpty()){
+            Iterator<Faction> iter= factionSelectors.keySet().iterator();
+            while(iter.hasNext()){
+                Faction f=iter.next();
+                FactionSelector fs=factionSelectors.get(f);
+                System.out.println(f);
+                fs.update();
+                if(fs.isDone()){
+                   iter.remove();
+                }
             }
         }
-        
         GameModel.get().setGalaxy(gax);
         StarSystem starSystem = null;
         

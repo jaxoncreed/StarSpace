@@ -15,5 +15,16 @@ import java.io.Serializable;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public enum Faction implements Serializable {
-    Space_People, Star_Empire, No_Faction, The_Test, Aliens;
+    Space_Alliance, Star_Empire, No_Faction, The_Test, Aliens;
+    @Override
+    public String toString(){
+        switch(this){
+            case Space_Alliance:return "Space Alliance";
+            case Star_Empire:return "Star Empire";
+            case No_Faction:return "No Faction";
+            case The_Test:return "The Test";
+            case Aliens:return "Aliens";
+        }
+        return "";
+    }
 }

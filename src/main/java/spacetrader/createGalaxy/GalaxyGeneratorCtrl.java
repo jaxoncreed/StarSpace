@@ -6,6 +6,9 @@ package spacetrader.createGalaxy;
  * and open the template in the editor.
  */
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +27,13 @@ import spacetrader.galaxygenerators.JumpPointsGenerator;
 import spacetrader.galaxygenerators.MarketGenerator;
 import spacetrader.galaxygenerators.PlanetGenerator;
 import spacetrader.galaxygenerators.StarSystemGenerator;
+import spacetrader.game_model.Faction;
+import spacetrader.game_model.graph.EuclideanHeuristic;
+import spacetrader.game_model.graph.FactionSelector;
 import spacetrader.game_model.system.Galaxy;
 import spacetrader.game_model.system.JumpPoint;
 import spacetrader.game_model.graph.Graph;
+import spacetrader.game_model.graph.GraphGrower;
 import spacetrader.game_model.system.StarSystem;
 
 /**
@@ -83,17 +90,35 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     }
     
     public void generate() {
-        if (generator == null) {
-            System.out.println("umm");
-        }
-        generator.setMinSystemDist(90.0);
         Galaxy gax = generator.generate();
         GameModel.get().setGalaxy(gax);
         jumpPointGenerator.generate();
         List<JumpPoint> edges = jumpPointGenerator.getJumpPoints();
         gax.setJumpPoints(new Graph(edges, null));
+        HashMap<Faction,FactionSelector> factionSelectors=new HashMap();
+        for(Faction f:Faction.values()){
+            factionSelectors.put(f,new FactionSelector(new EuclideanHeuristic(),f));
+            StarSystem home=gax.getSystems().get((int)(Math.random()*gax.getSystems().size()));
+            home.setFaction(f);
+            factionSelectors.get(f).addToSet(home);
+            factionSelectors.get(f).addNeighbor(home.getNeighbors());
+        }
+        System.out.println("Starting Faction Generation");
+        while(!factionSelectors.keySet().isEmpty()){
+            Iterator<Faction> iter= factionSelectors.keySet().iterator();
+            while(iter.hasNext()){
+                Faction f=iter.next();
+                FactionSelector fs=factionSelectors.get(f);
+                System.out.println(f);
+                fs.update();
+                if(fs.isDone()){
+                   iter.remove();
+                }
+            }
+        }
         GameModel.get().setGalaxy(gax);
         StarSystem starSystem = null;
+        
         for (StarSystem s : gax.getSystems()) {
             if (s.getJumpPoints().size() > 0) {
                 starSystem = s;

@@ -66,7 +66,7 @@ public class Position implements Serializable {
 	}
 
 	public double distTo(Position that) {
-		return Math.sqrt((this.x - that.x) * (this.x - that.x) + (this.y - that.y) * (this.y - that.y));
+		return Math.sqrt(Math.pow(this.x - that.x, 2) + Math.pow(this.y - that.y, 2));
 	}
     
     /**

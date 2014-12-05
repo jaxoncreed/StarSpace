@@ -7,7 +7,6 @@ package spacetrader.viewGalaxyMap;
  */
 
 import java.io.IOException;
-import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXPlanetRenderer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,35 +16,26 @@ import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import spacetrader.AbstractView;
 import spacetrader.MultiKeyPressEventHandler;
-import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.Window.JavaFXWindow;
-import spacetrader.controlship.RealTimeShipView;
-import spacetrader.controlship.graphicsrender.javafxrenderer.*;
 import spacetrader.game_model.GameModel;
 import spacetrader.game_model.system.*;
-import spacetrader.game_model.system.Planet;
-import spacetrader.game_model.player.Player;
 import spacetrader.game_model.gameLogic.Position;
-import spacetrader.game_model.Ship;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
-import spacetrader.game_model.positioncontainer.BoxCut;
 import spacetrader.game_model.positioncontainer.Camera;
+import spacetrader.controlship.graphicsrender.javafxrenderer.SpriteManager;
 
 /**
  *
@@ -75,7 +65,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             curPane = loader.load();
             window.loadFXML(curPane);
         } catch (IOException ex) {
-            Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GalaxyMapView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,47 +77,64 @@ public class GalaxyMapView extends AbstractView implements Initializable {
         GraphicsContext gc=canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvasWidth, canvasHeight);
+        gc.drawImage(SpriteManager.DIGITAL_BG_ALPHA, 0, 0);
         for(JumpPoint j:jumpPoints){
             Position p1=camera.normalize(j.getFromNode().getPosition());
             Position p2=camera.normalize(j.getToNode().getPosition());
             if(GameModel.get().getPlayer().getJumpPath().contains(j)){
-                gc.setStroke(Color.YELLOW);
+                gc.setStroke(Color.WHITE);
                 gc.setLineWidth(3);
             }
             else{
-                gc.setStroke(Color.GREEN);
+                gc.setStroke(Color.web("#00e7ff", .5));
                 gc.setLineWidth(1);
-
             }
             gc.strokeLine(p1.x*this.PIXELS_PER_DISTANCE, p1.y*this.PIXELS_PER_DISTANCE, p2.x*this.PIXELS_PER_DISTANCE, p2.y*this.PIXELS_PER_DISTANCE);
         }
         for(StarSystem sys:systems){
            //System.out.println(camera.normalize(sys.getPosition()));
            gc.setFill(Color.BLUE);
-           gc.fillOval((camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE);
+           double xDraw = (camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE;
+           double yDraw = (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE;
+           double xHaloDraw = (camera.normalize(sys.getPosition()).x-10*2)*this.PIXELS_PER_DISTANCE;
+           double yHaloDraw = (camera.normalize(sys.getPosition()).y-10*2)*this.PIXELS_PER_DISTANCE;
+           double widthDraw = 20*PIXELS_PER_DISTANCE;
+           double heightDraw = 20*PIXELS_PER_DISTANCE;
+           gc.drawImage(SpriteManager.STAR_HALO, xHaloDraw, yHaloDraw, widthDraw*2, heightDraw*2);
+           gc.drawImage(SpriteManager.getRandomStar(sys.getPosition().x * sys.getPosition().y), xDraw, yDraw, widthDraw, heightDraw);
+           gc.drawImage(SpriteManager.STAR_HALO_CORE, xHaloDraw, yHaloDraw, widthDraw*2, heightDraw*2);
         }
         for(StarSystem sys:systems){
            gc.setStroke(Color.RED);
            gc.setLineWidth(1);
            gc.strokeText(sys.getName(),(camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE);
         }
+        for(StarSystem sys:systems){
+           gc.setStroke(Color.WHITE);
+           gc.setLineWidth(1);
+           gc.strokeText(sys.getFaction().toString(),(camera.normalize(sys.getPosition()).x+10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y+10)*this.PIXELS_PER_DISTANCE);
+        }
+
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
         if(event.isPressed(KeyCode.W)){
-            camera.move(new Position(0,1));
+            camera.move(new Position(0,-2));
         }        
         if(event.isPressed(KeyCode.S)){
-            camera.move(new Position(0,-1));
+            camera.move(new Position(0,2));
         }
         if(event.isPressed(KeyCode.A)){
-            camera.move(new Position(-1,0));
+            camera.move(new Position(-2,0));
         }
         if(event.isPressed(KeyCode.D)){
-            camera.move(new Position(1,0));
+            camera.move(new Position(2,0));
         }
     }
-    public void handleMouseClick(MouseEvent e){
+    private double ox;
+    private double oy;
+    private boolean dragInProgress=false;
+    public void handleMouse(MouseEvent e){
         if(e.isPrimaryButtonDown()){
             double x=e.getSceneX()/PIXELS_PER_DISTANCE;
             double y=e.getSceneY()/PIXELS_PER_DISTANCE;
@@ -136,6 +143,19 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             System.out.println((selected));
             System.out.println(selected.getPosition());
             this.controller.findPath(selected);
+        }
+        if(!e.isSecondaryButtonDown()&&dragInProgress){
+            dragInProgress=false;
+            double tx=e.getSceneX()-ox;
+            double ty=e.getSceneY()-oy;
+            camera.move(new Position(tx,ty));
+        }
+        if(e.isSecondaryButtonDown()&&e.isDragDetect()){
+            dragInProgress=true;
+        }
+        else if(e.isSecondaryButtonDown()&&!dragInProgress){
+            ox=e.getSceneX();
+            oy=e.getSceneY();
         }
     }
     @Override
@@ -152,7 +172,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             handleMutliKey(event);
         });
         window.setMouseHandle((MouseEvent e)->{
-            handleMouseClick(e);
+            handleMouse(e);
         });
         Galaxy gal=GameModel.get().getGalaxy();
         List<StarSystem> systems=gal.getSystems();

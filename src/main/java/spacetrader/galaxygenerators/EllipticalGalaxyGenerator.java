@@ -24,19 +24,20 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
     private Double _tiltRads;
 
     @Override
-    public Galaxy generate() {
-
-        NormalDistribution xDistr = new NormalDistribution(0, _xSD);
-        NormalDistribution yDistr = new NormalDistribution(0, _ySD);
-        Galaxy gax = new Galaxy(width, height);
-        starSystemGenerator.setGalaxy(gax);
-        for (int i = 0; i < getNumSystems(); i++) {
-
-            System.out.println(i);
-            // randomly generate position
-            float x = (float) xDistr.sample();
-            float y = (float) yDistr.sample();
-            Position pos = new Position(x, y);
+	public Galaxy generate() {
+        
+		NormalDistribution xDistr = new NormalDistribution(0, _xSD);
+		NormalDistribution yDistr = new NormalDistribution(0, _ySD);
+		Galaxy gax = new Galaxy(width, height);
+		starSystemGenerator.setGalaxy(gax);
+		for (int i = 0; i < getNumSystems(); i++) {
+             
+			// randomly generate position
+			double x = xDistr.sample();
+			double y = yDistr.sample();
+			Position pos = new Position(x, y);
+            _tiltRads = Util.sampleFromUniformReal(0, Math.PI);
+			pos.rotate(_tiltRads);
 
             // calculate the distance from pos to all other StarSystems already generated
             boolean tooClose = false;
@@ -44,30 +45,29 @@ public class EllipticalGalaxyGenerator extends GalaxyGenerator {
             int size = systems.size();
             for (int j = 0; j < size && !tooClose; j++) {
                 StarSystem system = systems.get(j);
-                tooClose = pos.distTo(system.getPosition()) < minSystemDist;
-            }
+				tooClose = pos.distTo(system.getPosition()) < minSystemDist;
+			}
 
-            // if pos is too far away from the origin
-            if (1 > (Math.pow(_xBound, 2) * Math.pow(_yBound, 2))
-                    / //  ---------------------------------------------------------------------------
-                    (Math.pow(y, 2) * Math.pow(_xBound, 2) + Math.pow(x, 2) * Math.pow(_yBound, 2))
-                    // or if this position is too close to StarSystem already generated 
-                    || tooClose) {
-                // then loop again
-                i--;
+			// if pos is too far away from the origin
+			if (
+				1 > 		   (Math.pow(_xBound, 2)*Math.pow(_yBound, 2)) /
+			//  ---------------------------------------------------------------------------
+				(Math.pow(y, 2)*Math.pow(_xBound, 2) + Math.pow(x, 2)*Math.pow(_yBound, 2))
+			
+			// or if this position is too close to StarSystem already generated 
+			|| tooClose) {
+				// then loop again
+				i--;			
 
-                // otherwise make the system in all its glory
-            } else {
-                _tiltRads = Util.sampleFromUniformReal(0, Math.PI);
-                pos.rotate(_tiltRads);
-                // SET PROPERTIES FOR STARSYSTEM GENERATION HERE
-                starSystemGenerator.setName("System " + i);
-                starSystemGenerator.setPosition(pos);
-
-                gax.addSystem(starSystemGenerator.generate());
-            }
-        }
-        System.out.println("end");
+			// otherwise make the system in all its glory
+			} else {
+				// SET PROPERTIES FOR STARSYSTEM GENERATION HERE
+				starSystemGenerator.setName("System " + i);
+				starSystemGenerator.setPosition(pos);
+				
+				gax.addSystem(starSystemGenerator.generate());
+			}
+		}
         return gax;
     }
 

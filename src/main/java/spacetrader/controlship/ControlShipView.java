@@ -76,7 +76,7 @@ public class ControlShipView extends AbstractView implements Initializable {
             curPane = loader.load();
             window.loadFXML(curPane);
         } catch (IOException ex) {
-            Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControlShipView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -106,6 +106,7 @@ public class ControlShipView extends AbstractView implements Initializable {
 
         // Star
         JavaFXStarRenderer st = new JavaFXStarRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
+        st.setRandomStarSeed(system.getPosition().x * system.getPosition().y);
         st.setScale(PIXELS_PER_DISTANCE);
         st.setGraphicsContext(canvas.getGraphicsContext2D());
         st.draw();

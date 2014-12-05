@@ -41,7 +41,7 @@ import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.BoxCut;
 
-/**
+/**s
  *
  * @author Tyler Allen <tallen40@gatech.edu>
  */
@@ -158,6 +158,9 @@ public class ControlShipView extends AbstractView implements Initializable {
         decelerate=event.isPressed(KeyCode.S);
         if(event.isPressed(KeyCode.E)){
             this.controller.performInteraction();
+        }
+        if(event.isPressed(KeyCode.M)){
+            this.controller.switchToGalaxyView();
         }
     }
     @Override

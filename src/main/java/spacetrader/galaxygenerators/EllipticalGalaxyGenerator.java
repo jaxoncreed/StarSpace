@@ -1,3 +1,4 @@
+
 package spacetrader.galaxygenerators;
 
 //import spacetrader.Util;

@@ -54,8 +54,8 @@ tag.
         <height>            900    </height>
         <xSD>               300    </xSD>
         <ySD>               200    </ySD>
-        <xBound>            450    </xBound>
-        <yBound>            450    </yBound>
+        <xBound>            426    </xBound>
+        <yBound>            300    </yBound>
     </EllipticalGalaxyGenerator>
 
     <SimpleStarSystemGenerator>

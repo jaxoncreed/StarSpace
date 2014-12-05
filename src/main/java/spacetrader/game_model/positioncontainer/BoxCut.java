@@ -12,8 +12,8 @@ import spacetrader.game_model.gameLogic.Position;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public class BoxCut extends PositionContainer{
-    private Position origin,far;
-    private Position farRelative;
+    protected Position origin,far;
+    protected Position farRelative;
     public BoxCut(Position origin,Position far){
         this.origin=origin;
         this.far=far;
@@ -27,7 +27,8 @@ public class BoxCut extends PositionContainer{
         if(temp.x<0||temp.y<0){
             return false;
         }
-        Position temp2=new Position(farRelative);
+        temp=new Position(p);
+        Position temp2=new Position(far);
         temp2.sub(temp);
         return temp2.x>=0&&temp2.y>=0;
     }

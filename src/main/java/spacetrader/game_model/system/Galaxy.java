@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.HashMap;
 import spacetrader.game_model.Positionable;
 import spacetrader.game_model.gameLogic.Position;
+import spacetrader.game_model.graph.Edge;
+import spacetrader.game_model.graph.EuclideanHeuristic;
 import spacetrader.game_model.graph.Graph;
 
 /**
@@ -14,10 +16,10 @@ import spacetrader.game_model.graph.Graph;
  */
 public class Galaxy implements Serializable, Positionable {
 
-	private Map<Position,StarSystem> systems;
-	private Position pos;
-	private double width;
-	private double height;
+    private Map<Position,StarSystem> systems;
+    private Position pos;
+    private double width;
+    private double height;
     private Graph jumpPoints; 
 
 	public Galaxy() {
@@ -79,7 +81,14 @@ public class Galaxy implements Serializable, Positionable {
     public void setJumpPoints(Graph jumpPoints) {
         this.jumpPoints = jumpPoints;
     }
-
+    public ArrayList<JumpPoint> findPath(StarSystem start,StarSystem end){
+        List<Edge> edges=this.jumpPoints.aStarGraphSearch(start, end, new EuclideanHeuristic());
+        ArrayList<JumpPoint> jumpPoints=new ArrayList();
+        for(Edge e:edges){
+            jumpPoints.add((JumpPoint)e);
+        }
+        return jumpPoints;
+    }
     public Map<StarSystem, Double> getDistancesTo(StarSystem system) {
         Map<StarSystem, Double> dists = new HashMap();
         Position pos = system.getPosition();

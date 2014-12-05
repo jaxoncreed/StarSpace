@@ -34,7 +34,7 @@ private Position pos;
     public Planet(String name, Position pos) {
         this.name=name;
         this.pos=pos;
-        this.interactionRange = 50;
+        this.interactionRange = 100;
 
         market=new Market(new Inventory(10),this);
 

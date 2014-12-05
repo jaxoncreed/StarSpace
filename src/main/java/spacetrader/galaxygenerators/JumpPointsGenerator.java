@@ -101,7 +101,6 @@ public class JumpPointsGenerator {
         Galaxy gax = gameModel.getGalaxy();
         List<StarSystem> systems = gax.getSystems();
         for (StarSystem system1 : systems) {
-            System.out.println(system1.getName() + " making jumpPoints");
             double sample = Util.sampleFromNormal(numJumpsMean, numJumpsSD);
             int numJumps = (sample >= 1) ? (int) sample : 1;
             Map<StarSystem, Double> dists = gax.getDistancesTo(system1);
@@ -113,7 +112,6 @@ public class JumpPointsGenerator {
             if (iter.hasNext()) iter.next();
             int i = 0;
             while (iter.hasNext() && i++ < numJumps) {
-                System.out.println("making jumppoint");
                 StarSystem system2 = iter.next();
                 Position fromPos = this.makePosition(system1);
                 Position toPos = this.makePosition(system2);
@@ -150,7 +148,6 @@ public class JumpPointsGenerator {
         double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
         int attempts = 0;
         while (tryAgain && attempts++ < 50) {
-            System.out.println("makePosition loop");
             double x1 = Util.sampleFromUniformReal(bounds.getMinX(), bounds.getMaxX());
             double y1 = Util.sampleFromUniformReal(bounds.getMinY(), bounds.getMaxY());
             Position pos = new Position(x1, y1);

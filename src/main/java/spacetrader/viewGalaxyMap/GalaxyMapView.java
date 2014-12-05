@@ -26,6 +26,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -63,7 +64,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
     private Camera camera;
     private Timeline timeline;
     private AnimationTimer timer;
-    private int view_size=800;
+    private int view_size=400;
 
     public GalaxyMapView(JavaFXWindow win,GalaxyMapCtrl c){
         window=win;
@@ -81,14 +82,29 @@ public class GalaxyMapView extends AbstractView implements Initializable {
     private int animationStep = 0;
     public void draw() {
         List<StarSystem> systems=controller.getSystems();
+        List<JumpPoint> jumpPoints=GameModel.get().getGalaxy().getJumpPoints();
+        
         GraphicsContext gc=canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvasWidth, canvasHeight);
+        for(JumpPoint j:jumpPoints){
+            Position p1=camera.normalize(j.getFromNode().getPosition());
+            Position p2=camera.normalize(j.getToNode().getPosition());
+            gc.setStroke(Color.GREEN);
+            gc.setLineWidth(1);
+            gc.strokeLine(p1.x*this.PIXELS_PER_DISTANCE, p1.y*this.PIXELS_PER_DISTANCE, p2.x*this.PIXELS_PER_DISTANCE, p2.y*this.PIXELS_PER_DISTANCE);
+        }
         for(StarSystem sys:systems){
            //System.out.println(camera.normalize(sys.getPosition()));
            gc.setFill(Color.BLUE);
            gc.fillOval((camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE, 20*PIXELS_PER_DISTANCE);
         }
+        for(StarSystem sys:systems){
+           gc.setStroke(Color.YELLOW);
+           gc.setLineWidth(1);
+           gc.strokeText(sys.getName(),(camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE);
+        }
+
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
@@ -105,6 +121,16 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             camera.move(new Position(1,0));
         }
     }
+    public void handleMouseClick(MouseEvent e){
+        if(e.isPrimaryButtonDown()){
+            double x=e.getSceneX()/PIXELS_PER_DISTANCE;
+            double y=e.getSceneY()/PIXELS_PER_DISTANCE;
+            Position p=new Position(x,y);
+            StarSystem selected=this.controller.findNearbyStarSystem(camera.deNormalize(p));
+            System.out.println((selected));
+            System.out.println(selected.getPosition());
+        }
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -117,6 +143,9 @@ public class GalaxyMapView extends AbstractView implements Initializable {
     public void render() {
         window.setKeyHandle((MultiKeyPressEventHandler.MultiKeyEvent event)->{
             handleMutliKey(event);
+        });
+        window.setMouseHandle((MouseEvent e)->{
+            handleMouseClick(e);
         });
         Galaxy gal=GameModel.get().getGalaxy();
         List<StarSystem> systems=gal.getSystems();

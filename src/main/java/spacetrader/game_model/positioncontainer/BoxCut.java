@@ -37,5 +37,9 @@ public class BoxCut extends PositionContainer{
         pos.sub(origin);
         return pos;
     }
-    
+    public Position deNormalize(Position p){
+        Position pos=new Position(p.x,p.y);
+        pos.add(origin);
+        return pos;
+    }
 }

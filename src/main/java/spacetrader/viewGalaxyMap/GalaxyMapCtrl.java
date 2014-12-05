@@ -13,6 +13,7 @@ import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
 import spacetrader.game_model.GameModel;
+import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.graph.Edge;
 import spacetrader.game_model.graph.Node;
 import spacetrader.game_model.player.Player;
@@ -29,6 +30,7 @@ public class GalaxyMapCtrl extends ViewCtrl{
     MainCtrl mainCtrl;
     Galaxy  galaxy;
     Player  player;
+    double minDist=10;
     public GalaxyMapCtrl(Ctrl parent, Window window) {
         super(parent, window);
         mainCtrl=(MainCtrl) parent;
@@ -41,6 +43,19 @@ public class GalaxyMapCtrl extends ViewCtrl{
     }
     public List<StarSystem> getSystems(){
         return galaxy.getSystems();
+    }
+    public StarSystem findNearbyStarSystem(Position p){
+        StarSystem min=galaxy.getSystems().get(0);
+        for(StarSystem sys:galaxy.getSystems()){
+            if(p.distTo(sys.getPosition())<this.minDist){
+                if(min==null){
+                    min=sys;
+                }else if(p.distTo(sys.getPosition())<p.distTo(min.getPosition())){
+                    min=sys;
+                }
+            }
+        }
+        return min;
     }
     public List<JumpPoint> findPath(StarSystem target){
         StarSystem start=player.getSystem(); 

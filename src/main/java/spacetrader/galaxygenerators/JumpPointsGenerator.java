@@ -115,7 +115,9 @@ public class JumpPointsGenerator {
                 StarSystem system2 = iter.next();
                 Position fromPos = this.makePosition(system1);
                 Position toPos = this.makePosition(system2);
-                jumpPoints1.addAll(system1.addJumpPoint(system2, fromPos, toPos));
+                if (fromPos != null && toPos != null) {
+                    jumpPoints1.addAll(system1.addJumpPoint(system2, fromPos, toPos));
+                } 
             }
         }
         
@@ -144,7 +146,8 @@ public class JumpPointsGenerator {
         Bounds bounds = system.getBounds();
         boolean tryAgain = true;
         double shipInteraction = gameModel.getPlayer().getShip().getInteractionRange();
-        while (tryAgain) {
+        int attempts = 0;
+        while (tryAgain && attempts++ < 50) {
             double x1 = Util.sampleFromUniformReal(bounds.getMinX(), bounds.getMaxX());
             double y1 = Util.sampleFromUniformReal(bounds.getMinY(), bounds.getMaxY());
             Position pos = new Position(x1, y1);

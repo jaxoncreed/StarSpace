@@ -51,6 +51,12 @@ public class JavaFXMainApplication extends MainApplication{
             scene.addEventFilter(MouseEvent.MOUSE_RELEASED, (MouseEvent event) -> {
                 mainApp.getWindow().mouseHandle(event);
             });
+            scene.addEventFilter(MouseEvent.MOUSE_DRAGGED, (MouseEvent event) -> {
+                mainApp.getWindow().mouseHandle(event);
+            });
+            scene.addEventFilter(MouseEvent.MOUSE_RELEASED, (MouseEvent event) -> {
+                mainApp.getWindow().mouseHandle(event);
+            });
 
             scene.setOnKeyPressed(handler);
             scene.setOnKeyReleased(handler);

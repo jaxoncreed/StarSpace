@@ -7,6 +7,7 @@ package spacetrader.game_model.interactable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import spacetrader.Interactable;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.gameLogic.Position;
 
@@ -75,5 +76,8 @@ public class InteractionManager {
     public String getInteractionMessage(Ship ship) {
         InteractableObject object = getInteraction(ship);
         return object.getInteractionMessage();
+    }
+    public void setInteractableList(ArrayList<InteractableObject> objects){
+        objectList = objects;
     }
 }

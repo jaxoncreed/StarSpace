@@ -32,6 +32,9 @@ public class SpriteManager {
     public static Image STAR_HALO;
     public static Image STAR_HALO_CORE;
     public static Image DIGITAL_BG_ALPHA;
+    public static Image MINIMAP_BG;
+    public static Image MINIMAP_FRAME;
+
    
     public SpriteManager() {
     	LASHER_FF = new Image(getClass().getResourceAsStream("lasher_ff.png"));
@@ -59,6 +62,9 @@ public class SpriteManager {
     	STAR_HALO_CORE = new Image(getClass().getResourceAsStream("star_halo_core.png"));
 
         DIGITAL_BG_ALPHA = new Image(getClass().getResourceAsStream("digital_bg_alpha.png"));
+
+        MINIMAP_BG = new Image(getClass().getResourceAsStream("minimap_bg.png"));
+        MINIMAP_FRAME = new Image(getClass().getResourceAsStream("minimap_frame.png"));
     }
 
     public static Image getRandomStar(double seed) {

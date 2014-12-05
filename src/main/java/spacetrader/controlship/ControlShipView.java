@@ -147,6 +147,14 @@ public class ControlShipView extends AbstractView implements Initializable {
         fg.setScale(PIXELS_PER_DISTANCE);
         fg.setOffset(player.getPosition());
         fg.draw();
+
+        // Minimap
+        JavaFXMinimapRenderer minimap = new JavaFXMinimapRenderer(new BoxCut(neg,pos).normalize(new Position(0, 0)));
+        minimap.setSystem(system);
+        minimap.setPlayer(player);
+        minimap.setScale(PIXELS_PER_DISTANCE);
+        minimap.setGraphicsContext(canvas.getGraphicsContext2D());
+        minimap.draw();
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){

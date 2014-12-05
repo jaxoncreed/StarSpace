@@ -15,9 +15,10 @@ import spacetrader.MainCtrl;
 import spacetrader.ViewCtrl;
 import spacetrader.Window.Window;
 import spacetrader.game_model.*;
+import spacetrader.game_model.system.*;
 import spacetrader.maketrade.MakeTradeView;
 import spacetrader.game_model.GameModel;
-
+import spacetrader.game_model.Ship;
 import javafx.stage.Stage;
 import spacetrader.CtrlViewTypes;
 import spacetrader.ViewCtrlFactory;
@@ -91,4 +92,59 @@ public class MakeTradeCtrl extends ViewCtrl {
    public int getPlayerMoney(){
        return player.getWoolongs();
    }
+   
+   public void buy1() {
+        if (player.getWoolongs() >= 500) {
+            Ship s = player.getShip();
+            System.out.println("Old ship: " + player.getShip());
+            s.updateShip(new ShipDef("Arwing", 500, 20, 15, s.getCargo()));
+            System.out.println("New ship: " + player.getShip());
+            player.setWoolongs(player.getWoolongs() - 500);
+            System.out.println("Purchase Complete");
+        } else {
+            System.out.println("Not enough woolongs");
+        }
+        
+    }
+    public void buy2() {
+        if (player.getWoolongs() >= 550) {
+            Ship s = player.getShip();
+            System.out.println("Old ship: " + player.getShip());
+            s.updateShip(new ShipDef("Saturn V", 550, 10, 40, s.getCargo()));
+            System.out.println("New ship: " + player.getShip());
+            player.setWoolongs(player.getWoolongs() - 550);
+            System.out.println("Purchase Complete");
+        } else {
+            System.out.println("Not enough woolongs");
+        }
+
+    }
+    public void buy3() {
+        if (player.getWoolongs() >= 1500) {
+            Ship s = player.getShip();
+            System.out.println("Old ship: " + player.getShip());
+            s.updateShip(new ShipDef("Millenium Falcon", 1500, 60, 40, s.getCargo()));
+            System.out.println("New ship: " + player.getShip());
+            player.setWoolongs(player.getWoolongs() - 1500);
+            System.out.println("Purchase Complete");
+        } else {
+            System.out.println("Not enough woolongs");
+        }
+        
+        
+    }
+    public void buy4() {
+        if (player.getWoolongs() >= 2500) {
+            Ship s = player.getShip();
+            System.out.println("Old ship: " + player.getShip());
+            s.updateShip(new ShipDef("The Bebop", 2500, 25, 100, s.getCargo()));
+            System.out.println("New ship: " + player.getShip());
+            player.setWoolongs(player.getWoolongs() - 2500);
+            System.out.println("Purchase Complete");
+        } else {
+            System.out.println("Not enough woolongs");
+        }
+        
+        
+    }
 }

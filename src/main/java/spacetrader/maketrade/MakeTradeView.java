@@ -36,17 +36,30 @@ public class MakeTradeView extends AbstractView implements Initializable {
     List<Item> itemsP;
     List<Item> itemsM;
     @FXML
-    Button finishButton;
+    Button finishButton1;
+    @FXML
+    Button finishButton2;
     @FXML
     VBox yourItemsContainer;
     @FXML
     VBox theirItemsContainer;
     @FXML
-    Label money;
+    Label money1;
+    @FXML
+    Label money2;
     @FXML
     SplitPane splitpane;
     @FXML
     Pane anchor;
+    @FXML
+    Button buy1;
+    @FXML
+    Button buy2;
+    @FXML
+    Button buy3;
+    @FXML
+    Button buy4;
+    
     public MakeTradeView(JavaFXWindow window, MakeTradeCtrl ctrl) {
         this.window = window;
         this.makeTradeCtrl = ctrl;
@@ -73,7 +86,19 @@ public class MakeTradeView extends AbstractView implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MakeTradeView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finishButton.setOnAction((ActionEvent event)->{
+        buy1.setOnAction((ActionEvent event)->{makeTradeCtrl.buy1();
+        updateMoneyLabel();});
+        buy2.setOnAction((ActionEvent event)->{makeTradeCtrl.buy2();
+        updateMoneyLabel();});
+        buy3.setOnAction((ActionEvent event)->{makeTradeCtrl.buy3();
+        updateMoneyLabel();});
+        buy4.setOnAction((ActionEvent event)->{makeTradeCtrl.buy4();
+        updateMoneyLabel();});
+        updateMoneyLabel();
+        finishButton1.setOnAction((ActionEvent event)->{
+            makeTradeCtrl.returnToControlShip();
+        });
+        finishButton2.setOnAction((ActionEvent event)->{
             makeTradeCtrl.returnToControlShip();
         });
         splitpane.setPrefWidth(window.getWidth());
@@ -91,10 +116,10 @@ public class MakeTradeView extends AbstractView implements Initializable {
         for(Item i:itemsP){
             HBox h=new HBox(); 
             Button b=new Button();
-            b.setText(i.getName()+" #"+makeTradeCtrl.getPlayerItemAmount(i));
+            b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+") ");
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.sell(i, 1);
-                b.setText(i.getName()+" #"+makeTradeCtrl.getPlayerItemAmount(i));
+                b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+") ");
                 updateLists();
             });
             h.getChildren().add(b);
@@ -104,17 +129,22 @@ public class MakeTradeView extends AbstractView implements Initializable {
         for(Item i:itemsM){
             HBox h=new HBox(); 
             Button b=new Button();
-            b.setText(i.getName()+" #"+makeTradeCtrl.getStoreItemAmount(i));
+            b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + ") ");
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.buy(i, 1);
-                b.setText(i.getName()+" #"+makeTradeCtrl.getStoreItemAmount(i));
+                b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + ") ");
                 updateLists();
             });
             h.getChildren().add(b);
             theirItemsContainer.getChildren().add(h);
         }
-        money.setText("$"+makeTradeCtrl.getPlayerMoney());
+        money1.setText("$"+makeTradeCtrl.getPlayerMoney());
+        money2.setText("$"+makeTradeCtrl.getPlayerMoney());
 
+    }
+        public void updateMoneyLabel() {
+        money2.setText("$" + makeTradeCtrl.getPlayerMoney());
+        money1.setText("$" + makeTradeCtrl.getPlayerMoney());
     }
     public void removeMakeTrade() {
     }

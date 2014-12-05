@@ -33,7 +33,7 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     public float       angularBrake;
     public double      interactionRange;
 
-    private StarSystem system;
+    public StarSystem system;
     private transient Body physicsBody;
     private transient PhysicsDescriptor physicsDescriptor;
 
@@ -52,7 +52,7 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
         this.angularBrake      = shipDef.angularBrake;
         this.interactionRange  = shipDef.interactionRange;
 
-        this.cargo             = new Inventory();
+        this.cargo             = shipDef.cargo;
         this.physicsDescriptor = new PhysicsDescriptor();
         this.system            = null;
         this.physicsBody       = null;
@@ -61,6 +61,20 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     public void jump(JumpPoint jumpPoint) {
         this.setSystem(jumpPoint.getTargetSystem());
         this.setPosition(jumpPoint.getTargetPos());
+    }
+    public void updateShip(ShipDef shipDef) {
+        this.name              = shipDef.name;
+        this.basePrice         = shipDef.basePrice;
+        this.firePower         = shipDef.firePower;
+        this.cargo             = shipDef.cargo;
+        this.health            = shipDef.health;
+        this.maxHealth         = shipDef.maxHealth;
+        this.linearThrust      = shipDef.linearThrust;
+        this.maxLinearSpeed    = shipDef.maxLinearSpeed;
+        this.linearBrake       = shipDef.linearBrake;
+        this.angularThrust     = shipDef.angularThrust;
+        this.maxAngularSpeed   = shipDef.maxAngularSpeed;
+        this.angularBrake      = shipDef.angularBrake;
     }
 
 
@@ -151,9 +165,15 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     public PhysicsDescriptor getPhysicsDescriptor() {
         return physicsDescriptor;
     }
+    public void setPhysicsDescriptor(PhysicsDescriptor d) {
+        this.physicsDescriptor = d;
+    }
 
     public void setPhysicsBody(Body body) {
         this.physicsBody = body;
+    }
+    public Body getPhysicsBody() {
+        return this.physicsBody;
     }
 
     public void accelerate() {

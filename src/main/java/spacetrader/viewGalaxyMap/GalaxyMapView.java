@@ -130,6 +130,9 @@ public class GalaxyMapView extends AbstractView implements Initializable {
         if(event.isPressed(KeyCode.D)){
             camera.move(new Position(2,0));
         }
+        if(event.isPressed(KeyCode.B)){
+          controller.exitToControlShip();
+        }
     }
     private double ox;
     private double oy;

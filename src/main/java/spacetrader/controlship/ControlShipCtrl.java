@@ -109,6 +109,9 @@ public class ControlShipCtrl extends ViewCtrl {
     public void saveGame() {
         //mainCtrl.saveGame();
     }
+    void switchToGalaxyView(){
+        mainCtrl.switchViews(CtrlViewTypes.GalaxyMap);
+    }
 
     void performInteraction() {
         this.interactionManager.interact(playerShip);

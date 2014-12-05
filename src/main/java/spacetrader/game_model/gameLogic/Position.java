@@ -109,5 +109,10 @@ public class Position implements Serializable {
 	public Vec2 toVec2() {
 		return new Vec2((float)x, (float)y);
 	}
+        public Position negate(){
+            x=-x;
+            y=-y;
+            return this;
+        }
 
 }

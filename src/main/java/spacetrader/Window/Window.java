@@ -15,11 +15,15 @@ public abstract class Window {
         public void handle();
     } 
     protected Handler handleKey;
+    protected Handler handleMouse;
     private int SCREEN_WIDTH = 1280;
     private int SCREEN_HEIGHT = 720; 
     protected ApplicationType type;
     public abstract void init();
     public abstract void close();
+    public void setMouseHandle(Handler mouse){
+        handleMouse=mouse;
+    }
     public void setKeyHandle(Handler key){
         handleKey=key;
     }

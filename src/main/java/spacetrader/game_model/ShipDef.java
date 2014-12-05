@@ -44,6 +44,23 @@ public class ShipDef {
         this.maxAngularSpeed   = 2.0;
         this.angularBrake      = 3.0f;
         this.interactionRange  = 100.0;
+        this.cargo = new Inventory();
+    }
+    public ShipDef(String name, int basePrice,
+            int firePower, int health, Inventory cargo) {
+        this.name = name;
+        this.basePrice = basePrice;
+        this.firePower = firePower;
+        this.health = health;
+        this.maxHealth = health;
+        this.linearThrust = 0.005 + .000005 * basePrice;
+        this.maxLinearSpeed = 0.2 + .0005 * basePrice;
+        this.linearBrake = 1.5f;
+        this.angularThrust = 0.001 + .0000005 * basePrice;
+        this.maxAngularSpeed = 2.0;
+        this.angularBrake = 3.0f;
+        this.interactionRange = 100.0;
+        this.cargo = cargo;
     }
 
 }

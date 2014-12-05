@@ -6,10 +6,13 @@
 package spacetrader.game_model.player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import spacetrader.game_model.Faction;
 import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.ShipDef;
+import spacetrader.game_model.system.JumpPoint;
 import spacetrader.game_model.system.StarSystem;
 
 /**
@@ -22,6 +25,7 @@ public class Player implements Serializable {
     private int woolongs; //currency
     private Ship ship;
     private Skillset skillSet;
+    private List<JumpPoint> jumppoints;
     public Player(String name, Faction faction) {
         this.name = name;
         this.faction = faction;
@@ -29,6 +33,7 @@ public class Player implements Serializable {
         ShipDef shipDef = new ShipDef();
         shipDef.name = "Fart Duster";
         ship = new Ship(shipDef);
+        jumppoints=new ArrayList();
     }
     
     public void setWoolongs(int i) {
@@ -68,5 +73,12 @@ public class Player implements Serializable {
     }
     public void setSkillset(Skillset skill){
         skillSet=skill;
+    }
+
+    public void setJumpPath(List<JumpPoint> jp) {
+       jumppoints=jp;
+    }
+    public List<JumpPoint> getJumpPath(){
+        return jumppoints;
     }
 }

@@ -7,6 +7,7 @@ package spacetrader.Window;
 
 import java.io.IOException;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import static spacetrader.Application.ApplicationType.JavaFX;
 import spacetrader.MultiKeyPressEventHandler;
@@ -19,8 +20,13 @@ public class JavaFXWindow extends Window{
     public interface JavaFXKeyHandler{
         public void handle(MultiKeyPressEventHandler.MultiKeyEvent e);
     }
+    public interface JavaFXMouseHandler{
+        public void handle(MouseEvent e);
+    }
+
     private Pane windowPane;
     private JavaFXKeyHandler handleKey;
+    private JavaFXMouseHandler handleMouse;
     public JavaFXWindow(){
         this.type=JavaFX;
         windowPane=new Pane();
@@ -33,6 +39,12 @@ public class JavaFXWindow extends Window{
     }
     public void setKeyHandle(JavaFXKeyHandler handle){
         handleKey=handle;
+    }
+    public void mouseHandle(MouseEvent e){
+        this.handleMouse.handle(e);
+    }
+    public void setMouseHandle(JavaFXMouseHandler handle){
+        handleMouse=handle;
     }
     public void loadFXML(Pane pane) throws IOException {
         windowPane.getChildren().add(pane);

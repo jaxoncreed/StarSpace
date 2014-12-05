@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.ArrayList;
 import spacetrader.game_model.gameLogic.Position;
 import org.apache.commons.math3.distribution.NormalDistribution;
+import spacetrader.game_model.interactable.InteractableObject;
+import spacetrader.game_model.system.Planet;
 
 /**
  * @author Michael Lane
@@ -140,6 +142,8 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
             // SET PROPERTIES FOR PLANET GENERATION HERE
             planetGenerator.setName(name + ", Planet " + i);
             planetGenerator.setPosition(planetPos);
+            planetGenerator.setSystem(system);
+            Planet planet = planetGenerator.generate();
 			system.addPlanet(planetGenerator.generate());
 		}
                 

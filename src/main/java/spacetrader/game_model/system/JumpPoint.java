@@ -71,10 +71,10 @@ public class JumpPoint implements Serializable, DirectedEdge<StarSystem>, Intera
         JumpPoint that = (JumpPoint) o;
         return 
             this.getToNode().equals(that.getToNode()) 
-            && this.getFromNode().equals(that.getFromNode()) 
-            && this.getFromPosition().equals(that.getFromPosition()) 
-            && this.getToPosition().equals(that.getToPosition())
-            && this.getWeight() == that.getWeight();
+            && this.getFromNode().equals(that.getFromNode()) ;
+            //&& this.getFromPosition().equals(that.getFromPosition()) 
+            //&& this.getToPosition().equals(that.getToPosition())
+            // this.getWeight() == that.getWeight();
     }
 
     public double getInteractionRange() {
@@ -104,5 +104,8 @@ public class JumpPoint implements Serializable, DirectedEdge<StarSystem>, Intera
     @Override
     public InteractionType getType() {
         return InteractionType.Travel;
+    }
+    public String toString(){
+        return this.fromSystem+" to "+this.toSystem;
     }
 }

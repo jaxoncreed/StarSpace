@@ -47,7 +47,7 @@ public class MakeTradeCtrl extends ViewCtrl {
         Inventory cargo = player.getShip().getCargo();
         cargo.remove(item);
         store.add(item);
-        int profit = (int)(item.getAdjustedPrice(player.getFaction(), market.getPlanet().getSystem().getFaction()));
+        int profit = (int)(item.getAdjustedPrice(market.getPlanet().getSystem().getFaction(),player.getFaction()));
         player.setWoolongs(player.getWoolongs() + profit);
         return true;
     }
@@ -63,9 +63,13 @@ public class MakeTradeCtrl extends ViewCtrl {
         player.setWoolongs(player.getWoolongs() - cost);
         return true;
     }  
-    public double getCost(Item i) {
-        return i.getAdjustedPrice(player.getFaction(), market.getPlanet().getSystem().getFaction());
+    public double getCostSell(Item i) {
+        return i.getAdjustedPrice(market.getPlanet().getSystem().getFaction(),player.getFaction());
     }
+    public double getCostBuy(Item i) {
+        return i.getAdjustedPrice(player.getFaction(),market.getPlanet().getSystem().getFaction());
+    }
+
     @Override
     public void startView() {
         view.render();

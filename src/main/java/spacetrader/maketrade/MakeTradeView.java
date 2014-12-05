@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.controlship.ControlShipView;
 import spacetrader.game_model.Faction;
+import spacetrader.game_model.GameModel;
 import spacetrader.game_model.Ship;
 
 /**
@@ -83,7 +84,11 @@ public class MakeTradeView extends AbstractView implements Initializable {
     Button finishButton3;    
     @FXML
     Label money3;
-    
+    @FXML
+    Label Merchant;
+    @FXML
+    Label you;
+
     public MakeTradeView(JavaFXWindow window, MakeTradeCtrl ctrl) {
         this.window = window;
         this.makeTradeCtrl = ctrl;
@@ -145,7 +150,8 @@ public class MakeTradeView extends AbstractView implements Initializable {
         splitpane.setPrefHeight(window.getHeight());
         anchor.setPrefWidth(window.getWidth());
         anchor.setPrefHeight(window.getHeight());
-
+        Merchant.setText("Merchant of the "+GameModel.get().getPlayer().getSystem().getFaction().toString()+" Faction");
+        you.setText("You of the "+GameModel.get().getPlayer().getFaction()+" Faction");
         updateLists();
     }
     public void updateLists(){
@@ -157,11 +163,11 @@ public class MakeTradeView extends AbstractView implements Initializable {
             HBox h=new HBox(); 
             Button b=new Button();
             b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+"): ₩"+
-                    makeTradeCtrl.getCost(i));
+                    makeTradeCtrl.getCostSell(i));
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.sell(i, 1);
                 b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+"): ₩"+
-                    makeTradeCtrl.getCost(i));
+                    makeTradeCtrl.getCostSell(i));
                 updateLists();
             });
             h.getChildren().add(b);
@@ -172,11 +178,11 @@ public class MakeTradeView extends AbstractView implements Initializable {
             HBox h=new HBox(); 
             Button b=new Button();
             b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + "): ₩"+
-                    makeTradeCtrl.getCost(i));
+                    makeTradeCtrl.getCostBuy(i));
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.buy(i, 1);
                 b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + "): ₩"+
-                    makeTradeCtrl.getCost(i));
+                    makeTradeCtrl.getCostBuy(i));
                 updateLists();
             });
             h.getChildren().add(b);

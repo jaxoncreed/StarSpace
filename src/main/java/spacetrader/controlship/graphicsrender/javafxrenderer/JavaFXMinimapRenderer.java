@@ -12,6 +12,7 @@ import spacetrader.game_model.system.*;
 import spacetrader.game_model.player.Player;
 import spacetrader.game_model.gameLogic.Position;
 import javafx.scene.image.Image;
+import spacetrader.game_model.GameModel;
 
 /**
  *
@@ -58,6 +59,15 @@ public class JavaFXMinimapRenderer extends JavaFXRenderer{
             Position pos = new Position(jumpPoint.getFromPosition());
             pos.scale(mapScale);
             pos.add(zero);
+            System.out.println(GameModel.get().getPlayer().getNextJumpPoint()+" "+jumpPoint);
+            
+            System.out.println(jumpPoint.equals(GameModel.get().getPlayer().getNextJumpPoint()));
+
+            if(jumpPoint.equals(GameModel.get().getPlayer().getNextJumpPoint())){
+                graphics.setFill(Color.WHITE);
+            }else{
+                graphics.setFill(Color.PURPLE);               
+            }
             graphics.fillOval(pos.x, pos.y, 10, 10);
         } 
 

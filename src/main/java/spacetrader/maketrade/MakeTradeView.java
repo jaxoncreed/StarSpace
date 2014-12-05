@@ -117,10 +117,12 @@ public class MakeTradeView extends AbstractView implements Initializable {
         for(Item i:itemsP){
             HBox h=new HBox(); 
             Button b=new Button();
-            b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+") ");
+            b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+"): ₩"+
+                    makeTradeCtrl.getCost(i));
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.sell(i, 1);
-                b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+") ");
+                b.setText(i.getName()+" ("+makeTradeCtrl.getPlayerItemAmount(i)+"): ₩"+
+                    makeTradeCtrl.getCost(i));
                 updateLists();
             });
             h.getChildren().add(b);
@@ -130,22 +132,24 @@ public class MakeTradeView extends AbstractView implements Initializable {
         for(Item i:itemsM){
             HBox h=new HBox(); 
             Button b=new Button();
-            b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + ") ");
+            b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + "): ₩"+
+                    makeTradeCtrl.getCost(i));
             b.setOnAction((ActionEvent event)->{
                 makeTradeCtrl.buy(i, 1);
-                b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + ") ");
+                b.setText(i.getName()+" ("+makeTradeCtrl.getStoreItemAmount(i) + "): ₩"+
+                    makeTradeCtrl.getCost(i));
                 updateLists();
             });
             h.getChildren().add(b);
             theirItemsContainer.getChildren().add(h);
         }
-        money1.setText("$"+makeTradeCtrl.getPlayerMoney());
-        money2.setText("$"+makeTradeCtrl.getPlayerMoney());
+        money1.setText("₩"+makeTradeCtrl.getPlayerMoney());
+        money2.setText("₩"+makeTradeCtrl.getPlayerMoney());
 
     }
         public void updateMoneyLabel() {
-        money2.setText("$" + makeTradeCtrl.getPlayerMoney());
-        money1.setText("$" + makeTradeCtrl.getPlayerMoney());
+        money2.setText("₩" + makeTradeCtrl.getPlayerMoney());
+        money1.setText("₩" + makeTradeCtrl.getPlayerMoney());
     }
     public void removeMakeTrade() {
     }

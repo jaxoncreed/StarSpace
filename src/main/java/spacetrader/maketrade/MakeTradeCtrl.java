@@ -62,7 +62,10 @@ public class MakeTradeCtrl extends ViewCtrl {
         cargo.add(item);
         player.setWoolongs(player.getWoolongs() - cost);
         return true;
-    }    
+    }  
+    public double getCost(Item i) {
+        return i.getAdjustedPrice(player.getFaction(), market.getPlanet().getSystem().getFaction());
+    }
     @Override
     public void startView() {
         view.render();

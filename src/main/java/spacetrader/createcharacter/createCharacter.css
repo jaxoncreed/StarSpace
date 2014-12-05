@@ -16,3 +16,8 @@
 #background {
 	-fx-background-image: url("background.png");
 }
+
+.textBox {
+    -fx-background-color: rgba(150,150,150,0);
+    -fx-text-fill: #cfe4a1;
+}

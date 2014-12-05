@@ -59,7 +59,9 @@ public class GalaxyMapCtrl extends ViewCtrl{
     }
     public List<JumpPoint> findPath(StarSystem target){
         StarSystem start=player.getSystem(); 
-        return galaxy.findPath(start, target);
+        List<JumpPoint> jp=galaxy.findPath(start, target);
+        GameModel.get().getPlayer().setJumpPath(jp);
+        return jp;
     }
   
 }

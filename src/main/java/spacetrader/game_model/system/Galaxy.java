@@ -73,7 +73,7 @@ public class Galaxy implements Serializable, Positionable {
 	public double getHeight() {
 		return height;
 	}
-    
+
     public Position getPosition(){
         return pos;
     }

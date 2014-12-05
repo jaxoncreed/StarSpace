@@ -129,7 +129,6 @@ public class StarSystem implements Node, Positionable, Serializable {
         hash = 59 * hash + Objects.hashCode(this.pos);
         return hash;
     }
-
     public void setFaction(Faction f) {
 
         if (f == null) {

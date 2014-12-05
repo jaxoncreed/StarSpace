@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import spacetrader.game_model.Faction;
+import spacetrader.game_model.GameModel;
 import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.Ship;
 import spacetrader.game_model.ShipDef;
@@ -26,6 +27,7 @@ public class Player implements Serializable {
     private Ship ship;
     private Skillset skillSet;
     private List<JumpPoint> jumppoints;
+    private StarSystem target;
     public Player(String name, Faction faction) {
         this.name = name;
         this.faction = faction;
@@ -70,15 +72,26 @@ public class Player implements Serializable {
 
     public void setSystem(StarSystem system) {
         ship.setSystem(system);
+        calculatePath(target);
     }
     public void setSkillset(Skillset skill){
         skillSet=skill;
     }
 
-    public void setJumpPath(List<JumpPoint> jp) {
-       jumppoints=jp;
+    public List<JumpPoint> calculatePath(StarSystem target) {
+        this.target=target;
+        jumppoints=GameModel.get().getGalaxy().findPath(this.getSystem(), target);
+        return jumppoints;
     }
     public List<JumpPoint> getJumpPath(){
         return jumppoints;
+    }
+    public JumpPoint getNextJumpPoint(){
+        for(JumpPoint j:jumppoints){
+            if(this.getSystem().equals(j.getFromNode())){
+                return j;
+            }
+        }
+        return null;
     }
 }

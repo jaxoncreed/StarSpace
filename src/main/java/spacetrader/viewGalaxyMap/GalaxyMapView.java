@@ -35,6 +35,7 @@ import spacetrader.game_model.gameLogic.Position;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
 import spacetrader.game_model.positioncontainer.Camera;
+import spacetrader.controlship.graphicsrender.javafxrenderer.SpriteManager;
 
 /**
  *

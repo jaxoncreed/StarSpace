@@ -7,7 +7,6 @@ package spacetrader.viewGalaxyMap;
  */
 
 import java.io.IOException;
-import spacetrader.controlship.graphicsrender.javafxrenderer.JavaFXPlanetRenderer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,34 +16,24 @@ import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import spacetrader.AbstractView;
 import spacetrader.MultiKeyPressEventHandler;
-import spacetrader.MultiKeyPressEventHandler.MultiKeyEventHandler;
 import spacetrader.Window.JavaFXWindow;
-import spacetrader.controlship.RealTimeShipView;
-import spacetrader.controlship.graphicsrender.javafxrenderer.*;
 import spacetrader.game_model.GameModel;
 import spacetrader.game_model.system.*;
-import spacetrader.game_model.system.Planet;
-import spacetrader.game_model.player.Player;
 import spacetrader.game_model.gameLogic.Position;
-import spacetrader.game_model.Ship;
 import spacetrader.game_model.system.StarSystem;
 import spacetrader.game_model.positioncontainer.Bounds;
-import spacetrader.game_model.positioncontainer.BoxCut;
 import spacetrader.game_model.positioncontainer.Camera;
 
 /**
@@ -75,7 +64,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             curPane = loader.load();
             window.loadFXML(curPane);
         } catch (IOException ex) {
-            Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GalaxyMapView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,7 +86,6 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             else{
                 gc.setStroke(Color.GREEN);
                 gc.setLineWidth(1);
-
             }
             gc.strokeLine(p1.x*this.PIXELS_PER_DISTANCE, p1.y*this.PIXELS_PER_DISTANCE, p2.x*this.PIXELS_PER_DISTANCE, p2.y*this.PIXELS_PER_DISTANCE);
         }
@@ -111,6 +99,12 @@ public class GalaxyMapView extends AbstractView implements Initializable {
            gc.setLineWidth(1);
            gc.strokeText(sys.getName(),(camera.normalize(sys.getPosition()).x-10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y-10)*this.PIXELS_PER_DISTANCE);
         }
+        for(StarSystem sys:systems){
+           gc.setStroke(Color.WHITE);
+           gc.setLineWidth(1);
+           gc.strokeText(sys.getFaction().toString(),(camera.normalize(sys.getPosition()).x+10)*this.PIXELS_PER_DISTANCE, (camera.normalize(sys.getPosition()).y+10)*this.PIXELS_PER_DISTANCE);
+        }
+
     }
 
     public void handleMutliKey(MultiKeyPressEventHandler.MultiKeyEvent event){
@@ -127,7 +121,10 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             camera.move(new Position(1,0));
         }
     }
-    public void handleMouseClick(MouseEvent e){
+    private double ox;
+    private double oy;
+    private boolean dragInProgress=false;
+    public void handleMouse(MouseEvent e){
         if(e.isPrimaryButtonDown()){
             double x=e.getSceneX()/PIXELS_PER_DISTANCE;
             double y=e.getSceneY()/PIXELS_PER_DISTANCE;
@@ -136,6 +133,19 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             System.out.println((selected));
             System.out.println(selected.getPosition());
             this.controller.findPath(selected);
+        }
+        if(!e.isSecondaryButtonDown()&&dragInProgress){
+            dragInProgress=false;
+            double tx=e.getSceneX()-ox;
+            double ty=e.getSceneY()-oy;
+            camera.move(new Position(tx,ty));
+        }
+        if(e.isSecondaryButtonDown()&&e.isDragDetect()){
+            dragInProgress=true;
+        }
+        else if(e.isSecondaryButtonDown()&&!dragInProgress){
+            ox=e.getSceneX();
+            oy=e.getSceneY();
         }
     }
     @Override
@@ -152,7 +162,7 @@ public class GalaxyMapView extends AbstractView implements Initializable {
             handleMutliKey(event);
         });
         window.setMouseHandle((MouseEvent e)->{
-            handleMouseClick(e);
+            handleMouse(e);
         });
         Galaxy gal=GameModel.get().getGalaxy();
         List<StarSystem> systems=gal.getSystems();

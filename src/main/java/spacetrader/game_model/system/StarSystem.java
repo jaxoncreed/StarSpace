@@ -34,9 +34,9 @@ public class StarSystem implements Node, Positionable, Serializable {
     private double height;
 
 
-	public Position getPosition() {
-		return pos;
-	}
+    public Position getPosition() {
+	return pos;
+    }
     
     public StarSystem(String name, Position pos, StarType starType) {
         this.name = name;
@@ -45,6 +45,7 @@ public class StarSystem implements Node, Positionable, Serializable {
         this.jumpPoints = new HashMap<Node, JumpPoint>();
         this.starType = starType;
         this.ships = new ArrayList<Ship>();
+        this.faction=Faction.No_Faction;
     }
 
     public StarSystem(

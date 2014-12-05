@@ -7,7 +7,9 @@ package spacetrader.Application;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import spacetrader.MainCtrl;
@@ -26,6 +28,7 @@ public class JavaFXMainApplication extends MainApplication{
     }
     public static class JavaFXApp extends Application{
         private static JavaFXMainApplication mainApp;
+
         @Override
         public void start(Stage primaryStage) throws Exception {
             Pane pane=mainApp.getWindow().getPane();
@@ -35,9 +38,20 @@ public class JavaFXMainApplication extends MainApplication{
             mainApp.getWindow().setKeyHandle(()->{
                 //Do nothing in the key handler by default
             });
+            mainApp.getWindow().setMouseHandle((MouseEvent e)->{
+                //Do nothing in the key handler by default
+            });
+
             MultiKeyPressEventHandler handler=new MultiKeyPressEventHandler((MultiKeyPressEventHandler.MultiKeyEvent event) -> {
                 mainApp.getWindow().keyHandle(event);//Make the key handler for the window trigger on events
             });
+            scene.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
+                mainApp.getWindow().mouseHandle(event);
+            });
+            scene.addEventFilter(MouseEvent.MOUSE_RELEASED, (MouseEvent event) -> {
+                mainApp.getWindow().mouseHandle(event);
+            });
+
             scene.setOnKeyPressed(handler);
             scene.setOnKeyReleased(handler);
             primaryStage.show();

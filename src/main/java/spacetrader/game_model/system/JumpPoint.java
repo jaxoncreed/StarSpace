@@ -21,13 +21,13 @@ public class JumpPoint implements Serializable, DirectedEdge<StarSystem>, Intera
     private int level;
     public static final double INTERACTION_RANGE = 100;
 
-	public JumpPoint(StarSystem fromSystem, StarSystem toSystem, Position fromPos, Position toPos) {
-		this.toSystem = toSystem;
-		this.fromSystem = toSystem;
-		this.fromPos = fromPos;
+    public JumpPoint(StarSystem fromSystem, StarSystem toSystem, Position fromPos, Position toPos) {
+        this.toSystem = toSystem;
+        this.fromSystem = fromSystem;
+        this.fromPos = fromPos;
         this.toPos = toPos;
         level=1;
-	}
+    }
     
     public int getLevel(){
         return level;

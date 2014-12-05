@@ -73,13 +73,16 @@ public class Galaxy implements Serializable, Positionable {
 	public double getHeight() {
 		return height;
 	}
-    
+
     public Position getPosition(){
         return pos;
     }
     
     public void setJumpPoints(Graph jumpPoints) {
         this.jumpPoints = jumpPoints;
+    }
+    public List<JumpPoint> getJumpPoints(){
+        return this.jumpPoints.getEdges();
     }
     public ArrayList<JumpPoint> findPath(StarSystem start,StarSystem end){
         List<Edge> edges=this.jumpPoints.aStarGraphSearch(start, end, new EuclideanHeuristic());

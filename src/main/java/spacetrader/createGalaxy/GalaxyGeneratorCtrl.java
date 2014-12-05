@@ -83,9 +83,6 @@ public class GalaxyGeneratorCtrl extends ViewCtrl {
     }
     
     public void generate() {
-        if (generator == null) {
-            System.out.println("umm");
-        }
         Galaxy gax = generator.generate();
         GameModel.get().setGalaxy(gax);
         jumpPointGenerator.generate();

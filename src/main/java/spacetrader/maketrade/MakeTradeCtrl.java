@@ -147,7 +147,23 @@ public class MakeTradeCtrl extends ViewCtrl {
         } else {
             System.out.println("Not enough woolongs");
         }
-        
-        
+    }
+    public Ship buyUpgrade(String s) {
+        Ship ship = player.getShip();
+        if (s.equals("a") && player.getWoolongs() >= 500) {
+            player.setWoolongs(player.getWoolongs() - 500);
+            ship.linearThrust += .005;
+        } else if (s.equals("s") && player.getWoolongs() >= 250) {
+            player.setWoolongs(player.getWoolongs() - 250);
+            ship.maxLinearSpeed += .1;
+        } else if (s.equals("hp") && player.getWoolongs() >= 1000) {
+            player.setWoolongs(player.getWoolongs() - 1000);
+            ship.maxHealth += 10;
+            ship.health = ship.maxHealth;
+        } else if (s.equals("las") && player.getWoolongs() >= 200) {
+            player.setWoolongs(player.getWoolongs() - 200);
+            ship.laserBeams += 10;
+        }
+        return ship;
     }
 }

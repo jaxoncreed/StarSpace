@@ -44,7 +44,6 @@ public class StarSystem implements Node, Positionable, Serializable {
         this.planets = new ArrayList<Planet>();
         this.jumpPoints = new HashMap<Node, JumpPoint>();
         this.starType = starType;
-        this.faction = Faction.NoFaction;
         this.ships = new ArrayList<Ship>();
     }
 

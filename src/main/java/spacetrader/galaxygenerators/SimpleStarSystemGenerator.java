@@ -102,7 +102,7 @@ public class SimpleStarSystemGenerator extends StarSystemGenerator{
 		NormalDistribution distr = new NormalDistribution(planetSepMean, planetSepSD);
 		boolean tryAgain = true;
 		while (tryAgain) {
-                        float total = 0;
+            float total = 0;
 			for (int i = 0; i < getNumPlanets(); i++) {
 				double sample =  distr.sample();
 				// if this planet's orbit is too close to the previous

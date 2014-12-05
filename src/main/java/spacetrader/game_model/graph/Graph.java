@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
+import spacetrader.shared.Util;
 
 /**
  * Nodes in a Graph can be connected with DirectedEdges or UndirectedEdges, or they
@@ -17,15 +20,19 @@ import java.util.Objects;
  * be connected with both a DirectedEdge and an UndirectedEdge.
  *
  * @author Michael Lane <mlane@gatech.edu>
+ * @param <N>
  */
-public class Graph implements Serializable {
+public class Graph<N extends Node> implements Serializable {
 
-    private Map<NodePair, Edge> edges;
-    private Map<Node, List<Node>> neighborsByNode;
-    private Map<Node, List<Edge>> edgesByNode;
+    private Map<NodePair, Edge<N>> edges;
+    private Map<N, List<N>> neighborsByNode;
+    private Map<N, List<Edge<N>>> edgesByNode;
 //    private List<Node> expanded;
 
-    public Graph(List<? extends DirectedEdge> directedEdges, List<? extends UndirectedEdge> undirectedEdges) {
+    
+    public Graph(
+    List<? extends DirectedEdge<N>> directedEdges, 
+    List<? extends UndirectedEdge<N>> undirectedEdges) {
 
 //        prettyPrint("undirectedEdges", undirectedEdges, 1);
         
@@ -33,14 +40,14 @@ public class Graph implements Serializable {
         neighborsByNode = new HashMap();
         edges = new HashMap();
         if (directedEdges != null) {
-            for (DirectedEdge edge : directedEdges) {
+            for (DirectedEdge<N> edge : directedEdges) {
                 if (edge != null) {
                     asymmetricalAdd(edge.getFromNode(), edge.getToNode(), edge);   
                 }
             }
         }
         if (undirectedEdges != null) {
-            for (UndirectedEdge edge : undirectedEdges) {
+            for (UndirectedEdge<N> edge : undirectedEdges) {
                 if (edge != null) {
                     asymmetricalAdd(edge.getNode1(), edge.getNode2(), edge);
                     asymmetricalAdd(edge.getNode2(), edge.getNode1(), edge);                    
@@ -49,22 +56,22 @@ public class Graph implements Serializable {
         }
     }
     
-    public Graph(List<? extends DirectedEdge> directedEdges, List<? extends UndirectedEdge> undirectedEdges, 
-    List<Node> isolatedNodes) {
-        
-        this(directedEdges, undirectedEdges);
-        if (isolatedNodes != null) {
-            List<Edge> empty = new ArrayList();
-            for (Node node : isolatedNodes) {
-                if (node != null) {
-                    edgesByNode.put(node, empty);              
-                }
-            }
-        }
+//    public Graph(List<? extends DirectedEdge<N>> directedEdges, List<? extends UndirectedEdge> undirectedEdges, 
+//    List<Node> isolatedNodes) {
+//        
+//        this(directedEdges, undirectedEdges);
+//        if (isolatedNodes != null) {
+//            List<Edge> empty = new ArrayList();
+//            for (Node node : isolatedNodes) {
+//                if (node != null) {
+//                    edgesByNode.put(node, empty);              
+//                }
+//            }
+//        }
+//
+//    }
 
-    }
-
-    private void asymmetricalAdd(Node fromNode, Node toNode, Edge edge) {
+    private void asymmetricalAdd(N fromNode, N toNode, Edge<N> edge) {
         
 //        System.out.println("Attempting to add " + nodePair.toString() + " in asymmetricalAdd");
         NodePair nodePair = new NodePair(fromNode, toNode);
@@ -77,8 +84,8 @@ public class Graph implements Serializable {
 //            System.out.println("edge not added because already added");
         }
         
-        List<Node> neighbors = neighborsByNode.get(fromNode);
-        List<Edge> theseEdges = edgesByNode.get(fromNode);
+        List<N> neighbors = neighborsByNode.get(fromNode);
+        List<Edge<N>> theseEdges = edgesByNode.get(fromNode);
         if (neighbors != null && !neighbors.contains(toNode)) {
 //            System.out.println(toNode.toString() + " added as neighbor of " + fromNode.toString());
             neighbors.add(toNode);
@@ -86,21 +93,21 @@ public class Graph implements Serializable {
 
         } else if (neighbors == null) {
 //            System.out.println(toNode.toString() + " added as neighbor of " + fromNode.toString());
-            List<Node> newNeighbors = new ArrayList();
+            List<N> newNeighbors = new ArrayList();
             newNeighbors.add(toNode);
             neighborsByNode.put(fromNode, newNeighbors);
-            List<Edge> newEdges = new ArrayList();
+            List<Edge<N>> newEdges = new ArrayList();
             newEdges.add(edge);
             edgesByNode.put(fromNode, newEdges);
         }
     }
 
-    public List<Node> getNeighbors(Node node) {
-        List<Node> neighbors = neighborsByNode.get(node);
+    public List<N> getNeighbors(N node) {
+        List<N> neighbors = neighborsByNode.get(node);
         return (neighbors != null) ? neighbors : new ArrayList();
     }
 
-    public List<Node> getNodes() {
+    public List<N> getNodes() {
         return new ArrayList(neighborsByNode.keySet());
     }
 
@@ -114,7 +121,7 @@ public class Graph implements Serializable {
      *         fromNode
      *         to toNode
      */
-    public Edge getEdge(Node fromNode, Node toNode) {
+    public Edge getEdge(N fromNode, N toNode) {
 
         if (fromNode == null || toNode == null) {
             return null;
@@ -134,7 +141,7 @@ public class Graph implements Serializable {
      * node to visit from start; the last node is end. null if start and end are
      * disconnected in the graph.
      */
-    public List<Node> bfs(Node start, Node end) {
+    public List<N> bfs(N start, N end) {
         
         if (start == null || end == null) {
             return null;
@@ -144,28 +151,28 @@ public class Graph implements Serializable {
         if (start.equals(end)) {
             return new ArrayList();
         }
-        List<Node> visited = new LinkedList();
+        List<N> visited = new LinkedList();
         visited.add(start);
 //        System.out.println("Neighbors of start: ");
 //        for (Node neighbor : this.getNeighbors(start)) {
 //            System.out.println("\t" + ((StarSystem) neighbor).getName());
 //        }
-        Map<Node, List<Node>> pathByNode = new HashMap();
+        Map<N, List<N>> pathByNode = new HashMap();
         // init pathByNode
-        for (Node neighbor : this.getNeighbors(start)) {
-            List<Node> path = new ArrayList();
+        for (N neighbor : this.getNeighbors(start)) {
+            List<N> path = new ArrayList();
             path.add(neighbor);
             pathByNode.put(neighbor, path);
         }
 
-        List<Node> frontier = new LinkedList(this.getNeighbors(start));
+        List<N> frontier = new LinkedList(this.getNeighbors(start));
         while (!frontier.isEmpty()) {
 //            System.out.println("Frontier:");
             // int i = 0;
 //            for (Node node : frontier) {
 //                System.out.println("\tIndex " + i++ + ": " + ((StarSystem) node).getName());
 //            }
-            Node node = frontier.remove(0);
+            N node = frontier.remove(0);
 //            System.out.println("Popped StarSystem: " + ((StarSystem) node).getName());
             if (!visited.contains(node)) {
 //                System.out.println("Neighbors of popped StarSystem: ");
@@ -175,7 +182,7 @@ public class Graph implements Serializable {
                     return pathByNode.get(node);
                 }
                 visited.add(node);
-                List<Node> neighbors = this.getNeighbors(node);
+                List<N> neighbors = this.getNeighbors(node);
 //                for (Node aNode : neighbors) {
 //                    System.out.println("\t" + ((StarSystem) aNode).getName());
 //                }
@@ -183,10 +190,10 @@ public class Graph implements Serializable {
                 frontier.addAll(neighbors);
 
                 // update neighbor paths
-                List<Node> path = pathByNode.get(node);
-                for (Node neighbor : neighbors) {
+                List<N> path = pathByNode.get(node);
+                for (N neighbor : neighbors) {
                     if (pathByNode.get(neighbor) == null) {
-                        List<Node> newPath = new ArrayList(path);
+                        List<N> newPath = new ArrayList(path);
                         newPath.add(neighbor);
                         pathByNode.put(neighbor, newPath);
                     }
@@ -215,7 +222,7 @@ public class Graph implements Serializable {
      * node to visit from start; the last node is end. null if start and end are
      * disconnected in the graph.
      */
-    public List<Edge> aStarTreeSearch(Node start, Node end, Heurstic heur) {
+    public List<Edge<N>> aStarTreeSearch(N start, N end, Heurstic<N> heur) {
 
         if (start == null || end == null || heur == null) return null;
         
@@ -227,8 +234,8 @@ public class Graph implements Serializable {
         // via insertion sort. with an arraylist implementation, the object
         // would have to be copied over and over again
         List<Action> frontier = new LinkedList();
-        Map<Action, List<Edge>> pathByAction = new HashMap();
-        Map<Node, Double> hByNode = new HashMap(); // not actually used
+        Map<Action, List<Edge<N>>> pathByAction = new HashMap();
+        Map<N, Double> hByNode = new HashMap(); // not actually used
         Map<Action, Double> costByAction = new HashMap();
 
         initAStarData(start, end, heur, frontier, hByNode, pathByAction, costByAction);
@@ -239,22 +246,22 @@ public class Graph implements Serializable {
 
         while (!frontier.isEmpty()) {
             Action action = frontier.remove(0);
-            Node node = action.state;
+            N node = action.state;
             // goal test
             if (node.equals(end)) {
                 return pathByAction.get(action);
             }
-            List<Edge> path = pathByAction.get(action);
+            List<Edge<N>> path = pathByAction.get(action);
             // add neighbors to frontier
-            List<Node> neighbors = this.getNeighbors(node);
+            List<N> neighbors = this.getNeighbors(node);
             double cost = costByAction.get(action);
-            for (Node neighbor : neighbors) {
+            for (N neighbor : neighbors) {
                 Action next = new Action(neighbor, this.getEdge(node, neighbor));
             	// the only thing we need to check for optimality is that
             	// neighbor hasn't already been added to the frontier
             	if (pathByAction.get(next) == null) {
 	                // create path
-	                List<Edge> newPath = new LinkedList(path);
+	                List<Edge<N>> newPath = new LinkedList(path);
 	                newPath.add(next.edge);
 	                double w = this.getEdge(node, neighbor).getWeight();
 	                double h = heur.calculate(neighbor, end);
@@ -281,7 +288,7 @@ public class Graph implements Serializable {
      * node to visit from start; the last node is end. null if start and end are
      * disconnected in the graph.
      */
-    public List<Edge> aStarGraphSearch(Node start, Node end, Heurstic heur) {
+    public List<Edge<N>> aStarGraphSearch(N start, N end, Heurstic heur) {
         
 //        for (Node node : this.getNodes()) {
 //            prettyPrint("Neighbors of " + node.toString(), this.getNeighbors(node), 1);
@@ -296,11 +303,11 @@ public class Graph implements Serializable {
         List<Action> frontier = new LinkedList();
 //        System.out.println("Expanded " + ((StarSystem) start).getName());
         // the path with least total cost from start to node
-        Map<Action, List<Edge>> pathByAction = new HashMap();
-        Map<Node, Double> hByNode = new HashMap();
+        Map<Action, List<Edge<N>>> pathByAction = new HashMap();
+        Map<N, Double> hByNode = new HashMap();
         // the cost along the path will least total cost from start to node 
         Map<Action, Double> costByAction = new HashMap();
-        List<Node> visited = new LinkedList();
+        List<N> visited = new LinkedList();
         visited.add(start);
         
         initAStarData(start, end, heur, frontier, hByNode, pathByAction, costByAction);
@@ -316,7 +323,7 @@ public class Graph implements Serializable {
             Action action = frontier.remove(0);
             if (!visited.contains(action.state)) {
                 
-                Node node = action.state;
+                N node = action.state;
                 
 //                System.out.println(node.toString() + " => " + (heur.calculate(node, end) + costByAction.get(action)));
                 // goal test
@@ -330,7 +337,7 @@ public class Graph implements Serializable {
 
                 // peek at neighbors
 //                System.out.println("neighbors: " + this.getNeighbors(node));
-                for (Node neighbor : this.getNeighbors(node)) {
+                for (N neighbor : this.getNeighbors(node)) {
                 	if (!visited.contains(neighbor)) {
                 		Double newH = null;
                         boolean toRecalc = heur.toRecalc();
@@ -341,11 +348,11 @@ public class Graph implements Serializable {
                             }
                         }
                         
-                        Edge edge = this.getEdge(node, neighbor);
+                        Edge<N> edge = this.getEdge(node, neighbor);
                         Action next = new Action(neighbor, edge);
             			double newCost = cost + edge.getWeight();
             			double newF = newCost + newH;
-		                List<Edge> newPath = new ArrayList(pathByAction.get(action));
+		                List<Edge<N>> newPath = new ArrayList(pathByAction.get(action));
 		                newPath.add(edge);
         				pathByAction.put(next, newPath);
         				costByAction.put(next, newCost);
@@ -362,7 +369,7 @@ public class Graph implements Serializable {
     }	
 
     private void insertIntoFrontier(Action next, List<Action> frontier,
-    Map<Action, Double> costByAction, Map<Node, Double> hByNode, Heurstic<Node> heur, Node end) {
+    Map<Action, Double> costByAction, Map<N, Double> hByNode, Heurstic<N> heur, N end) {
         
 //        System.out.println("Adding neighbor " + neighbor.toString() + 
 //            " to frontier.");
@@ -371,7 +378,7 @@ public class Graph implements Serializable {
 //        prettyPrint("costByNode:", costByNode);
         
         ListIterator<Action> iter = frontier.listIterator();
-        Node neighbor = next.state;
+        N neighbor = next.state;
         
         double h;
         if (heur.toRecalc()) {
@@ -415,34 +422,95 @@ public class Graph implements Serializable {
 //            + (iter.nextIndex() - 1));
     }
     
-    public List<Edge> getEdges() {
+    public List<Edge<N>> getEdges() {
         return new ArrayList(edges.values());
     }
     
-    public List<Edge> getEdges(Node fromNode) {
-        List<Edge> edges = edgesByNode.get(fromNode);
+    public List<Edge<N>> getEdges(N fromNode) {
+        List<Edge<N>> edges = edgesByNode.get(fromNode);
         return (edges != null) ? edges : new ArrayList();
     }
     
+    public List<N> getConnectedNodes(N node) {
+        
+        List<N> visited = new LinkedList();
+        List<N> frontier = new LinkedList();
+        
+        frontier.addAll(this.getNeighbors(node));
+        
+        while (!frontier.isEmpty()) {
+            N n = frontier.remove(0);
+            if (!visited.contains(n)) {
+                visited.add(n);
+                List<N> neighbors = this.getNeighbors(n);
+                for (N neighbor : neighbors) {
+                    if (!visited.contains(neighbor)) {
+                        frontier.add(neighbor);
+                    }
+                }                
+            }      
+        }
+        return visited;
+    }
+    
+    public List<N> getDisconnections() {
+        List<N> nodes = this.getNodes();
+        Iterator<N> nodesIter = nodes.iterator();
+        int numNodes = nodes.size();
+        List<N> totalConnected = new LinkedList();
+        List<N> disconn = new LinkedList();
+        while (totalConnected.size() < numNodes) {
+            N n = nodesIter.next();
+            while (totalConnected.contains(n)) {
+                n = nodesIter.next();
+            }
+            totalConnected.addAll(this.getConnectedNodes(n));
+            disconn.add(n);
+        }
+        
+        return disconn;
+    }
+    
+//    public Edge<N> getMinimalEdge(N node) {
+//        List<Edge<N>> someEdges = this.getEdges(node);
+//        Edge<N> minEdge = someEdges.get(0);
+//        double minWeight = minEdge.getWeight();
+//        for (Edge<N> edge : someEdges) {
+//            double weight = edge.getWeight();
+//            if (weight < minWeight) {
+//                minEdge = edge;
+//                minWeight = weight;
+//            }
+//        }
+//        return minEdge;
+//    }
+
+    public void union(Graph<N> graph) { 
+        
+        this.edges.putAll(graph.edges);
+        Util.unionListMaps(this.neighborsByNode, graph.neighborsByNode);
+        Util.unionListMaps(this.edgesByNode, graph.edgesByNode);
+    }
+    
     private void initAStarData(
-        Node start, Node end, Heurstic heur, List<Action> frontier,
-        Map<Node, Double> hByNode, 
-        Map<Action, List<Edge>> pathByAction, Map<Action, Double> costByAction) {
+        N start, N end, Heurstic<N> heur, List<Action> frontier,
+        Map<N, Double> hByNode, 
+        Map<Action, List<Edge<N>>> pathByAction, Map<Action, Double> costByAction) {
 
 //        System.out.println("end position: " + ((Positionable) end).getPosition());
         
-        for (Node neighbor : this.getNeighbors(start)) {
+        for (N neighbor : this.getNeighbors(start)) {
 //            System.out.println(neighbor.toString() + " position: " + 
 //                ((Positionable) neighbor).getPosition().toString());
             
-            Edge edge = this.getEdge(start, neighbor);
+            Edge<N> edge = this.getEdge(start, neighbor);
             Action action = new Action(neighbor, edge);
             frontier.add(action);
             double w = edge.getWeight();
             double h = heur.calculate(neighbor, end);
             costByAction.put(action, w);            
             hByNode.put(neighbor, h);
-            List<Edge> path = new LinkedList();
+            List<Edge<N>> path = new LinkedList();
             path.add(edge);
             pathByAction.put(action, path);
 //            System.out.println(neighbor.toString() + " h = " + h);
@@ -466,25 +534,12 @@ public class Graph implements Serializable {
     
     private class NodePair implements Serializable {
 
-        Node node1;
-        Node node2;
+        N node1;
+        N node2;
 
-        public NodePair(Node node1, Node node2) {
+        public NodePair(N node1, N node2) {
             this.node1 = node1;
             this.node2 = node2;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o == null) {
-                return false;
-            }
-            if (!(o instanceof NodePair)) {
-                return false;
-            }
-            NodePair nodePair = (NodePair) o;
-            return node1.equals(nodePair.node1)
-                && node2.equals(nodePair.node2);
         }
 
         @Override
@@ -494,6 +549,19 @@ public class Graph implements Serializable {
             hash = 89 * hash + Objects.hashCode(this.node2);
             return hash;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null) {
+                return false;
+            }
+            if (this.getClass() != o.getClass()) {
+                return false;
+            }
+            NodePair nodePair = (NodePair) o;
+            return node1.equals(nodePair.node1)
+                && node2.equals(nodePair.node2);
+        }
         
         public String toString()  {
             return "(" + node1.toString() + ", " + node2.toString() + ")";
@@ -502,17 +570,18 @@ public class Graph implements Serializable {
     
     private class Action {
         
-        final Node state;
-        final Edge edge;
+        final N state;
+        final Edge<N> edge;
         
-        Action(Node state, Edge edge) {
+        Action(N state, Edge<N> edge) {
             this.state = state;
             this.edge = edge;
         }
         
         @Override
         public boolean equals(Object o) {
-            if (!(o instanceof Action)) return false;
+            if (o == null) return false;
+            if (this.getClass() != o.getClass()) return false;
             Action a = (Action) o;
             return a.state.equals(this.state) && a.edge.equals(this.edge);
         }

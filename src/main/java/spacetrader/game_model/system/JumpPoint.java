@@ -11,7 +11,7 @@ import spacetrader.game_model.interactable.InteractableObject;
 import spacetrader.game_model.interactable.InteractionType;
 import spacetrader.game_model.system.StarSystem;
 
-public class JumpPoint implements Serializable, DirectedEdge, InteractableObject {
+public class JumpPoint implements Serializable, DirectedEdge<StarSystem>, InteractableObject {
 	
     public static final String TERM = "Hargin Point";
     private StarSystem fromSystem;
@@ -34,12 +34,12 @@ public class JumpPoint implements Serializable, DirectedEdge, InteractableObject
     }
     
     @Override
-    public Node getFromNode() {
+    public StarSystem getFromNode() {
         return fromSystem;
     }
     
     @Override
-    public Node getToNode() {
+    public StarSystem getToNode() {
         return toSystem;
     }
     

@@ -9,7 +9,7 @@ package spacetrader.game_model.graph;
  *
  * @author michael
  */
-public interface Edge {
+public interface Edge<N extends Node> {
  
     public double getWeight();
 }

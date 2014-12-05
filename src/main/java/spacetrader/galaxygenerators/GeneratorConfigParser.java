@@ -21,6 +21,7 @@ public class GeneratorConfigParser {
     private List<StarSystemGenerator> _starSystemGenerators;
     private List<PlanetGenerator> _planetGenerators;
     private List<JumpPointsGenerator> _jumpPointsGenerators;
+    private List<MarketGenerator> _marketGenerators;
 
     public GeneratorConfigParser(String filename) throws Exception {
 
@@ -38,6 +39,7 @@ public class GeneratorConfigParser {
         _starSystemGenerators = new ArrayList();
         _planetGenerators = new ArrayList();
         _jumpPointsGenerators = new ArrayList();
+        _marketGenerators = new ArrayList();
     }
 
     public void createGenerators() throws Exception {
@@ -47,8 +49,8 @@ public class GeneratorConfigParser {
         for (Element genTag : genTags) {
             // get the generator type
             String type = genTag.getTagName();
-            Object gen = new GeneratorFactory().getGenerator(type);
-            Class<?> genClass = new GeneratorFactory().getGeneratorClass(type);
+            Class<?> genClass = Class.forName(this.getClass().getPackage().getName()+ "." + type);
+            Object gen = genClass.newInstance();
             // read the properties and set them
             List<Element> propTags = getChildElements(genTag);
             for (Element propTag : propTags) {
@@ -146,6 +148,9 @@ public class GeneratorConfigParser {
             } else if (gen instanceof JumpPointsGenerator) {
                 _jumpPointsGenerators.add((JumpPointsGenerator) gen);
 
+            } else if (gen instanceof MarketGenerator) {
+                _marketGenerators.add((MarketGenerator) gen);
+                
             } else {
                 throw new RuntimeException("YO FOOL: I don't know how you managed"
                         + " to get this far in the code and not run in to any other errors."
@@ -170,6 +175,10 @@ public class GeneratorConfigParser {
     public List<JumpPointsGenerator> getJumpPointsGenerators() {
         return _jumpPointsGenerators;
     }
+    
+    public List<MarketGenerator> getMarketGenerators() {
+        return _marketGenerators;
+    }
 
     private String camelify(String str) {
         StringBuilder builder = new StringBuilder(str);
@@ -183,15 +192,13 @@ public class GeneratorConfigParser {
         try {
             Integer.parseInt(value);
             return Integer.class;
-        } catch (NumberFormatException e) {
-        }
+        } catch (NumberFormatException e) {}
 
         // parse doubles
         try {
             Double.parseDouble(value);
             return Double.class;
-        } catch (NumberFormatException e) {
-        }
+        } catch (NumberFormatException e) {}
 
         // parse booleans
         if (value.toLowerCase().equals("true")

@@ -46,14 +46,14 @@ public class MakeTradeCtrl extends ViewCtrl {
         Inventory cargo = player.getShip().getCargo();
         cargo.remove(item);
         store.add(item);
-        int profit = (int)(item.getBasePrice());
+        int profit = (int)(item.getAdjustedPrice(player.getFaction(), market.getPlanet().getSystem().getFaction()));
         player.setWoolongs(player.getWoolongs() + profit);
         return true;
     }
     
     public boolean buy(Item item,int amount) {
         Inventory cargo = player.getShip().getCargo();
-        int cost = (int)(item.getBasePrice());
+        int cost = (int)(item.getAdjustedPrice(player.getFaction(), market.getPlanet().getSystem().getFaction()));
         if (player.getWoolongs() < cost) {
             return false;
         }

@@ -76,7 +76,7 @@ public class ControlShipView extends AbstractView implements Initializable {
             curPane = loader.load();
             window.loadFXML(curPane);
         } catch (IOException ex) {
-            Logger.getLogger(RealTimeShipView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControlShipView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

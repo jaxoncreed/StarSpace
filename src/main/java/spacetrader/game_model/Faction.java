@@ -15,5 +15,5 @@ import java.io.Serializable;
  * @author Tyler Allen <tallen40@gatech.edu>
  */
 public enum Faction implements Serializable {
-    Asdf, Ghjk, No_Faction, Test1, Test2;
+    Space_People, Star_Empire, No_Faction, The_Test, Aliens;
 }

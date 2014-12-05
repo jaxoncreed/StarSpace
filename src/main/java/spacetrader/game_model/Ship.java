@@ -32,6 +32,7 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
     public double      maxAngularSpeed;
     public float       angularBrake;
     public double      interactionRange;
+    public int         laserBeams;
 
     public StarSystem system;
     private transient Body physicsBody;
@@ -77,7 +78,12 @@ public class Ship implements Tradeable, Serializable,InteractableObject {
         this.angularBrake      = shipDef.angularBrake;
     }
 
-
+    public void setHasLaserBeams(int b) {
+        this.laserBeams = b;
+    }
+    public int hasLaserBeams() {
+        return laserBeams;
+    }
     public void setSystem(StarSystem system) {
         if (this.system != null) {
             system.removeShip(this);

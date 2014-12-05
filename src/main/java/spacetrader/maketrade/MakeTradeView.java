@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import spacetrader.Window.JavaFXWindow;
 import spacetrader.controlship.ControlShipView;
 import spacetrader.game_model.Faction;
+import spacetrader.game_model.Ship;
 
 /**
  *
@@ -60,6 +61,28 @@ public class MakeTradeView extends AbstractView implements Initializable {
     Button buy3;
     @FXML
     Button buy4;
+    @FXML
+    Button buyacc;
+    @FXML
+    Button buyspeed;
+    @FXML
+    Button buyhp;
+    @FXML
+    Button buylas;
+    @FXML
+    Label shipAcc;
+    @FXML
+    Label shipSpeed;
+    @FXML
+    Label shipHealth;
+    @FXML
+    Label shipName;
+    @FXML
+    Label lasers;
+    @FXML
+    Button finishButton3;    
+    @FXML
+    Label money3;
     
     public MakeTradeView(JavaFXWindow window, MakeTradeCtrl ctrl) {
         this.window = window;
@@ -88,18 +111,34 @@ public class MakeTradeView extends AbstractView implements Initializable {
             Logger.getLogger(MakeTradeView.class.getName()).log(Level.SEVERE, null, ex);
         }
         buy1.setOnAction((ActionEvent event)->{makeTradeCtrl.buy1();
+        updateShipLabels(makeTradeCtrl.buyUpgrade("yeah"));
         updateMoneyLabel();});
         buy2.setOnAction((ActionEvent event)->{makeTradeCtrl.buy2();
+        updateShipLabels(makeTradeCtrl.buyUpgrade("yeah"));
         updateMoneyLabel();});
         buy3.setOnAction((ActionEvent event)->{makeTradeCtrl.buy3();
+        updateShipLabels(makeTradeCtrl.buyUpgrade("yeah"));
         updateMoneyLabel();});
         buy4.setOnAction((ActionEvent event)->{makeTradeCtrl.buy4();
+        updateShipLabels(makeTradeCtrl.buyUpgrade("yeah"));
+        updateMoneyLabel();});
+        buyacc.setOnAction((ActionEvent event)->{updateShipLabels(makeTradeCtrl.buyUpgrade("a"));
+        updateMoneyLabel();});
+        buyspeed.setOnAction((ActionEvent event)->{updateShipLabels(makeTradeCtrl.buyUpgrade("s"));
+        updateMoneyLabel();});
+        buyhp.setOnAction((ActionEvent event)->{updateShipLabels(makeTradeCtrl.buyUpgrade("hp"));
+        updateMoneyLabel();});
+        buylas.setOnAction((ActionEvent event)->{updateShipLabels(makeTradeCtrl.buyUpgrade("las"));
         updateMoneyLabel();});
         updateMoneyLabel();
+        updateShipLabels(makeTradeCtrl.buyUpgrade("yeah"));
         finishButton1.setOnAction((ActionEvent event)->{
             makeTradeCtrl.returnToControlShip();
         });
         finishButton2.setOnAction((ActionEvent event)->{
+            makeTradeCtrl.returnToControlShip();
+        });
+        finishButton3.setOnAction((ActionEvent event)->{
             makeTradeCtrl.returnToControlShip();
         });
         splitpane.setPrefWidth(window.getWidth());
@@ -147,10 +186,19 @@ public class MakeTradeView extends AbstractView implements Initializable {
         money2.setText("₩"+makeTradeCtrl.getPlayerMoney());
 
     }
-        public void updateMoneyLabel() {
+    public void updateMoneyLabel() {
         money2.setText("₩" + makeTradeCtrl.getPlayerMoney());
         money1.setText("₩" + makeTradeCtrl.getPlayerMoney());
+        money3.setText("₩" + makeTradeCtrl.getPlayerMoney());
     }
+    public void updateShipLabels(Ship ship) {
+        shipAcc.setText("Acceleration: " + Math.round(ship.linearThrust*1000) + "Gm/s/s");
+        shipSpeed.setText("Top Speed: " + Math.round(ship.maxLinearSpeed*100) + "Gm/s");
+        shipHealth.setText("Health: " + ship.maxHealth + "HP");
+        lasers.setText("Laser Power: " + ship.laserBeams + "YW"); 
+        shipName.setText("Ship: " + ship.name);
+    }
+        
     public void removeMakeTrade() {
     }
 }

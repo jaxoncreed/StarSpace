@@ -4,12 +4,12 @@
 */
 
 .button {
-    -fx-background-color: rgba(255,255,255,0.5);
+    -fx-background-color: rgba(255,255,255,0);
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,2,3,0;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #cfe4a1;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
+    -fx-font-size: 24px;
     -fx-padding: 10 20 10 20;
 }
 
